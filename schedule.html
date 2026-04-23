@@ -4,11 +4,197 @@
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://images.unsplash.com" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Live Class Schedule — Ripples of Healing</title>
-  <meta name="description" content="View the weekly live class schedule and register for upcoming sessions." />
+  <title>Class Schedule — Ripples of Healing</title>
+  <meta name="description" content="View today's classes and book upcoming sessions at Ripples of Healing." />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .schedule-page { background: #f7f9f9; min-height: 100vh; padding-bottom: 60px; }
+
+    /* ── Today strip ───────────────────────────── */
+    .today-strip {
+      background: #fff;
+      border-bottom: 1px solid var(--border-light);
+      padding: 32px 0 36px;
+    }
+    .today-label {
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--deep-teal);
+      margin-bottom: 6px;
+    }
+    .today-heading {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--dark-charcoal);
+      margin: 0 0 24px;
+    }
+    .today-cards {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .today-cards::-webkit-scrollbar { display: none; }
+    .today-card {
+      background: #fff;
+      border: 1.5px solid var(--border-light);
+      border-radius: 14px;
+      padding: 20px 22px;
+      min-width: 220px;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+    .today-card:hover { border-color: var(--deep-teal); box-shadow: 0 4px 20px rgba(13,115,119,0.1); transform: translateY(-2px); }
+    .today-card.live { border-color: var(--warm-orange); background: #fff8f4; }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: var(--warm-orange); color: #fff;
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em;
+      padding: 3px 9px; border-radius: 99px; margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse 1.2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+    .today-card-time { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+    .today-card-name { font-size: 1rem; font-weight: 800; color: var(--dark-charcoal); margin-bottom: 4px; }
+    .today-card-instructor { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; }
+    .today-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .today-card-duration { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); background: #f3f4f6; padding: 3px 9px; border-radius: 99px; }
+    .btn-book {
+      background: var(--deep-teal); color: #fff;
+      border: none; border-radius: 8px;
+      padding: 8px 16px; font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .btn-book:hover { background: #0a5f63; }
+    .btn-book.booked { background: #10B981; cursor: default; }
+    .btn-book.live-join { background: var(--warm-orange); }
+    .btn-book.live-join:hover { background: #c2410c; }
+    .no-classes-today {
+      text-align: center; padding: 32px;
+      color: var(--text-muted); font-size: 0.95rem;
+    }
+
+    /* ── Calendar ───────────────────────────────── */
+    .calendar-section { padding: 40px 0; }
+    .calendar-header {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
+    }
+    .calendar-title { font-size: 1.25rem; font-weight: 800; color: var(--dark-charcoal); }
+    .cal-nav { display: flex; align-items: center; gap: 10px; }
+    .cal-nav-btn {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 1.5px solid var(--border-light);
+      background: #fff; cursor: pointer; font-size: 1.1rem;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; color: var(--dark-charcoal);
+    }
+    .cal-nav-btn:hover { border-color: var(--deep-teal); color: var(--deep-teal); }
+    .cal-week-label { font-size: 0.9rem; font-weight: 700; color: var(--dark-charcoal); min-width: 160px; text-align: center; }
+
+    /* Week day headers */
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+    }
+    @media (max-width: 760px) {
+      .cal-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .cal-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .cal-day {
+      background: #fff;
+      border: 1.5px solid var(--border-light);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 120px;
+    }
+    .cal-day.today { border-color: var(--deep-teal); box-shadow: 0 0 0 3px rgba(13,115,119,0.08); }
+    .cal-day-header {
+      padding: 10px 14px 8px;
+      border-bottom: 1px solid var(--border-light);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .cal-day-name { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); }
+    .cal-day-num {
+      font-size: 1rem; font-weight: 800; color: var(--dark-charcoal);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .cal-day.today .cal-day-num { background: var(--deep-teal); color: #fff; }
+    .cal-day-classes { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
+    .cal-class-pill {
+      background: #f0f8f8;
+      border-left: 3px solid var(--deep-teal);
+      border-radius: 0 7px 7px 0;
+      padding: 6px 9px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .cal-class-pill:hover { background: #daf0f0; }
+    .cal-class-pill.orange { background: #fff5f0; border-left-color: var(--warm-orange); }
+    .cal-class-pill.orange:hover { background: #ffe8dc; }
+    .cal-class-pill-time { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); }
+    .cal-class-pill-name { font-size: 0.78rem; font-weight: 700; color: var(--dark-charcoal); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .cal-empty { padding: 16px 14px; font-size: 0.8rem; color: #ccc; }
+
+    /* ── Booking modal ──────────────────────────── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      padding: 20px;
+      opacity: 0; pointer-events: none; transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: #fff;
+      border-radius: 20px;
+      padding: 36px;
+      max-width: 440px; width: 100%;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.2);
+      transform: translateY(16px); transition: transform 0.2s;
+    }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--deep-teal); margin-bottom: 8px; }
+    .modal-title { font-size: 1.5rem; font-weight: 800; color: var(--dark-charcoal); margin-bottom: 4px; }
+    .modal-meta { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; }
+    .modal-details { background: #f7f9f9; border-radius: 12px; padding: 16px 18px; margin-bottom: 24px; }
+    .modal-detail-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.88rem; }
+    .modal-detail-row:not(:last-child) { border-bottom: 1px solid var(--border-light); }
+    .modal-detail-label { color: var(--text-muted); font-weight: 600; }
+    .modal-detail-val { font-weight: 700; color: var(--dark-charcoal); }
+    .modal-actions { display: flex; gap: 10px; }
+    .btn-modal-book {
+      flex: 1; padding: 14px; border: none; border-radius: 10px;
+      background: var(--deep-teal); color: #fff;
+      font-size: 0.95rem; font-weight: 800; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-modal-book:hover { background: #0a5f63; }
+    .btn-modal-cancel {
+      padding: 14px 20px; border: 1.5px solid var(--border-light);
+      border-radius: 10px; background: #fff; color: var(--dark-charcoal);
+      font-size: 0.95rem; font-weight: 700; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-modal-cancel:hover { border-color: #999; }
+    .modal-success { text-align: center; padding: 12px 0; }
+    .modal-success-icon { font-size: 2.5rem; margin-bottom: 10px; }
+    .modal-success-msg { font-size: 1rem; font-weight: 700; color: #15803d; }
+    .modal-success-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+  </style>
 </head>
 <body>
 
@@ -20,10 +206,10 @@
       </a>
       <ul class="nav-links" role="list">
         <li><a href="index.html">Home</a></li>
-        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="classes.html">Classes</a></li>
+        <li><a href="schedule.html" class="active">Schedule</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="blog.html">Blog</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-actions">
@@ -33,401 +219,54 @@
       </div>
     </div>
   </nav>
-  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes</a><a href="schedule.html">Schedule</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
   <div class="nav-overlay" aria-hidden="true"></div>
 
-  <main>
-    <!-- PAGE HERO -->
-    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=1600&q=80&fit=crop&auto=format')">
+  <main class="schedule-page" style="padding-top: var(--nav-height, 80px);">
+
+    <!-- TODAY'S CLASSES -->
+    <div class="today-strip">
       <div class="container">
-        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Schedule</span></div>
-        <h1>Live Class Schedule</h1>
-        <p class="tagline">Join our instructors in real time. Live classes are interactive, energizing, and deeply connecting.</p>
+        <div class="today-label">Today's Classes</div>
+        <h2 class="today-heading" id="today-heading">Loading…</h2>
+        <div class="today-cards" id="today-cards"></div>
       </div>
-    </section>
+    </div>
 
-    <!-- SCHEDULE CONTROLS -->
-    <div class="schedule-header-bar" aria-label="Schedule navigation controls">
+    <!-- WEEKLY CALENDAR -->
+    <div class="calendar-section">
       <div class="container">
-        <div class="schedule-header-inner">
-          <div class="week-nav">
-            <button class="week-nav-btn" id="week-prev" aria-label="Previous week">‹</button>
-            <span class="week-label" id="week-label">Loading...</span>
-            <button class="week-nav-btn" id="week-next" aria-label="Next week">›</button>
-          </div>
-
-          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-            <!-- Legend -->
-            <div style="display:flex;align-items:center;gap:12px;font-size:0.8rem;">
-              <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:var(--deep-teal);display:inline-block;"></span> Upcoming</span>
-              <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:var(--warm-orange);display:inline-block;"></span> Live Now</span>
-            </div>
-
-            <label for="timezone-select" style="font-size:0.88rem;font-weight:600;color:var(--dark-charcoal);">Timezone:</label>
-            <select class="timezone-select" id="timezone-select" aria-label="Select timezone">
-              <option value="ET">Eastern (ET)</option>
-              <option value="CT">Central (CT)</option>
-              <option value="MT">Mountain (MT)</option>
-              <option value="PT" selected>Pacific (PT)</option>
-              <option value="GMT">London (GMT)</option>
-              <option value="CET">Central Europe (CET)</option>
-              <option value="IST">India (IST)</option>
-              <option value="AEST">Sydney (AEST)</option>
-            </select>
+        <div class="calendar-header">
+          <div class="calendar-title">Upcoming Schedule</div>
+          <div class="cal-nav">
+            <button class="cal-nav-btn" id="cal-prev">‹</button>
+            <div class="cal-week-label" id="cal-week-label"></div>
+            <button class="cal-nav-btn" id="cal-next">›</button>
           </div>
         </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <p style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-muted);">
+          All times shown in your local timezone. Classes are also recorded and available on-demand within 2 hours.
+        </p>
       </div>
     </div>
-
-    <!-- SCHEDULE TABLE -->
-    <div class="container">
-      <div class="schedule-table-wrap">
-        <table class="schedule-table" role="grid" aria-label="Weekly live class schedule">
-          <thead>
-            <tr>
-              <th scope="col">Time</th>
-              <th scope="col">Mon</th>
-              <th scope="col">Tue</th>
-              <th scope="col">Wed</th>
-              <th scope="col">Thu</th>
-              <th scope="col">Fri</th>
-              <th scope="col">Sat</th>
-              <th scope="col">Sun</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            <!-- 6:00 AM -->
-            <tr>
-              <td class="time-col">6:00 AM</td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Morning Vinyasa</div>
-                  <div class="schedule-slot-instructor">Sara Chen</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">45 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Sunrise Flow</div>
-                  <div class="schedule-slot-instructor">Sara Chen</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">30 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Morning Vinyasa</div>
-                  <div class="schedule-slot-instructor">Sara Chen</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">45 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <!-- 7:30 AM -->
-            <tr>
-              <td class="time-col">7:30 AM</td>
-              <td></td>
-              <td>
-                <div class="schedule-slot live">
-                  <div class="schedule-slot-name">● Breathwork Reset</div>
-                  <div class="schedule-slot-instructor">Priya Kapoor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-primary" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;background:var(--warm-orange);">Live Now</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Breathwork Reset</div>
-                  <div class="schedule-slot-instructor">Priya Kapoor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Breathwork Reset</div>
-                  <div class="schedule-slot-instructor">Priya Kapoor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-            </tr>
-
-            <!-- 9:00 AM -->
-            <tr>
-              <td class="time-col">9:00 AM</td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Yin Yoga Deep Hold</div>
-                  <div class="schedule-slot-instructor">James Okafor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">75 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Loving-Kindness Med.</div>
-                  <div class="schedule-slot-instructor">Priya Kapoor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">30 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Yin Yoga Deep Hold</div>
-                  <div class="schedule-slot-instructor">James Okafor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">75 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Weekend Warrior Flow</div>
-                  <div class="schedule-slot-instructor">Lena Novak</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">60 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Sunday Restore</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">60 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-            <!-- 12:00 PM -->
-            <tr>
-              <td class="time-col">12:00 PM</td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Midday Reset</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Midday Reset</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Midday Reset</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Midday Reset</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Midday Reset</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">20 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <!-- 5:30 PM -->
-            <tr>
-              <td class="time-col">5:30 PM</td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Somatic Release</div>
-                  <div class="schedule-slot-instructor">Marcus Rivera</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">60 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Somatic Release</div>
-                  <div class="schedule-slot-instructor">Marcus Rivera</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">60 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Power Vinyasa</div>
-                  <div class="schedule-slot-instructor">Lena Novak</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">60 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td></td>
-            </tr>
-
-            <!-- 7:30 PM -->
-            <tr>
-              <td class="time-col">7:30 PM</td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Evening Wind Down</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">45 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Evening Wind Down</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">45 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Yoga Nidra</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">40 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Evening Wind Down</div>
-                  <div class="schedule-slot-instructor">Elena Vasquez</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">45 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Deep Sleep Prep</div>
-                  <div class="schedule-slot-instructor">Priya Kapoor</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">30 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-              <td></td>
-              <td>
-                <div class="schedule-slot">
-                  <div class="schedule-slot-name">Sunday Closing Circle</div>
-                  <div class="schedule-slot-instructor">Marcus Rivera</div>
-                  <div class="schedule-slot-meta">
-                    <span class="schedule-slot-duration">50 min</span>
-                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
-                  </div>
-                </div>
-              </td>
-            </tr>
-
-          </tbody>
-        </table>
-      </div>
-
-      <!-- Note -->
-      <div style="text-align:center;padding:24px 0;color:var(--text-muted);font-size:0.88rem;">
-        <p>All times shown in your selected timezone. Live classes are also recorded and available on-demand within 2 hours.</p>
-        <p style="margin-top:8px;">Can't find the class you're looking for? <a href="contact.html" style="color:var(--deep-teal);font-weight:700;">Request a new time slot →</a></p>
-      </div>
-    </div>
-
-    <!-- CTA -->
-    <section class="cta-banner" style="margin-top:40px;">
-      <div class="container">
-        <h2>Never Miss a Live Class</h2>
-        <p>Subscribe to our schedule updates and get reminders 15 minutes before every class you're registered for.</p>
-        <form class="newsletter-form" aria-label="Schedule notifications signup" style="max-width:400px;">
-          <input type="email" placeholder="Your email address" required />
-          <button type="submit">Subscribe</button>
-        </form>
-      </div>
-    </section>
 
   </main>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal" id="modal">
+      <div id="modal-content"></div>
+    </div>
+  </div>
 
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-brand"><div class="footer-logo">
-            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
-          </div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
+        <div class="footer-brand"><div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
         <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
-        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="schedule.html">Schedule</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
         <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
@@ -437,5 +276,206 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-client.js"></script>
   <script src="main.js"></script>
+  <script>
+  // ── CLASS DATA (0=Sun, 1=Mon, ... 6=Sat) ─────────────────────
+  const CLASSES = [
+    { id:1,  day:1, time:'6:00 AM',  name:'Morning Vinyasa',      instructor:'Sara Chen',      duration:'45 min', color:'teal' },
+    { id:2,  day:3, time:'6:00 AM',  name:'Sunrise Flow',         instructor:'Sara Chen',      duration:'30 min', color:'teal' },
+    { id:3,  day:5, time:'6:00 AM',  name:'Morning Vinyasa',      instructor:'Sara Chen',      duration:'45 min', color:'teal' },
+    { id:4,  day:2, time:'7:30 AM',  name:'Breathwork Reset',     instructor:'Priya Kapoor',   duration:'20 min', color:'orange' },
+    { id:5,  day:4, time:'7:30 AM',  name:'Breathwork Reset',     instructor:'Priya Kapoor',   duration:'20 min', color:'orange' },
+    { id:6,  day:5, time:'7:30 AM',  name:'Breathwork Reset',     instructor:'Priya Kapoor',   duration:'20 min', color:'orange' },
+    { id:7,  day:1, time:'9:00 AM',  name:'Yin Yoga Deep Hold',   instructor:'James Okafor',   duration:'75 min', color:'teal' },
+    { id:8,  day:3, time:'9:00 AM',  name:'Loving-Kindness Med.', instructor:'Priya Kapoor',   duration:'30 min', color:'orange' },
+    { id:9,  day:4, time:'9:00 AM',  name:'Yin Yoga Deep Hold',   instructor:'James Okafor',   duration:'75 min', color:'teal' },
+    { id:10, day:6, time:'9:00 AM',  name:'Weekend Warrior Flow', instructor:'Lena Novak',     duration:'60 min', color:'teal' },
+    { id:11, day:0, time:'9:00 AM',  name:'Sunday Restore',       instructor:'Elena Vasquez',  duration:'60 min', color:'orange' },
+    { id:12, day:1, time:'12:00 PM', name:'Midday Reset',         instructor:'Elena Vasquez',  duration:'20 min', color:'teal' },
+    { id:13, day:2, time:'12:00 PM', name:'Midday Reset',         instructor:'Elena Vasquez',  duration:'20 min', color:'teal' },
+    { id:14, day:3, time:'12:00 PM', name:'Midday Reset',         instructor:'Elena Vasquez',  duration:'20 min', color:'teal' },
+    { id:15, day:4, time:'12:00 PM', name:'Midday Reset',         instructor:'Elena Vasquez',  duration:'20 min', color:'teal' },
+    { id:16, day:5, time:'12:00 PM', name:'Midday Reset',         instructor:'Elena Vasquez',  duration:'20 min', color:'teal' },
+    { id:17, day:1, time:'5:30 PM',  name:'Somatic Release',      instructor:'Marcus Rivera',  duration:'60 min', color:'orange' },
+    { id:18, day:3, time:'5:30 PM',  name:'Somatic Release',      instructor:'Marcus Rivera',  duration:'60 min', color:'orange' },
+    { id:19, day:5, time:'5:30 PM',  name:'Power Vinyasa',        instructor:'Lena Novak',     duration:'60 min', color:'teal' },
+    { id:20, day:1, time:'7:30 PM',  name:'Evening Wind Down',    instructor:'Elena Vasquez',  duration:'45 min', color:'teal' },
+    { id:21, day:2, time:'7:30 PM',  name:'Evening Wind Down',    instructor:'Elena Vasquez',  duration:'45 min', color:'teal' },
+    { id:22, day:3, time:'7:30 PM',  name:'Yoga Nidra',           instructor:'Elena Vasquez',  duration:'40 min', color:'orange' },
+    { id:23, day:4, time:'7:30 PM',  name:'Evening Wind Down',    instructor:'Elena Vasquez',  duration:'45 min', color:'teal' },
+    { id:24, day:5, time:'7:30 PM',  name:'Deep Sleep Prep',      instructor:'Priya Kapoor',   duration:'30 min', color:'orange' },
+    { id:25, day:0, time:'7:30 PM',  name:'Sunday Closing Circle',instructor:'Marcus Rivera',  duration:'50 min', color:'orange' },
+  ];
+
+  const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const MONTHS    = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+  const booked = new Set(); // track booked class IDs in session
+  let weekOffset = 0;
+
+  // ── Helpers ───────────────────────────────────────────────────
+  function getMonday(offset = 0) {
+    const now = new Date();
+    const day = now.getDay();
+    const monday = new Date(now);
+    monday.setDate(now.getDate() - (day === 0 ? 6 : day - 1) + offset * 7);
+    monday.setHours(0,0,0,0);
+    return monday;
+  }
+
+  function isLiveNow(cls) {
+    const now = new Date();
+    if (now.getDay() !== cls.day) return false;
+    const [time, ampm] = cls.time.split(' ');
+    let [h, m] = time.split(':').map(Number);
+    if (ampm === 'PM' && h !== 12) h += 12;
+    if (ampm === 'AM' && h === 12) h = 0;
+    const start = new Date(); start.setHours(h, m, 0, 0);
+    const end   = new Date(start.getTime() + 60 * 60 * 1000);
+    return now >= start && now < end;
+  }
+
+  function openModal(cls, dateStr) {
+    const live = isLiveNow(cls);
+    const isBooked = booked.has(cls.id);
+    document.getElementById('modal-content').innerHTML = `
+      <div class="modal-tag">${live ? '🔴 Live Now' : '📅 Book Class'}</div>
+      <div class="modal-title">${cls.name}</div>
+      <div class="modal-meta">with ${cls.instructor}</div>
+      <div class="modal-details">
+        <div class="modal-detail-row"><span class="modal-detail-label">Date</span><span class="modal-detail-val">${dateStr}</span></div>
+        <div class="modal-detail-row"><span class="modal-detail-label">Time</span><span class="modal-detail-val">${cls.time}</span></div>
+        <div class="modal-detail-row"><span class="modal-detail-label">Duration</span><span class="modal-detail-val">${cls.duration}</span></div>
+        <div class="modal-detail-row"><span class="modal-detail-label">Instructor</span><span class="modal-detail-val">${cls.instructor}</span></div>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-modal-book" id="modal-book-btn">${isBooked ? '✓ Already Booked' : live ? 'Join Now' : 'Book Class'}</button>
+        <button class="btn-modal-cancel" id="modal-close-btn">Close</button>
+      </div>
+    `;
+    document.getElementById('modal-overlay').classList.add('open');
+
+    document.getElementById('modal-close-btn').onclick = closeModal;
+    document.getElementById('modal-book-btn').onclick = () => confirmBooking(cls);
+    if (isBooked) document.getElementById('modal-book-btn').disabled = true;
+  }
+
+  function confirmBooking(cls) {
+    booked.add(cls.id);
+    document.getElementById('modal-content').innerHTML = `
+      <div class="modal-success">
+        <div class="modal-success-icon">✅</div>
+        <div class="modal-success-msg">${cls.name} is booked!</div>
+        <div class="modal-success-sub">You'll receive a reminder 15 minutes before class.<br>Check your portal for all bookings.</div>
+      </div>
+      <div class="modal-actions" style="margin-top:24px;">
+        <button class="btn-modal-book" onclick="closeModal()">Done</button>
+        <a href="portal.html" class="btn-modal-cancel" style="text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;">My Portal</a>
+      </div>
+    `;
+    renderToday();
+    renderCalendar();
+  }
+
+  function closeModal() {
+    document.getElementById('modal-overlay').classList.remove('open');
+  }
+  document.getElementById('modal-overlay').addEventListener('click', e => {
+    if (e.target === document.getElementById('modal-overlay')) closeModal();
+  });
+
+  // ── Today's classes ───────────────────────────────────────────
+  function renderToday() {
+    const now = new Date();
+    const todayDay = now.getDay();
+    const todayClasses = CLASSES.filter(c => c.day === todayDay);
+    const heading = document.getElementById('today-heading');
+    const container = document.getElementById('today-cards');
+    const dateStr = `${DAY_NAMES[todayDay]}, ${MONTHS[now.getMonth()]} ${now.getDate()}`;
+
+    heading.textContent = dateStr;
+
+    if (!todayClasses.length) {
+      container.innerHTML = `<div class="no-classes-today">No classes scheduled today — check the calendar below for upcoming sessions.</div>`;
+      return;
+    }
+
+    container.innerHTML = todayClasses.map(cls => {
+      const live    = isLiveNow(cls);
+      const isBooked = booked.has(cls.id);
+      return `
+        <div class="today-card ${live ? 'live' : ''}" onclick='openModal(${JSON.stringify(cls)}, "${dateStr}")'>
+          ${live ? '<div class="live-badge"><span class="live-dot"></span> Live Now</div>' : ''}
+          <div class="today-card-time">${cls.time}</div>
+          <div class="today-card-name">${cls.name}</div>
+          <div class="today-card-instructor">with ${cls.instructor}</div>
+          <div class="today-card-footer">
+            <span class="today-card-duration">${cls.duration}</span>
+            <button class="btn-book ${isBooked ? 'booked' : live ? 'live-join' : ''}" onclick="event.stopPropagation();openModal(${JSON.stringify(cls)}, '${dateStr}')">
+              ${isBooked ? '✓ Booked' : live ? 'Join Now' : 'Book'}
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // ── Weekly calendar ───────────────────────────────────────────
+  function renderCalendar() {
+    const monday   = getMonday(weekOffset);
+    const sunday   = new Date(monday); sunday.setDate(monday.getDate() + 6);
+    const todayNum = new Date().setHours(0,0,0,0);
+
+    // Week label
+    const fmt = d => `${MONTHS[d.getMonth()].slice(0,3)} ${d.getDate()}`;
+    document.getElementById('cal-week-label').textContent = `${fmt(monday)} – ${fmt(sunday)}`;
+
+    const grid = document.getElementById('cal-grid');
+    grid.innerHTML = '';
+
+    for (let i = 0; i < 7; i++) {
+      const date    = new Date(monday); date.setDate(monday.getDate() + i);
+      const dayIdx  = date.getDay();
+      const isToday = date.setHours(0,0,0,0) === todayNum;
+      const isPast  = date < todayNum;
+      const dateStr = `${DAY_NAMES[dayIdx]}, ${MONTHS[new Date(date).getMonth()]} ${new Date(date).getDate()}`;
+      date.setHours(0,0,0,0);
+
+      const dayClasses = CLASSES.filter(c => c.day === dayIdx);
+
+      const col = document.createElement('div');
+      col.className = `cal-day${isToday ? ' today' : ''}`;
+      col.innerHTML = `
+        <div class="cal-day-header">
+          <span class="cal-day-name">${DAY_SHORT[dayIdx]}</span>
+          <span class="cal-day-num">${new Date(date).getDate()}</span>
+        </div>
+        <div class="cal-day-classes">
+          ${dayClasses.length
+            ? dayClasses.map(cls => {
+                const isBooked = booked.has(cls.id);
+                return `
+                  <div class="cal-class-pill ${cls.color === 'orange' ? 'orange' : ''}" onclick='openModal(${JSON.stringify(cls)}, "${dateStr}")' style="${isPast ? 'opacity:0.45;' : ''}">
+                    <div class="cal-class-pill-time">${cls.time}${isBooked ? ' ✓' : ''}</div>
+                    <div class="cal-class-pill-name">${cls.name}</div>
+                  </div>
+                `;
+              }).join('')
+            : '<div class="cal-empty">Rest day</div>'
+          }
+        </div>
+      `;
+      grid.appendChild(col);
+    }
+  }
+
+  // ── Nav buttons ───────────────────────────────────────────────
+  document.getElementById('cal-prev').addEventListener('click', () => { weekOffset--; renderCalendar(); });
+  document.getElementById('cal-next').addEventListener('click', () => { weekOffset++; renderCalendar(); });
+
+  // ── Init ──────────────────────────────────────────────────────
+  renderToday();
+  renderCalendar();
+  </script>
 </body>
 </html>
