@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Classes — Ripples of Healing</title>
+  <meta name="description" content="Browse our full library of yoga, healing movement, meditation, and breathwork classes." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="classes.html" class="active">Classes &amp; Book</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
+        <button class="nav-hamburger" aria-label="Open menu">
+          <span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+    <!-- PAGE HERO -->
+    <section class="page-hero" aria-label="Classes page hero" style="background-image:url('images/classes/classes-hero.png')">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Classes</span></div>
+        <h1>Our Classes</h1>
+        <p class="tagline">Browse our full library or book a live stream session — every class meets you exactly where you are.</p>
+      </div>
+    </section>
+
+    <!-- Main Tab Bar -->
+    <div style="background:var(--white);border-bottom:2px solid var(--border-light);position:sticky;top:var(--nav-height);z-index:91;box-shadow:var(--shadow-sm);">
+      <div class="container">
+        <div style="display:flex;gap:0;border-bottom:none;">
+          <button class="main-tab-btn active" data-tab="browse" style="padding:20px 36px;font-size:0.95rem;font-weight:700;background:none;border:none;border-bottom:3px solid var(--warm-orange);color:var(--warm-orange);cursor:pointer;transition:all 0.3s;font-family:var(--font-body);">Browse Classes</button>
+          <button class="main-tab-btn" data-tab="schedule" style="padding:20px 36px;font-size:0.95rem;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;color:var(--text-muted);cursor:pointer;transition:all 0.3s;font-family:var(--font-body);">Live Schedule &amp; Book</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Browse Classes Tab — category filters -->
+    <div id="tab-browse" class="tab-panel">
+      <div class="classes-filters" aria-label="Class category filters" style="position:sticky;top:calc(var(--nav-height) + 61px);z-index:90;background:var(--soft-grey);border-bottom:1px solid var(--border-light);padding:16px 0;box-shadow:var(--shadow-sm);">
+        <div class="container">
+          <div class="filter-tabs" role="tablist">
+            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All Classes</button>
+            <button class="filter-tab" data-filter="yoga" role="tab" aria-selected="false">Yoga</button>
+            <button class="filter-tab" data-filter="healing" role="tab" aria-selected="false">Healing Movement</button>
+            <button class="filter-tab" data-filter="meditation" role="tab" aria-selected="false">Meditation &amp; Rest</button>
+          </div>
+        </div>
+      </div>
+
+    <!-- CLASSES LAYOUT -->
+    <div class="container">
+      <div class="classes-layout">
+
+        <!-- SIDEBAR -->
+        <aside class="classes-sidebar" aria-label="Class filters">
+          <div class="sidebar-widget">
+            <h4>Day</h4>
+            <label class="sidebar-option"><input type="checkbox" /> Monday</label>
+            <label class="sidebar-option"><input type="checkbox" /> Tuesday</label>
+            <label class="sidebar-option"><input type="checkbox" /> Wednesday</label>
+            <label class="sidebar-option"><input type="checkbox" /> Thursday</label>
+            <label class="sidebar-option"><input type="checkbox" /> Friday</label>
+            <label class="sidebar-option"><input type="checkbox" /> Saturday</label>
+            <label class="sidebar-option"><input type="checkbox" /> Sunday</label>
+          </div>
+          <div class="sidebar-widget">
+            <h4>Time of Day</h4>
+            <label class="sidebar-option"><input type="checkbox" /> Early Morning (7 AM)</label>
+            <label class="sidebar-option"><input type="checkbox" /> Morning (9–10 AM)</label>
+            <label class="sidebar-option"><input type="checkbox" /> Midday (12 PM)</label>
+            <label class="sidebar-option"><input type="checkbox" /> Evening (5:30–7 PM)</label>
+          </div>
+          <div class="sidebar-widget">
+            <h4>Instructor</h4>
+            <label class="sidebar-option"><input type="checkbox" /> Anna Fernandez</label>
+            <label class="sidebar-option"><input type="checkbox" /> Amy Freeman</label>
+            <label class="sidebar-option"><input type="checkbox" /> Alisha Ayyad</label>
+            <label class="sidebar-option"><input type="checkbox" /> Brent Honnerlaw</label>
+            <label class="sidebar-option"><input type="checkbox" /> Carli Klingerman</label>
+            <label class="sidebar-option"><input type="checkbox" /> India Bee</label>
+            <label class="sidebar-option"><input type="checkbox" /> Jennifer Opaka</label>
+            <label class="sidebar-option"><input type="checkbox" /> Nam Chanterrwynn</label>
+            <label class="sidebar-option"><input type="checkbox" /> Olivia Hughes</label>
+            <label class="sidebar-option"><input type="checkbox" /> Zach Brown</label>
+          </div>
+          <div class="sidebar-widget">
+            <h4>All Times Pacific</h4>
+            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;margin:0;">All live classes stream weekly on Zoom. Join from anywhere in the world.</p>
+          </div>
+        </aside>
+
+        <!-- CLASS GRID -->
+        <section aria-label="Class listings">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+            <p style="color:var(--text-muted);font-size:0.9rem;"><strong style="color:var(--dark-charcoal);">21 live classes</strong> weekly — all times Pacific</p>
+            <span style="display:inline-flex;align-items:center;gap:6px;background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:var(--radius-full);padding:5px 14px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;animation:pulse 1.5s ease-in-out infinite;"></span>
+              Live on Zoom
+            </span>
+          </div>
+
+          <div class="classes-grid" id="classes-grid">
+
+            <!-- Yoga Mythology Flow -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=300&fit=crop&q=80&auto=format" alt="Yoga Mythology Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Mon 9:00 AM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Brent Honnerlaw</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Yoga Mythology Flow</h3>
+                <p>Storytelling woven into a dynamic all-levels Vinyasa — dive into Yoga Philosophy and embody the ancient teachings as you flow.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Full Body Stretch -->
+            <article class="card class-card-item" data-category="healing">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=300&fit=crop&q=80&auto=format" alt="Full Body Stretch" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Mon &amp; Fri 12 PM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Anna Fernandez</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Full Body Stretch</h3>
+                <p>A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Hatha Flow -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="images/classes/hatha-flow.jpg" alt="Hatha Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Mon 5:30 PM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Amy Freeman</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Hatha Flow</h3>
+                <p>Grounded yet uplifting — mindful, slow postures and steady breath help you develop alignment, awareness, and inner calm.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Gentle Flow -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="images/classes/gentle-flow.webp" alt="Gentle Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue, Thu &amp; Fri</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Olivia Hughes · India Bee · Zach Brown</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Gentle Flow</h3>
+                <p>Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">Beginner Friendly</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- OM Mat Pilates -->
+            <article class="card class-card-item" data-category="healing">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=300&fit=crop&q=80&auto=format" alt="OM Mat Pilates" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue &amp; Thu 12 PM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Jennifer Opaka</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>OM Mat Pilates</h3>
+                <p>Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Vinyasa -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=600&h=300&fit=crop&q=80&auto=format" alt="Vinyasa" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue, Thu &amp; Sat</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Brent Honnerlaw · Zach Brown · Amy Freeman</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Vinyasa</h3>
+                <p>A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-intermediate">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Restorative & Meditation (Nidra) -->
+            <article class="card class-card-item" data-category="meditation">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&h=300&fit=crop&q=80&auto=format" alt="Restorative &amp; Meditation" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue &amp; Thu 7 PM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">India Bee</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Restorative &amp; Meditation (Nidra)</h3>
+                <p>A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Slow Flow -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="images/classes/slow-flow.jpeg" alt="Slow Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed 7:00 AM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Zach Brown</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Slow Flow</h3>
+                <p>Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm to start your day with presence.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Power Vinyasa -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&h=300&fit=crop&q=80&auto=format" alt="Power Vinyasa" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed 9:00 AM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Zach Brown</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Power Vinyasa</h3>
+                <p>An empowering, dynamic flow designed to build strength, stamina, and focus. Expect heat, challenge, and the satisfaction of moving beyond your limits with intention.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-intermediate">Intermediate</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Gentle Deep Stretch -->
+            <article class="card class-card-item" data-category="healing">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="images/classes/gentle-deep-stretch.webp" alt="Gentle Deep Stretch" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed &amp; Sat 9–12</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Amy Freeman · Anna Fernandez</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Gentle Deep Stretch: Happy Hips, Back &amp; Shoulders</h3>
+                <p>Focused attention on the body's most tension-prone areas. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Slow & Strong Mobility Flow -->
+            <article class="card class-card-item" data-category="healing">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="images/classes/strong-mobility-flow.jpg" alt="Slow &amp; Strong Mobility Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed 5:30 PM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Nam Chanterrwynn</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Slow &amp; Strong Mobility Flow</h3>
+                <p>A fusion of strength and mobility that awakens your body, opens your joints, and builds core stability. Leave strong, fluid, and fully energized.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-intermediate">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Chakra Vinyasa -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?w=600&h=300&fit=crop&q=80&auto=format" alt="Chakra Vinyasa" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Fri 9:00 AM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Amy Freeman</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Chakra Vinyasa</h3>
+                <p>Journey through the body's energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Yin -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="images/classes/yin.webp" alt="Yin" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Fri 5:30 PM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Alisha Ayyad</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Yin</h3>
+                <p>A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Serenity Roll & Release -->
+            <article class="card class-card-item" data-category="healing">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&h=300&fit=crop&q=80&auto=format" alt="Serenity Roll &amp; Release" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Sun 9:00 AM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Jennifer Opaka</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Serenity Roll &amp; Release</h3>
+                <p>Guided self-massage with fascia release balls to relieve tightness, reduce stress, and enhance natural mobility. Opaka Method Ball Kit or rolled towel as alternative.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-beginner">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+            <!-- Detox Flow -->
+            <article class="card class-card-item" data-category="yoga">
+              <div style="position:relative;overflow:hidden;height:200px;">
+                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=300&fit=crop&q=80&auto=format" alt="Detox Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
+                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
+                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
+                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Sun 10:30 AM</span>
+              </div>
+              <div class="card-body">
+                <div class="class-card-meta">
+                  <span class="instructor">Carli Klingerman</span>
+                  <span class="class-card-duration">⏱ 60 min</span>
+                </div>
+                <h3>Detox Flow</h3>
+                <p>A purifying, faster-paced sequence of twists, breathwork, and energizing postures. Stimulates circulation, supports digestion, and leaves you feeling light and revitalized.</p>
+                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+                  <span class="badge badge-intermediate">All Levels</span>
+                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
+                </div>
+              </div>
+            </article>
+
+          </div><!-- end classes-grid -->
+        </section>
+
+      </div><!-- end classes-layout -->
+    </div>
+
+    <!-- WEEKLY SCHEDULE AT A GLANCE -->
+<section style="background:var(--soft-grey);padding:64px 0;margin-top:48px;">
+  <div class="container">
+    <div class="section-header fade-in" style="margin-bottom:36px;">
+      <span class="section-label">All Times Pacific</span>
+      <h2>Weekly Schedule at a Glance</h2>
+      <p>21 live classes every week — join from anywhere on Zoom</p>
+    </div>
+    <div style="overflow-x:auto;border-radius:var(--radius-lg);box-shadow:var(--shadow-md);">
+      <table style="width:100%;border-collapse:collapse;background:white;font-size:0.88rem;">
+        <thead>
+          <tr style="background:linear-gradient(135deg,var(--deep-teal),#1a5060);color:white;">
+            <th style="padding:16px 18px;text-align:left;font-weight:700;">Time</th>
+            <th style="padding:16px 12px;text-align:center;">Monday</th>
+            <th style="padding:16px 12px;text-align:center;">Tuesday</th>
+            <th style="padding:16px 12px;text-align:center;">Wednesday</th>
+            <th style="padding:16px 12px;text-align:center;">Thursday</th>
+            <th style="padding:16px 12px;text-align:center;">Friday</th>
+            <th style="padding:16px 12px;text-align:center;">Saturday</th>
+            <th style="padding:16px 12px;text-align:center;">Sunday</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border-light);">
+            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">7:00 AM</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Slow Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border-light);background:#FAFCFD;">
+            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">9:00 AM</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Yoga Mythology Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Brent Honnerlaw</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Olivia Hughes</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Power Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">India Bee</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Chakra Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#FFF4EE;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Deep Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Anna Fernandez</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Serenity Roll &amp; Release</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Jennifer Opaka</span></div></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border-light);">
+            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">10:30 AM</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Detox Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Carli Klingerman</span></div></td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border-light);background:#FAFCFD;">
+            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">12:00 PM</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Full Body Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Anna Fernandez</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#F4EEFF;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">OM Mat Pilates</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Jennifer Opaka</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Deep Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#F4EEFF;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">OM Mat Pilates</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Jennifer Opaka</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Full Body Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Anna Fernandez</span></div></td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border-light);">
+            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">5:30 PM</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Hatha Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Brent Honnerlaw</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Slow &amp; Strong Mobility</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Nam Chanterrwynn</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Yin</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Alisha Ayyad</span></div></td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+          </tr>
+          <tr>
+            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">7:00 PM</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#1C3C6E;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;color:white;">Restorative &amp; Nidra</strong><br><span style="color:rgba(255,255,255,0.7);font-size:0.75rem;">India Bee</span></div></td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;"><div style="background:#1C3C6E;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;color:white;">Restorative &amp; Meditation</strong><br><span style="color:rgba(255,255,255,0.7);font-size:0.75rem;">India Bee</span></div></td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+            <td style="padding:14px 12px;text-align:center;">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="text-align:center;margin-top:16px;color:var(--text-muted);font-size:0.83rem;">All classes run live on Zoom weekly · Meeting ID: 724 254 2678 · Passcode: JXKB7R</p>
+  </div>
+</section>
+
+    <!-- CTA -->
+    <section class="cta-banner section-sm" style="margin-top:64px;">
+      <div class="container">
+        <h2>See the Full Weekly Schedule</h2>
+        <p>All 21 classes run live on Zoom every week. Check the live schedule to book your spot.</p>
+        <button onclick="document.querySelector('[data-tab=schedule]').click()" class="btn btn-primary btn-lg" style="margin-right:16px;">See Live Schedule</button>
+        <a href="contact.html" class="btn btn-outline-teal btn-lg">Contact Us</a>
+      </div>
+    </section>
+</div><!-- end tab-browse -->
+
+<!-- Live Schedule Tab Panel — Vagaro -->
+<div id="tab-schedule" class="tab-panel" style="display:none;">
+
+  <!-- Schedule header bar -->
+  <div style="background:var(--white);border-bottom:1px solid var(--border-light);padding:18px 0;box-shadow:var(--shadow-sm);">
+    <div class="container">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="display:inline-flex;align-items:center;gap:6px;background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:var(--radius-full);padding:5px 14px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;">
+            <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;animation:pulse 1.5s ease-in-out infinite;"></span>
+            LIVE BOOKING OPEN
+          </span>
+          <span style="color:var(--text-muted);font-size:0.85rem;">Select a class below to reserve your spot</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.8rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--deep-teal);display:inline-block;"></span>Upcoming</span>
+          <span style="display:flex;align-items:center;gap:5px;font-size:0.8rem;color:var(--text-muted);"><span style="width:10px;height:10px;border-radius:2px;background:var(--warm-orange);display:inline-block;"></span>Live Now</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Vagaro widget wrapper -->
+  <div style="background:var(--soft-grey);padding:40px 0 60px;">
+    <div class="container" style="max-width:1100px;">
+
+      <!-- Section label -->
+      <div style="text-align:center;margin-bottom:32px;">
+        <span class="section-label">Real-Time Availability</span>
+        <h2 style="margin-bottom:8px;">Book a Live Class</h2>
+        <p style="color:var(--text-muted);max-width:520px;margin:0 auto;">Choose your class, pick a time that works, and you're in. All sessions are live with your instructor.</p>
+      </div>
+
+      <!-- Vagaro embed card -->
+      <div style="background:var(--white);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);overflow:hidden;border:1px solid var(--border-light);">
+
+        <!-- Card top bar -->
+        <div style="background:linear-gradient(135deg,var(--deep-teal),#1a5060);padding:20px 28px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <img src="logo.svg" alt="Ripples of Healing" style="height:38px;width:auto;" />
+            <div>
+              <div style="color:white;font-weight:700;font-size:1rem;line-height:1.2;">Live Schedule</div>
+              <div style="color:rgba(255,255,255,0.7);font-size:0.78rem;">Book your spot — real-time availability</div>
+            </div>
+          </div>
+          <span style="background:rgba(255,255,255,0.15);color:white;border-radius:var(--radius-full);padding:5px 14px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;">Powered by Vagaro</span>
+        </div>
+
+        <!-- Vagaro widget -->
+        <div style="padding:8px 0 0;">
+          <div id='frameTitle' class='embedded-widget-title' style='font-size: 23px; color: #333;font-family:Arial, Helvetica, sans-serif; line-height:24px; padding: 18px 10px 8px; text-align: center; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;'></div>
+          <div class="vagaro" style="width:250px; padding:0; border:0; margin:0 auto; text-align:center;"><style>.vagaro a {font-size:14px; color:#AAA; text-decoration:none;}</style><a href="https://www.vagaro.com/pro/">Powered by Vagaro</a>&nbsp;<a href="https://www.vagaro.com/pro/salon-software">Salon Software</a>,&nbsp;<a href="https://www.vagaro.com/pro/spa-software">Spa Software</a>&nbsp;&amp;&nbsp;<a href="https://www.vagaro.com/pro/fitness-software">Fitness Software</a><script type="text/javascript" src="https://www.vagaro.com//resources/WidgetEmbeddedLoader/OZqqCp4qEJ8cT3qmV35y6JuPlXiz3avV34mC2PeFJ4mC30m9cyUeJUtjP0dDxkJEvwRapWUgZawifCs7fYJEPwMc9CxkPwOc9cQ6nW?v=y6z3fzbiMqajW5zsSYb2W1zt2jpMMyfM1aqRPfama1s4#"></script></div>
+        </div>
+
+      </div><!-- end card -->
+
+      <!-- Footer note -->
+      <p style="text-align:center;margin-top:20px;color:var(--text-muted);font-size:0.83rem;">
+        Can't find a time that works? <a href="contact.html" style="color:var(--warm-orange);font-weight:600;text-decoration:none;">Contact us</a> to request a private session.
+      </p>
+
+    </div>
+  </div>
+</div>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
+          </div>
+          <p class="footer-tagline">Real. Guided. Transformative.</p>
+          <div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div>
+        </div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Meditation</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Newsletter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    /* Lazy load fade-in */
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+      if (img.complete) { img.classList.add('loaded'); }
+      else { img.addEventListener('load', function() { img.classList.add('loaded'); }); }
+    });
+  </script>
+  <script>
+  // Category filter tabs
+  document.querySelectorAll('.filter-tab').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-tab').forEach(function(b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      this.classList.add('active');
+      this.setAttribute('aria-selected', 'true');
+      var filter = this.getAttribute('data-filter');
+      document.querySelectorAll('.class-card-item').forEach(function(card) {
+        card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
+      });
+    });
+  });
+
+  // Main tab switching
+  document.querySelectorAll('.main-tab-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.main-tab-btn').forEach(function(b) {
+        b.style.borderBottomColor = 'transparent';
+        b.style.color = 'var(--text-muted)';
+        b.classList.remove('active');
+      });
+      this.style.borderBottomColor = 'var(--warm-orange)';
+      this.style.color = 'var(--warm-orange)';
+      this.classList.add('active');
+      var tab = this.getAttribute('data-tab');
+      document.getElementById('tab-browse').style.display = tab === 'browse' ? '' : 'none';
+      document.getElementById('tab-schedule').style.display = tab === 'schedule' ? '' : 'none';
+    });
+  });
+  </script>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Start Free Trial — Ripples of Healing</title>
+  <meta name="description" content="Create your Ripples of Healing account and start your 7-day free trial today." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      background: linear-gradient(135deg, #f0f8f8 0%, #fdf6f2 100%);
+      padding: 100px 20px 60px;
+    }
+    .auth-card {
+      background: var(--white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: 52px 48px;
+      width: 100%;
+      max-width: 500px;
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 32px;
+      text-decoration: none;
+    }
+    .auth-logo-text {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--dark-charcoal);
+    }
+    .auth-heading {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--dark-charcoal);
+      text-align: center;
+      margin-bottom: 8px;
+    }
+    .auth-subheading {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 10px;
+    }
+    .auth-subheading a { color: var(--warm-orange); font-weight: 600; text-decoration: none; }
+    .auth-subheading a:hover { text-decoration: underline; }
+    .trial-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      color: #15803d;
+      border-radius: var(--radius-full);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      margin: 0 auto 28px;
+      width: fit-content;
+      letter-spacing: 0.02em;
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 24px 0;
+      color: var(--text-muted);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+    }
+    .btn-social {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 13px 20px;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      color: var(--dark-charcoal);
+      font-size: 0.93rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-decoration: none;
+      margin-bottom: 12px;
+    }
+    .btn-social:hover { border-color: var(--deep-teal); background: #f8fefe; }
+    .btn-social svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .plan-picker {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .plan-option {
+      border: 2px solid var(--border-light);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      cursor: pointer;
+      transition: all var(--transition);
+      position: relative;
+    }
+    .plan-option:hover { border-color: var(--deep-teal); }
+    .plan-option.selected { border-color: var(--warm-orange); background: #fff8f5; }
+    .plan-option input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
+    .plan-option-name { font-weight: 700; font-size: 0.92rem; color: var(--dark-charcoal); margin-bottom: 2px; }
+    .plan-option-price { font-size: 0.82rem; color: var(--text-muted); }
+    .plan-option.selected .plan-option-name { color: var(--warm-orange); }
+    .plan-check {
+      position: absolute;
+      top: 10px; right: 10px;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 2px solid var(--border-light);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: var(--white);
+      transition: all var(--transition);
+    }
+    .plan-option.selected .plan-check { background: var(--warm-orange); border-color: var(--warm-orange); }
+    .plan-option.selected .plan-check::after { content: '✓'; }
+    .form-label-plan {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--dark-charcoal);
+      margin-bottom: 10px;
+      letter-spacing: 0.02em;
+    }
+    .auth-submit {
+      width: 100%;
+      justify-content: center;
+      padding: 15px;
+      font-size: 1rem;
+      margin-top: 8px;
+    }
+    .auth-footer-note {
+      text-align: center;
+      margin-top: 20px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+    .auth-footer-note a { color: var(--text-muted); text-decoration: underline; }
+    .form-input.error { border-color: #EF4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
+    .field-error { font-size: 0.78rem; color: #EF4444; margin-top: 5px; display: none; }
+    .password-strength { margin-top: 8px; display: none; }
+    .strength-bar { height: 4px; border-radius: 2px; background: var(--border-light); margin-bottom: 4px; overflow: hidden; }
+    .strength-fill { height: 100%; border-radius: 2px; transition: width 0.3s, background 0.3s; width: 0%; }
+    .strength-label { font-size: 0.75rem; color: var(--text-muted); }
+    .auth-alert {
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+      display: none;
+    }
+    .auth-alert.error   { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+    .auth-alert.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+    @media (max-width: 520px) {
+      .auth-card { padding: 36px 24px; }
+      .auth-heading { font-size: 1.5rem; }
+      .plan-picker { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <div class="nav-actions">
+        <span style="color:var(--text-muted);font-size:0.9rem;">Already have an account?</span>
+        <a href="login.html" class="btn btn-outline-teal btn-sm">Log In</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="auth-page">
+    <div class="auth-card">
+
+      <a href="index.html" class="auth-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="auth-logo-img" />
+      </a>
+
+      <h1 class="auth-heading">Start your free trial</h1>
+      <p class="auth-subheading">Already have an account? <a href="login.html">Log in</a></p>
+      <div class="trial-badge">✦ 7 days free — no credit card required</div>
+
+      <button class="btn-social" type="button" id="google-btn">
+        <svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </button>
+
+      <div class="auth-divider">OR</div>
+
+      <div class="auth-alert" id="signup-alert" role="alert"></div>
+
+      <form id="signup-form" novalidate>
+
+        <div class="form-row" style="margin-bottom:22px;">
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="signup-fname">First name</label>
+            <input class="form-input" type="text" id="signup-fname" placeholder="Jane" autocomplete="given-name" required />
+            <p class="field-error" id="fname-error">Required.</p>
+          </div>
+          <div class="form-group" style="margin-bottom:0;">
+            <label class="form-label" for="signup-lname">Last name</label>
+            <input class="form-input" type="text" id="signup-lname" placeholder="Doe" autocomplete="family-name" required />
+            <p class="field-error" id="lname-error">Required.</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-email">Email address</label>
+          <input class="form-input" type="email" id="signup-email" placeholder="you@example.com" autocomplete="email" required />
+          <p class="field-error" id="email-error">Please enter a valid email address.</p>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="signup-password">Password</label>
+          <input class="form-input" type="password" id="signup-password" placeholder="At least 8 characters" autocomplete="new-password" required />
+          <p class="field-error" id="password-error">Password must be at least 8 characters.</p>
+          <div class="password-strength" id="password-strength">
+            <div class="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+            <span class="strength-label" id="strength-label"></span>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:28px;">
+          <span class="form-label-plan">Choose your plan</span>
+          <div class="plan-picker">
+            <label class="plan-option selected" id="plan-flow">
+              <input type="radio" name="plan" value="flow" checked />
+              <div class="plan-check"></div>
+              <div class="plan-option-name">Ripple Flow</div>
+              <div class="plan-option-price">$22/mo after trial</div>
+            </label>
+            <label class="plan-option" id="plan-unlimited">
+              <input type="radio" name="plan" value="unlimited" />
+              <div class="plan-check"></div>
+              <div class="plan-option-name">Ripple Unlimited</div>
+              <div class="plan-option-price">$59/mo after trial</div>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary auth-submit" id="signup-submit">Start Free Trial</button>
+      </form>
+
+      <p class="auth-footer-note">
+        By creating an account you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        You won't be charged until your 7-day trial ends.
+      </p>
+
+    </div>
+  </main>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Plan picker
+    document.querySelectorAll('.plan-option').forEach(option => {
+      option.addEventListener('click', function() {
+        document.querySelectorAll('.plan-option').forEach(o => o.classList.remove('selected'));
+        this.classList.add('selected');
+        this.querySelector('input[type="radio"]').checked = true;
+      });
+    });
+
+    // Password strength meter
+    const passInput = document.getElementById('signup-password');
+    const strengthWrap = document.getElementById('password-strength');
+    const strengthFill = document.getElementById('strength-fill');
+    const strengthLabel = document.getElementById('strength-label');
+
+    passInput.addEventListener('input', function() {
+      if (!this.value) { strengthWrap.style.display = 'none'; return; }
+      strengthWrap.style.display = 'block';
+      let score = 0;
+      if (this.value.length >= 8) score++;
+      if (this.value.length >= 12) score++;
+      if (/[A-Z]/.test(this.value)) score++;
+      if (/[0-9]/.test(this.value)) score++;
+      if (/[^A-Za-z0-9]/.test(this.value)) score++;
+      const levels = [
+        { pct:'20%', color:'#EF4444', label:'Too weak' },
+        { pct:'40%', color:'#F97316', label:'Weak' },
+        { pct:'60%', color:'#EAB308', label:'Fair' },
+        { pct:'80%', color:'#22C55E', label:'Strong' },
+        { pct:'100%',color:'#10B981', label:'Very strong' },
+      ];
+      const lv = levels[Math.min(score - 1, 4)] || levels[0];
+      strengthFill.style.width = lv.pct;
+      strengthFill.style.background = lv.color;
+      strengthLabel.textContent = lv.label;
+      strengthLabel.style.color = lv.color;
+    });
+
+    // Field validation helpers
+    function showErr(id, errId) {
+      document.getElementById(id).classList.add('error');
+      document.getElementById(errId).style.display = 'block';
+    }
+    function clearErr(id, errId) {
+      document.getElementById(id).classList.remove('error');
+      document.getElementById(errId).style.display = 'none';
+    }
+    [['signup-fname','fname-error'],['signup-lname','lname-error'],
+     ['signup-email','email-error'],['signup-password','password-error']].forEach(([iId, eId]) => {
+      document.getElementById(iId).addEventListener('input', () => clearErr(iId, eId));
+    });
+
+    function showAlert(msg, type = 'error') {
+      const box = document.getElementById('signup-alert');
+      box.textContent = msg;
+      box.className = 'auth-alert ' + type;
+      box.style.display = 'block';
+    }
+
+    // Form submit — real Supabase sign up
+    document.getElementById('signup-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      document.getElementById('signup-alert').style.display = 'none';
+
+      const fname    = document.getElementById('signup-fname').value.trim();
+      const lname    = document.getElementById('signup-lname').value.trim();
+      const email    = document.getElementById('signup-email').value.trim();
+      const password = document.getElementById('signup-password').value;
+      const plan     = document.querySelector('input[name="plan"]:checked').value;
+
+      let valid = true;
+      if (!fname) { showErr('signup-fname','fname-error'); valid = false; }
+      if (!lname) { showErr('signup-lname','lname-error'); valid = false; }
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showErr('signup-email','email-error'); valid = false; }
+      if (!password || password.length < 8) { showErr('signup-password','password-error'); valid = false; }
+      if (!valid) return;
+
+      const btn = document.getElementById('signup-submit');
+      btn.disabled = true;
+      btn.textContent = 'Creating account…';
+
+      // Create auth user + store profile data in metadata
+      const { data, error } = await sb.auth.signUp({
+        email,
+        password,
+        options: {
+          data: { first_name: fname, last_name: lname, plan }
+        }
+      });
+
+      if (error) {
+        showAlert(error.message);
+        btn.disabled = false;
+        btn.textContent = 'Start Free Trial';
+        return;
+      }
+
+      // Also write to profiles table (if it exists)
+      if (data.user) {
+        await sb.from('profiles').upsert({
+          id: data.user.id,
+          first_name: fname,
+          last_name: lname,
+          plan,
+        });
+      }
+
+      // If email confirmation is required, Supabase returns a user but no session
+      if (data.session) {
+        btn.textContent = '✓ Welcome to Ripples!';
+        btn.style.background = '#10B981';
+        setTimeout(() => { window.location.href = 'portal.html'; }, 1000);
+      } else {
+        // Email confirmation required
+        btn.textContent = '✓ Check your email!';
+        btn.style.background = '#10B981';
+        showAlert('Account created! Check your email to confirm your address, then log in.', 'success');
+      }
+    });
+
+    // Google OAuth
+    document.getElementById('google-btn').addEventListener('click', async function() {
+      this.textContent = 'Redirecting to Google…';
+      this.disabled = true;
+      const { error } = await sb.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: window.location.origin + '/portal.html' }
+      });
+      if (error) {
+        this.textContent = 'Continue with Google';
+        this.disabled = false;
+        showAlert(error.message);
+      }
+    });
+
+    // Redirect if already logged in
+    sb.auth.getSession().then(({ data: { session } }) => {
+      if (session) window.location.href = 'portal.html';
+    });
+  </script>
+</body>
+</html>

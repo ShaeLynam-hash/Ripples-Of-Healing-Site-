@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Class Schedule — Ripples of Healing</title>
+  <meta name="description" content="View the weekly live class schedule and register for upcoming sessions." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav scrolled" id="main-nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
+        <button class="nav-hamburger" aria-label="Open menu"><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+    <!-- PAGE HERO -->
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=1600&q=80&fit=crop&auto=format')">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Schedule</span></div>
+        <h1>Live Class Schedule</h1>
+        <p class="tagline">Join our instructors in real time. Live classes are interactive, energizing, and deeply connecting.</p>
+      </div>
+    </section>
+
+    <!-- SCHEDULE CONTROLS -->
+    <div class="schedule-header-bar" aria-label="Schedule navigation controls">
+      <div class="container">
+        <div class="schedule-header-inner">
+          <div class="week-nav">
+            <button class="week-nav-btn" id="week-prev" aria-label="Previous week">‹</button>
+            <span class="week-label" id="week-label">Loading...</span>
+            <button class="week-nav-btn" id="week-next" aria-label="Next week">›</button>
+          </div>
+
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
+            <!-- Legend -->
+            <div style="display:flex;align-items:center;gap:12px;font-size:0.8rem;">
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:var(--deep-teal);display:inline-block;"></span> Upcoming</span>
+              <span style="display:flex;align-items:center;gap:5px;"><span style="width:12px;height:12px;border-radius:2px;background:var(--warm-orange);display:inline-block;"></span> Live Now</span>
+            </div>
+
+            <label for="timezone-select" style="font-size:0.88rem;font-weight:600;color:var(--dark-charcoal);">Timezone:</label>
+            <select class="timezone-select" id="timezone-select" aria-label="Select timezone">
+              <option value="ET">Eastern (ET)</option>
+              <option value="CT">Central (CT)</option>
+              <option value="MT">Mountain (MT)</option>
+              <option value="PT" selected>Pacific (PT)</option>
+              <option value="GMT">London (GMT)</option>
+              <option value="CET">Central Europe (CET)</option>
+              <option value="IST">India (IST)</option>
+              <option value="AEST">Sydney (AEST)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE TABLE -->
+    <div class="container">
+      <div class="schedule-table-wrap">
+        <table class="schedule-table" role="grid" aria-label="Weekly live class schedule">
+          <thead>
+            <tr>
+              <th scope="col">Time</th>
+              <th scope="col">Mon</th>
+              <th scope="col">Tue</th>
+              <th scope="col">Wed</th>
+              <th scope="col">Thu</th>
+              <th scope="col">Fri</th>
+              <th scope="col">Sat</th>
+              <th scope="col">Sun</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <!-- 6:00 AM -->
+            <tr>
+              <td class="time-col">6:00 AM</td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Morning Vinyasa</div>
+                  <div class="schedule-slot-instructor">Sara Chen</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">45 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Sunrise Flow</div>
+                  <div class="schedule-slot-instructor">Sara Chen</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">30 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Morning Vinyasa</div>
+                  <div class="schedule-slot-instructor">Sara Chen</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">45 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <!-- 7:30 AM -->
+            <tr>
+              <td class="time-col">7:30 AM</td>
+              <td></td>
+              <td>
+                <div class="schedule-slot live">
+                  <div class="schedule-slot-name">● Breathwork Reset</div>
+                  <div class="schedule-slot-instructor">Priya Kapoor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-primary" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;background:var(--warm-orange);">Live Now</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Breathwork Reset</div>
+                  <div class="schedule-slot-instructor">Priya Kapoor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Breathwork Reset</div>
+                  <div class="schedule-slot-instructor">Priya Kapoor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+            </tr>
+
+            <!-- 9:00 AM -->
+            <tr>
+              <td class="time-col">9:00 AM</td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Yin Yoga Deep Hold</div>
+                  <div class="schedule-slot-instructor">James Okafor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">75 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Loving-Kindness Med.</div>
+                  <div class="schedule-slot-instructor">Priya Kapoor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">30 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Yin Yoga Deep Hold</div>
+                  <div class="schedule-slot-instructor">James Okafor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">75 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Weekend Warrior Flow</div>
+                  <div class="schedule-slot-instructor">Lena Novak</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">60 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Sunday Restore</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">60 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+            <!-- 12:00 PM -->
+            <tr>
+              <td class="time-col">12:00 PM</td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Midday Reset</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Midday Reset</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Midday Reset</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Midday Reset</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Midday Reset</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">20 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <!-- 5:30 PM -->
+            <tr>
+              <td class="time-col">5:30 PM</td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Somatic Release</div>
+                  <div class="schedule-slot-instructor">Marcus Rivera</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">60 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Somatic Release</div>
+                  <div class="schedule-slot-instructor">Marcus Rivera</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">60 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Power Vinyasa</div>
+                  <div class="schedule-slot-instructor">Lena Novak</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">60 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td></td>
+            </tr>
+
+            <!-- 7:30 PM -->
+            <tr>
+              <td class="time-col">7:30 PM</td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Evening Wind Down</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">45 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Evening Wind Down</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">45 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Yoga Nidra</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">40 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Evening Wind Down</div>
+                  <div class="schedule-slot-instructor">Elena Vasquez</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">45 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Deep Sleep Prep</div>
+                  <div class="schedule-slot-instructor">Priya Kapoor</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">30 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+              <td></td>
+              <td>
+                <div class="schedule-slot">
+                  <div class="schedule-slot-name">Sunday Closing Circle</div>
+                  <div class="schedule-slot-instructor">Marcus Rivera</div>
+                  <div class="schedule-slot-meta">
+                    <span class="schedule-slot-duration">50 min</span>
+                    <button class="btn btn-teal" style="padding:4px 10px;font-size:0.7rem;border-radius:6px;">Register</button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Note -->
+      <div style="text-align:center;padding:24px 0;color:var(--text-muted);font-size:0.88rem;">
+        <p>All times shown in your selected timezone. Live classes are also recorded and available on-demand within 2 hours.</p>
+        <p style="margin-top:8px;">Can't find the class you're looking for? <a href="contact.html" style="color:var(--deep-teal);font-weight:700;">Request a new time slot →</a></p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-banner" style="margin-top:40px;">
+      <div class="container">
+        <h2>Never Miss a Live Class</h2>
+        <p>Subscribe to our schedule updates and get reminders 15 minutes before every class you're registered for.</p>
+        <form class="newsletter-form" aria-label="Schedule notifications signup" style="max-width:400px;">
+          <input type="email" placeholder="Your email address" required />
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><div class="footer-logo">
+            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
+          </div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" width="260" height="260" role="img" aria-label="Ripples of Healing">
+  <title>Ripples of Healing</title>
+  <defs>
+    <!-- Sky-to-ocean gradient: warm amber → rich teal -->
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%"   stop-color="#F5A023"/>
+      <stop offset="42%"  stop-color="#E8793A"/>
+      <stop offset="100%" stop-color="#237070"/>
+    </linearGradient>
+    <!-- Sun radial glow -->
+    <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#FFD166"/>
+      <stop offset="100%" stop-color="#E05A1E"/>
+    </radialGradient>
+    <!-- Clip everything to the main circle -->
+    <clipPath id="mainClip">
+      <circle cx="130" cy="130" r="120"/>
+    </clipPath>
+  </defs>
+
+  <!-- Outer border ring -->
+  <circle cx="130" cy="130" r="126" fill="none" stroke="#1A5060" stroke-width="5"/>
+
+  <!-- Background fill -->
+  <circle cx="130" cy="130" r="120" fill="url(#bgGrad)"/>
+
+  <!-- Clipped inner art -->
+  <g clip-path="url(#mainClip)">
+
+    <!-- Wave layer 1 — lightest, topmost -->
+    <path d="M8,156 C40,141 82,160 130,148 C178,136 218,154 252,144 L252,252 L8,252 Z"
+          fill="#2A8080" opacity="0.88"/>
+    <!-- Wave layer 2 -->
+    <path d="M8,173 C46,162 88,176 130,166 C172,156 214,170 252,161 L252,252 L8,252 Z"
+          fill="#1E6868" opacity="0.92"/>
+    <!-- Wave layer 3 — darkest, bottom fill -->
+    <path d="M8,190 C48,182 90,192 130,184 C170,176 212,186 252,178 L252,252 L8,252 Z"
+          fill="#165555"/>
+
+    <!-- Concentric ripple rings centred on sun -->
+    <circle cx="130" cy="104" r="22" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2.2"/>
+    <circle cx="130" cy="104" r="45" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.8"/>
+    <circle cx="130" cy="104" r="70" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.4"/>
+
+    <!-- Sun: outer glow halo -->
+    <circle cx="130" cy="104" r="16" fill="url(#sunGrad)" opacity="0.9"/>
+    <!-- Sun: bright centre -->
+    <circle cx="130" cy="104" r="8"  fill="#FFD580"/>
+
+  </g>
+
+  <!-- RIPPLES — main wordmark inside the wave zone -->
+  <text x="130" y="196"
+        font-family="Georgia, 'Palatino Linotype', 'Book Antiqua', serif"
+        font-size="30"
+        font-weight="700"
+        fill="#FFFFFF"
+        text-anchor="middle"
+        letter-spacing="6">RIPPLES</text>
+
+  <!-- of healing — subtitle -->
+  <text x="130" y="218"
+        font-family="Georgia, 'Palatino Linotype', 'Book Antiqua', serif"
+        font-size="11"
+        fill="rgba(255,255,255,0.80)"
+        text-anchor="middle"
+        letter-spacing="5">OF  HEALING</text>
+</svg>

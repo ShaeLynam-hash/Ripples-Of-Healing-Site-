@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ripples of Healing — Live Stream Yoga & Healing Movement</title>
+  <meta name="description" content="Real. Guided. Transformative. Premium live stream yoga and somatic healing with live and on-demand classes from world-class instructors." />
+  <meta property="og:title" content="Ripples of Healing — Live Stream Yoga &amp; Healing" />
+  <meta property="og:description" content="Real. Guided. Transformative. Premium live stream yoga and somatic healing." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1200&q=80&fit=crop&auto=format" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── HERO PREMIUM ENHANCEMENTS ───────────────── */
+
+    /* Cinematic multi-layer overlay — darker at edges, open in centre */
+    .hero-overlay {
+      background:
+        radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0.18) 0%, rgba(0,0,0,0.72) 100%),
+        linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 55%, rgba(0,0,0,0.45) 100%);
+    }
+
+    /* Animated ripple rings emanating from hero centre */
+    .hero-ripples {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-ripple-ring {
+      position: absolute;
+      width: var(--s);
+      height: var(--s);
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.08);
+      animation: heroRipple 6s ease-out var(--d) infinite;
+    }
+    @keyframes heroRipple {
+      0%   { transform: scale(0.6); opacity: 0.6; }
+      100% { transform: scale(1.15); opacity: 0; }
+    }
+
+    /* Eyebrow pill above the mantra */
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-radius: 100px;
+      padding: 8px 20px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--warm-orange);
+      animation: livePulse2 1.8s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes livePulse2 {
+      0%,100% { opacity:1; transform:scale(1); box-shadow: 0 0 0 0 rgba(232,121,58,0.6); }
+      50% { opacity:0.8; transform:scale(1.3); box-shadow: 0 0 0 5px rgba(232,121,58,0); }
+    }
+
+    /* Floating live class card — bottom left */
+    .hero-live-card {
+      position: absolute;
+      bottom: 100px;
+      left: clamp(20px, 5vw, 80px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 14px 20px;
+      z-index: 3;
+      animation: floatUp 0.8s ease 0.4s both;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero-live-card:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(0,0,0,0.4); }
+    .hero-live-card-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #ff4444;
+      flex-shrink: 0;
+      animation: livePulse2 1.4s ease-in-out infinite;
+      box-shadow: 0 0 0 0 rgba(255,68,68,0.6);
+    }
+    .hero-live-card-info { display: flex; flex-direction: column; gap: 2px; }
+    .hero-live-card-label {
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ff6b6b;
+    }
+    .hero-live-card-class {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .hero-live-card-join {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--warm-orange);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .hero-live-card-join:hover { color: var(--white); }
+
+    /* Floating member badge — bottom right */
+    .hero-member-badge {
+      position: absolute;
+      bottom: 100px;
+      right: clamp(20px, 5vw, 80px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 16px;
+      padding: 12px 18px;
+      z-index: 3;
+      animation: floatUp 0.8s ease 0.6s both;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+    .hero-member-avatars {
+      display: flex;
+      margin-right: 4px;
+    }
+    .hero-member-avatars img {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.3);
+      margin-left: -10px;
+      object-fit: cover;
+    }
+    .hero-member-avatars img:first-child { margin-left: 0; }
+    .hero-member-badge span {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--white);
+      white-space: nowrap;
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── LIVE TICKER (kept for reference, not used) ── */
+    .live-ticker {
+      background: var(--warm-orange);
+      padding: 10px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 999;
+    }
+    .live-ticker-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      animation: tickerScroll 30s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+    .live-ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 40px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .live-ticker-item .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      flex-shrink: 0;
+    }
+    .live-ticker-item .live-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: #fff;
+      flex-shrink: 0;
+      animation: livePulse 1.4s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      0%,100% { opacity:1; transform:scale(1); }
+      50% { opacity:0.4; transform:scale(1.4); }
+    }
+    @keyframes tickerScroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── STATS STRIP ─────────────────────────────── */
+    .stats-strip { background: var(--dark-charcoal); padding: 0; }
+    .stats-inner { display: grid; grid-template-columns: repeat(4, 1fr); }
+    .stat-item {
+      padding: 48px 32px;
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-icon { font-size: 1.6rem; margin-bottom: 12px; opacity: 0.7; }
+    .stat-number {
+      font-family: var(--font-display);
+      font-size: clamp(2.4rem, 4vw, 3.8rem);
+      font-weight: 300;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+    .stat-number span { color: var(--warm-orange); }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── FEATURES STRIP ───────────────────────────── */
+    .features-strip { background: var(--white); padding: 0; position: relative; z-index: 3; }
+    .features-strip-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border-light);
+      box-shadow: 0 4px 20px rgba(17,34,54,0.06);
+    }
+    .feature-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 36px 20px;
+      text-align: center;
+      border-right: 1px solid var(--border-light);
+      transition: background var(--transition);
+    }
+    .feature-item:last-child { border-right: none; }
+    .feature-item:hover { background: #f0f8f9; }
+    .feature-icon {
+      width: 54px; height: 54px;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, rgba(64,144,163,0.14), rgba(28,60,110,0.1));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+    }
+    .feature-item h4 { font-family: var(--font-body); font-size: 0.9rem; font-weight: 800; color: var(--dark-charcoal); }
+    .feature-item p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── CLASSES EDITORIAL ────────────────────────── */
+    .classes-section { background: var(--white); padding: 100px 0; }
+    .classes-editorial {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+    }
+    .class-overlay-card {
+      position: relative;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+    }
+    .class-overlay-card.wide { aspect-ratio: 16/9; grid-column: span 2; }
+    .class-overlay-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .class-overlay-card:hover img { transform: scale(1.06); }
+    .class-overlay-card .gradient-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.05) 100%);
+      transition: background var(--transition);
+    }
+    .class-overlay-card:hover .gradient-overlay {
+      background: linear-gradient(to top, rgba(42,127,127,0.9) 0%, rgba(0,0,0,0.35) 55%, rgba(0,0,0,0.05) 100%);
+    }
+    .class-overlay-body { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px; }
+    .class-overlay-body .badge { margin-bottom: 10px; }
+    .class-overlay-body h3 {
+      font-size: clamp(1.1rem, 2vw, 1.5rem);
+      color: var(--white);
+      margin-bottom: 6px;
+      text-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .class-overlay-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; color: rgba(255,255,255,0.75); font-size: 0.85rem; margin-bottom: 14px;
+    }
+    .class-overlay-meta .instructor-name { font-weight: 700; color: var(--warm-gold); }
+    .class-overlay-card .btn { opacity: 0; transform: translateY(8px); transition: opacity 0.3s ease, transform 0.3s ease; }
+    .class-overlay-card:hover .btn { opacity: 1; transform: translateY(0); }
+
+    /* ── TRANSFORMATION SPLIT ─────────────────────── */
+    .transform-section {
+      background: var(--soft-grey);
+      padding: 100px 0;
+    }
+    .transform-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: center;
+    }
+    .transform-img-wrap {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+    }
+    .transform-img-wrap img { width: 100%; display: block; aspect-ratio: 4/5; object-fit: cover; }
+    .transform-img-badge {
+      position: absolute;
+      bottom: 28px; left: 28px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(8px);
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      box-shadow: var(--shadow-md);
+    }
+    .transform-img-badge .badge-num {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 300;
+      color: var(--warm-orange);
+      line-height: 1;
+    }
+    .transform-img-badge .badge-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .transform-content { padding: 8px 0; }
+    .transform-content h2 { font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 20px; color: var(--dark-charcoal); }
+    .transform-content > p { color: var(--text-muted); font-size: 1.05rem; line-height: 1.8; margin-bottom: 36px; }
+    .transform-benefits { display: flex; flex-direction: column; gap: 18px; margin-bottom: 40px; }
+    .transform-benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .benefit-icon-wrap {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--deep-teal), var(--ocean-blue));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; flex-shrink: 0;
+      box-shadow: 0 4px 14px rgba(64,144,163,0.28);
+    }
+    .benefit-text h4 { font-family: var(--font-body); font-size: 0.95rem; font-weight: 800; color: var(--dark-charcoal); margin-bottom: 3px; }
+    .benefit-text p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* ── HOW IT WORKS ─────────────────────────────── */
+    .how-section {
+      background: var(--dark-charcoal);
+      padding: 100px 0;
+      position: relative; overflow: hidden;
+    }
+    .how-section::before {
+      content: ''; position: absolute; top: -200px; right: -200px;
+      width: 600px; height: 600px; border-radius: 50%;
+      border: 1px solid rgba(42,127,127,0.12); pointer-events: none;
+    }
+    .how-section::after {
+      content: ''; position: absolute; bottom: -200px; left: -200px;
+      width: 500px; height: 500px; border-radius: 50%;
+      border: 1px solid rgba(232,121,58,0.1); pointer-events: none;
+    }
+    .how-section .section-label { color: rgba(232,194,58,0.8); }
+    .how-section h2 { color: var(--white); }
+    .how-section .section-header p { color: rgba(255,255,255,0.5); }
+    .how-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+    }
+    .how-step {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: var(--radius-md);
+      padding: 48px 36px;
+      position: relative;
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .how-step:hover { background: rgba(42,127,127,0.1); border-color: rgba(42,127,127,0.3); }
+    .how-step-num {
+      font-family: var(--font-display);
+      font-size: 5rem; font-weight: 300;
+      color: rgba(255,255,255,0.06);
+      line-height: 1; margin-bottom: 12px; letter-spacing: -0.04em;
+    }
+    .how-step-icon {
+      width: 52px; height: 52px;
+      border-radius: var(--radius-full);
+      background: var(--deep-teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 20px;
+      box-shadow: 0 0 20px rgba(42,127,127,0.35);
+    }
+    .how-step:nth-child(2) .how-step-icon { background: var(--ocean-blue); box-shadow: 0 0 20px rgba(58,111,168,0.35); }
+    .how-step:nth-child(3) .how-step-icon { background: var(--warm-orange); box-shadow: 0 0 20px rgba(232,121,58,0.35); }
+    .how-step h3 { color: var(--white); font-size: 1.3rem; margin-bottom: 12px; }
+    .how-step p { color: rgba(255,255,255,0.5); font-size: 0.95rem; line-height: 1.75; }
+    .how-step-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .how-step-tag {
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── SCHEDULE PREVIEW ─────────────────────────── */
+    .schedule-preview {
+      background: var(--white);
+      padding: 100px 0;
+    }
+    .schedule-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .sched-card {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 22px 26px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-light);
+      transition: all var(--transition);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .sched-card::before {
+      content: '';
+      position: absolute; left: 0; top: 0; bottom: 0;
+      width: 4px;
+      background: var(--deep-teal);
+      border-radius: 4px 0 0 4px;
+    }
+    .sched-card.live-now::before { background: var(--warm-orange); }
+    .sched-card:hover { border-color: var(--deep-teal); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .sched-card.live-now:hover { border-color: var(--warm-orange); }
+    .sched-time {
+      text-align: center;
+      min-width: 68px; flex-shrink: 0;
+    }
+    .sched-time .time { font-family: var(--font-display); font-size: 1.35rem; font-weight: 600; color: var(--dark-charcoal); line-height: 1.1; }
+    .sched-time .ampm { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; color: var(--text-muted); text-transform: uppercase; }
+    .sched-divider { width: 1px; height: 48px; background: var(--border-light); flex-shrink: 0; }
+    .sched-info { flex: 1; min-width: 0; }
+    .sched-info h4 { font-size: 0.97rem; font-weight: 800; color: var(--dark-charcoal); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .sched-info p { font-size: 0.82rem; color: var(--text-muted); }
+    .sched-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+    .sched-duration { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); }
+    .live-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(224,90,30,0.1); color: var(--warm-orange);
+      padding: 3px 10px; border-radius: var(--radius-full);
+      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .live-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--warm-orange); animation: livePulse 1.4s ease-in-out infinite; }
+
+    /* ── PULL QUOTE ───────────────────────────────── */
+    .quote-banner {
+      background: var(--deep-teal);
+      padding: 100px 0;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .quote-banner::before {
+      content: '"'; position: absolute; top: -40px; left: 50%;
+      transform: translateX(-50%);
+      font-family: var(--font-display); font-size: 28rem;
+      color: rgba(255,255,255,0.04);
+      line-height: 1; pointer-events: none; user-select: none;
+    }
+    .quote-banner blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem); font-weight: 300; font-style: italic;
+      color: var(--white); max-width: 800px; margin: 0 auto 24px;
+      line-height: 1.45; letter-spacing: 0.01em; position: relative; z-index: 1;
+    }
+    .quote-banner cite {
+      font-style: normal; font-size: 0.88rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.55); position: relative; z-index: 1;
+    }
+    .quote-banner cite::before { content: '— '; }
+
+    /* ── TESTIMONIALS ─────────────────────────────── */
+    .testimonials-section { background: #FAF7F4; padding: 100px 0; }
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px; margin-top: 16px;
+    }
+    .t-card {
+      background: var(--white); border-radius: var(--radius-md);
+      padding: 40px 36px; box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      transition: transform var(--transition), box-shadow var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .t-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(to right, var(--deep-teal), var(--warm-orange));
+      opacity: 0; transition: opacity var(--transition);
+    }
+    .t-card:hover { transform: translateY(-6px); box-shadow: 0 16px 48px rgba(0,0,0,0.1); }
+    .t-card:hover::before { opacity: 1; }
+    .t-stars { color: var(--warm-gold); font-size: 1rem; letter-spacing: 3px; margin-bottom: 20px; }
+    .t-text { font-family: var(--font-display); font-size: 1.1rem; font-style: italic; color: var(--dark-charcoal); line-height: 1.75; margin-bottom: 28px; }
+    .t-author { display: flex; align-items: center; gap: 14px; padding-top: 20px; border-top: 1px solid var(--border-light); }
+    .t-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--soft-grey); }
+    .t-name { font-weight: 800; font-size: 0.9rem; color: var(--dark-charcoal); margin-bottom: 2px; }
+    .t-role { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* ── PLATFORM FEATURES ────────────────────────── */
+    .platform-section {
+      background: linear-gradient(160deg, #0e2340 0%, #1a3a5c 45%, #0d1f38 100%);
+      padding: 100px 0;
+      position: relative; overflow: hidden;
+    }
+    .platform-section::before {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 50%;
+      background: radial-gradient(ellipse at 80% 50%, rgba(64,144,163,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .platform-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+    .platform-content .section-label { color: rgba(245,194,0,0.8); }
+    .platform-content h2 { color: var(--white); font-size: clamp(1.8rem, 3.5vw, 3rem); margin-bottom: 20px; }
+    .platform-content > p { color: rgba(255,255,255,0.55); font-size: 1.05rem; line-height: 1.8; margin-bottom: 44px; }
+    .platform-features-list { display: flex; flex-direction: column; gap: 20px; }
+    .platform-feat {
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .platform-feat-icon {
+      width: 40px; height: 40px; border-radius: var(--radius-sm); flex-shrink: 0;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+    }
+    .platform-feat h4 { font-family: var(--font-body); font-size: 0.92rem; font-weight: 800; color: var(--white); margin-bottom: 3px; }
+    .platform-feat p { font-size: 0.85rem; color: rgba(255,255,255,0.45); line-height: 1.6; }
+    .platform-mockup {
+      position: relative;
+    }
+    .platform-card-stack { position: relative; }
+    .p-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      backdrop-filter: blur(10px);
+    }
+    .p-card + .p-card { margin-top: 12px; }
+    .p-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+    .p-card-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: var(--deep-teal); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: white; flex-shrink: 0; }
+    .p-card-title { font-size: 0.88rem; font-weight: 800; color: var(--white); margin-bottom: 2px; }
+    .p-card-sub { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+    .p-card-bar { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); overflow: hidden; margin-bottom: 8px; }
+    .p-card-bar-fill { height: 100%; border-radius: 3px; background: linear-gradient(to right, var(--deep-teal), var(--mint)); }
+    .p-card-progress-label { display: flex; justify-content: space-between; font-size: 0.73rem; color: rgba(255,255,255,0.4); }
+    .p-card-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+    .p-card-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+    .p-card-value { font-size: 0.78rem; font-weight: 700; color: var(--white); }
+    .p-live-dot { display: inline-flex; align-items: center; gap: 5px; font-size: 0.72rem; font-weight: 800; color: var(--warm-orange); letter-spacing: 0.04em; text-transform: uppercase; }
+    .p-live-dot::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--warm-orange); animation: livePulse 1.4s ease-in-out infinite; }
+
+    /* ── INSTRUCTORS PREVIEW ──────────────────────── */
+    .instructors-preview { background: var(--white); padding: 100px 0; }
+    .instructors-scroll {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px; margin-top: 56px;
+    }
+    .inst-mini-card {
+      text-align: center;
+      padding: 32px 20px 24px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--border-light);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      position: relative; overflow: hidden;
+    }
+    .inst-mini-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
+    .inst-mini-avatar { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; margin: 0 auto 16px; border: 3px solid var(--soft-grey); display: block; }
+    .inst-mini-card h4 { font-size: 1.02rem; margin-bottom: 4px; }
+    .inst-mini-card .spec { font-size: 0.78rem; color: var(--deep-teal); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; }
+    .inst-mini-card .classes-count { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* ── FINAL CTA ────────────────────────────────── */
+    .final-cta {
+      background: var(--dark-charcoal);
+      padding: 120px 0; text-align: center; position: relative; overflow: hidden;
+    }
+    .final-cta-rings { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+    .final-cta-ring { position: absolute; border-radius: 50%; border: 1px solid rgba(42,127,127,0.15); }
+    .final-cta h2 { font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 300; color: var(--white); margin-bottom: 16px; position: relative; z-index: 1; }
+    .final-cta p { color: rgba(255,255,255,0.55); font-size: 1.1rem; margin-bottom: 48px; max-width: 500px; margin-left: auto; margin-right: auto; position: relative; z-index: 1; }
+    .final-cta .newsletter-form { position: relative; z-index: 1; }
+    .final-cta .fine-print { color: rgba(255,255,255,0.3); font-size: 0.8rem; margin-top: 16px; position: relative; z-index: 1; }
+    .trust-row {
+      display: flex; align-items: center; justify-content: center;
+      gap: 32px; margin-top: 48px; flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
+    .trust-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.82rem; font-weight: 700;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .trust-item span { font-size: 1rem; opacity: 0.6; }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 1024px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .stat-item:nth-child(2) { border-right: none; }
+      .features-strip-inner { grid-template-columns: repeat(2, 1fr); }
+      .feature-item:nth-child(2) { border-right: none; }
+      .feature-item { border-bottom: 1px solid var(--border-light); }
+      .classes-editorial { grid-template-columns: 1fr 1fr; }
+      .classes-editorial .class-overlay-card:last-child { grid-column: span 2; aspect-ratio: 16/7; }
+      .classes-editorial .class-overlay-card.wide { grid-column: span 2; }
+      .transform-inner { grid-template-columns: 1fr; gap: 48px; }
+      .how-steps-grid { grid-template-columns: 1fr; gap: 16px; }
+      .schedule-preview-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr 1fr; }
+      .testimonials-grid .t-card:last-child { grid-column: span 2; }
+      .platform-inner { grid-template-columns: 1fr; gap: 48px; }
+      .platform-mockup { display: none; }
+      .instructors-scroll { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .stats-inner { grid-template-columns: repeat(2, 1fr); }
+      .features-strip-inner { grid-template-columns: 1fr 1fr; }
+      .classes-editorial { grid-template-columns: 1fr; }
+      .classes-editorial .class-overlay-card:last-child,
+      .classes-editorial .class-overlay-card.wide { grid-column: span 1; aspect-ratio: 3/4; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .testimonials-grid .t-card:last-child { grid-column: span 1; }
+      .instructors-scroll { grid-template-columns: repeat(2, 1fr); }
+      .trust-row { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo" aria-label="Ripples of Healing Home">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
+        <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-drawer" role="dialog" aria-label="Mobile navigation">
+    <nav class="nav-drawer-links">
+      <a href="index.html">Home</a>
+      <a href="classes.html">Classes &amp; Book</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-drawer-actions">
+      <a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a>
+      <a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a>
+    </div>
+  </div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ═══════════════════════════════════════════ HERO -->
+    <section class="hero" aria-label="Hero">
+      <div class="hero-video-wrap">
+        <div class="hero-video-fallback"></div>
+        <video id="hero-video" autoplay muted loop playsinline preload="auto" aria-hidden="true" webkit-playsinline>
+          <source src="videos/hero.mp4" type="video/mp4">
+        </video>
+      </div>
+      <div class="hero-overlay"></div>
+      <!-- Animated ripple rings -->
+      <div class="hero-ripples" aria-hidden="true">
+        <div class="hero-ripple-ring" style="--d:0s;--s:300px;"></div>
+        <div class="hero-ripple-ring" style="--d:1.2s;--s:550px;"></div>
+        <div class="hero-ripple-ring" style="--d:2.4s;--s:800px;"></div>
+        <div class="hero-ripple-ring" style="--d:3.6s;--s:1050px;"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">
+          <span class="hero-eyebrow-dot"></span>
+          <span>Live Stream Yoga &amp; Healing Movement</span>
+        </div>
+        <h1 class="hero-mantra">
+          "May All Beings Be Happy &amp; Free<br>
+          <em>&amp; May I Contribute To This Healing"</em>
+        </h1>
+        <p class="hero-subtitle">Real. Guided. Transformative.</p>
+        <div class="hero-actions">
+          <a href="classes.html" class="btn btn-primary btn-lg">Book Now</a>
+        </div>
+      </div>
+
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Explore</span>
+        <div class="hero-scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ FEATURES STRIP -->
+    <section class="features-strip" aria-label="Platform features">
+      <div class="features-strip-inner">
+        <div class="feature-item fade-in">
+          <div class="feature-icon">🔴</div>
+          <h4>Live Classes Daily</h4>
+          <p>Real-time guidance from certified instructors, 7 days a week</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="feature-icon">📚</div>
+          <h4>500+ On-Demand</h4>
+          <p>Stream any class from our full library, anytime you need it</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="feature-icon">🌿</div>
+          <h4>Real Instructors</h4>
+          <p>Hand-selected healers, yogis &amp; somatic practitioners</p>
+        </div>
+        <div class="feature-item fade-in">
+          <div class="feature-icon">🌊</div>
+          <h4>Healing Community</h4>
+          <p>Connect with thousands walking the same healing path</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ STATS STRIP -->
+    <section class="stats-strip" aria-label="Platform statistics">
+      <div class="stats-inner">
+        <div class="stat-item fade-in">
+          <div class="stat-icon">🔴</div>
+          <div class="stat-number">21</div>
+          <div class="stat-label">Live Classes Weekly</div>
+        </div>
+        <div class="stat-item fade-in">
+          <div class="stat-icon">✨</div>
+          <div class="stat-number">14</div>
+          <div class="stat-label">Expert Instructors</div>
+        </div>
+        <div class="stat-item fade-in">
+          <div class="stat-icon">📅</div>
+          <div class="stat-number">7</div>
+          <div class="stat-label">Days a Week</div>
+        </div>
+        <div class="stat-item fade-in">
+          <div class="stat-icon">🌊</div>
+          <div class="stat-number">100<span>%</span></div>
+          <div class="stat-label">Live & Real</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ FEATURED CLASSES -->
+    <section class="classes-section" aria-labelledby="classes-heading">
+      <div class="container">
+        <div class="section-header fade-in" style="margin-bottom:48px;">
+          <span class="section-label">Explore Our Classes</span>
+          <h2 id="classes-heading">Move. Heal. Transform.</h2>
+          <p>From sunrise yoga to deep somatic healing — every class meets you exactly where you are.</p>
+        </div>
+
+        <div class="classes-editorial">
+
+          <!-- tall left card -->
+          <article class="class-overlay-card">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=800&fit=crop&q=80&auto=format" alt="Yoga Mythology Flow" />
+            <div class="gradient-overlay"></div>
+            <div class="class-overlay-body">
+              <span class="badge badge-beginner">Beginner</span>
+              <h3>Yoga Mythology Flow</h3>
+              <div class="class-overlay-meta">
+                <span class="instructor-name">Brent Honnerlaw</span>
+                <span>Mon 9AM</span>
+              </div>
+              <a href="classes.html" class="btn btn-primary btn-sm">Join Class</a>
+            </div>
+          </article>
+
+          <!-- right column: stacked two cards -->
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <article class="class-overlay-card" style="aspect-ratio:4/3;">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=450&fit=crop&q=80&auto=format" alt="OM Mat Pilates" />
+              <div class="gradient-overlay"></div>
+              <div class="class-overlay-body">
+                <span class="badge badge-beginner" style="background:rgba(232,194,58,0.2);color:var(--warm-gold);">All Levels</span>
+                <h3>OM Mat Pilates</h3>
+                <div class="class-overlay-meta">
+                  <span class="instructor-name">Jennifer Opaka</span>
+                  <span>Tue &amp; Thu 12PM</span>
+                </div>
+                <a href="classes.html" class="btn btn-primary btn-sm">Join Class</a>
+              </div>
+            </article>
+            <article class="class-overlay-card" style="aspect-ratio:4/3;">
+              <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&h=450&fit=crop&q=80&auto=format" alt="Restorative &amp; Meditation Nidra" />
+              <div class="gradient-overlay"></div>
+              <div class="class-overlay-body">
+                <span class="badge badge-beginner" style="background:rgba(232,194,58,0.2);color:var(--warm-gold);">All Levels</span>
+                <h3>Restorative &amp; Meditation</h3>
+                <div class="class-overlay-meta">
+                  <span class="instructor-name">India Bee</span>
+                  <span>Tue &amp; Thu 7PM</span>
+                </div>
+                <a href="classes.html" class="btn btn-primary btn-sm">Join Class</a>
+              </div>
+            </article>
+          </div>
+
+          <!-- third column: one tall card -->
+          <div style="display:flex;flex-direction:column;gap:20px;">
+            <article class="class-overlay-card" style="aspect-ratio:3/4;flex:1;">
+              <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=800&fit=crop&q=80&auto=format" alt="Yin" />
+              <div class="gradient-overlay"></div>
+              <div class="class-overlay-body">
+                <span class="badge badge-beginner" style="background:rgba(232,194,58,0.2);color:var(--warm-gold);">All Levels</span>
+                <h3>Yin</h3>
+                <div class="class-overlay-meta">
+                  <span class="instructor-name">Alisha Ayyad</span>
+                  <span>Fri 5:30PM</span>
+                </div>
+                <a href="classes.html" class="btn btn-primary btn-sm">Join Class</a>
+              </div>
+            </article>
+          </div>
+
+        </div>
+
+        <!-- bottom row: 3 more condensed cards -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;">
+          <article class="class-overlay-card" style="aspect-ratio:16/9;">
+            <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=600&h=340&fit=crop&q=80&auto=format" alt="Hatha Flow" />
+            <div class="gradient-overlay"></div>
+            <div class="class-overlay-body">
+              <span class="badge badge-beginner" style="background:rgba(232,194,58,0.2);color:var(--warm-gold);">All Levels</span>
+              <h3>Hatha Flow</h3>
+              <div class="class-overlay-meta" style="margin-bottom:0;">
+                <span class="instructor-name">Amy Freeman</span>
+                <span>Mon 5:30PM</span>
+              </div>
+            </div>
+          </article>
+          <article class="class-overlay-card" style="aspect-ratio:16/9;">
+            <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&h=340&fit=crop&q=80&auto=format" alt="Power Vinyasa" />
+            <div class="gradient-overlay"></div>
+            <div class="class-overlay-body">
+              <span class="badge badge-advanced">Advanced</span>
+              <h3>Power Vinyasa</h3>
+              <div class="class-overlay-meta" style="margin-bottom:0;">
+                <span class="instructor-name">Zach Brown</span>
+                <span>Wed 9AM</span>
+              </div>
+            </div>
+          </article>
+          <article class="class-overlay-card" style="aspect-ratio:16/9;">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=340&fit=crop&q=80&auto=format" alt="Detox Flow" />
+            <div class="gradient-overlay"></div>
+            <div class="class-overlay-body">
+              <span class="badge badge-beginner" style="background:rgba(232,194,58,0.2);color:var(--warm-gold);">All Levels</span>
+              <h3>Detox Flow</h3>
+              <div class="class-overlay-meta" style="margin-bottom:0;">
+                <span class="instructor-name">Carli Klingerman</span>
+                <span>Sun 10:30AM</span>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div style="text-align:center;margin-top:52px;">
+          <a href="classes.html" class="btn btn-outline-orange btn-lg">View All Classes →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ TRANSFORMATION SPLIT -->
+    <section class="transform-section" aria-labelledby="transform-heading">
+      <div class="container">
+        <div class="transform-inner">
+          <div class="transform-img-wrap fade-in">
+            <img src="https://images.unsplash.com/photo-1547592180-85f173990554?w=800&q=80&fit=crop&auto=format" alt="Woman in peaceful yoga pose" loading="lazy" />
+            <div class="transform-img-badge">
+              <div class="badge-num">7</div>
+              <div class="badge-label">Day Free Trial</div>
+            </div>
+          </div>
+          <div class="transform-content fade-in">
+            <span class="section-label">Why Ripples of Healing</span>
+            <h2 id="transform-heading">Healing That Goes Beyond the Mat</h2>
+            <p>We're not just another yoga app. Ripples of Healing was born from the belief that when you heal yourself — truly, deeply, in your body — you change the energy you bring to every room, every relationship, every moment.</p>
+            <div class="transform-benefits">
+              <div class="transform-benefit">
+                <div class="benefit-icon-wrap">🌙</div>
+                <div class="benefit-text">
+                  <h4>Trauma-Informed Movement</h4>
+                  <p>Every class is designed with nervous system safety in mind. We meet you exactly where your body is today.</p>
+                </div>
+              </div>
+              <div class="transform-benefit">
+                <div class="benefit-icon-wrap">💫</div>
+                <div class="benefit-text">
+                  <h4>Real Human Connection</h4>
+                  <p>Unlike pre-recorded videos, our live classes create genuine connection between instructor and student.</p>
+                </div>
+              </div>
+              <div class="transform-benefit">
+                <div class="benefit-icon-wrap">🌱</div>
+                <div class="benefit-text">
+                  <h4>Progressive, Personal Practice</h4>
+                  <p>Track your journey. Instructors remember you. Your practice grows with you, season by season.</p>
+                </div>
+              </div>
+              <div class="transform-benefit">
+                <div class="benefit-icon-wrap">🤝</div>
+                <div class="benefit-text">
+                  <h4>Community That Holds You</h4>
+                  <p>Join a circle of thousands who are on the same path — supportive, non-judgmental, deeply kind.</p>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:16px;flex-wrap:wrap;">
+              <a href="signup.html" class="btn btn-primary">Start 7-Day Free Trial</a>
+              <a href="about.html" class="btn btn-outline-orange">Our Story</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ HOW IT WORKS -->
+    <section class="how-section" aria-labelledby="how-heading">
+      <div class="container">
+        <div class="section-header fade-in" style="text-align:center;margin-bottom:0;">
+          <span class="section-label">Simple &amp; Beautiful</span>
+          <h2 id="how-heading" style="color:var(--white);">Your Path to Healing</h2>
+          <p style="color:rgba(255,255,255,0.5);">Getting started takes three steps — and a willingness to begin.</p>
+        </div>
+        <div class="how-steps-grid">
+          <div class="how-step fade-in">
+            <div class="how-step-num">01</div>
+            <div class="how-step-icon">🧘</div>
+            <h3>Choose Your Class</h3>
+            <p>Browse hundreds of yoga, somatic healing, meditation, and breathwork classes. Filter by level, duration, or instructor — and find exactly what your body is asking for today.</p>
+            <div class="how-step-tags">
+              <span class="how-step-tag">Yoga</span>
+              <span class="how-step-tag">Somatic</span>
+              <span class="how-step-tag">Meditation</span>
+              <span class="how-step-tag">Breathwork</span>
+            </div>
+          </div>
+          <div class="how-step fade-in">
+            <div class="how-step-num">02</div>
+            <div class="how-step-icon">🎥</div>
+            <h3>Join Live or On-Demand</h3>
+            <p>Attend a live session with real-time guidance from your instructor, or stream any class from our library at the moment that works for your life. 7 days a week, any timezone.</p>
+            <div class="how-step-tags">
+              <span class="how-step-tag">Live Stream</span>
+              <span class="how-step-tag">On-Demand</span>
+              <span class="how-step-tag">Any Device</span>
+            </div>
+          </div>
+          <div class="how-step fade-in">
+            <div class="how-step-num">03</div>
+            <div class="how-step-icon">🌊</div>
+            <h3>Feel the Ripple</h3>
+            <p>Transformation that extends beyond the mat — into your relationships, your energy, your presence in the world. What you heal in yourself, you offer to everyone around you.</p>
+            <div class="how-step-tags">
+              <span class="how-step-tag">Track Progress</span>
+              <span class="how-step-tag">Community</span>
+              <span class="how-step-tag">Transform</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ SCHEDULE PREVIEW -->
+    <section class="schedule-preview" aria-labelledby="schedule-heading">
+      <div class="container">
+        <div class="section-header fade-in" style="margin-bottom:0;">
+          <span class="section-label">This Week's Live Schedule</span>
+          <h2 id="schedule-heading">21 Live Classes Every Week</h2>
+          <p>Join a live class and experience real-time healing with your instructor and fellow members.</p>
+        </div>
+        <div class="schedule-preview-grid">
+          <div class="sched-card fade-in">
+            <div class="sched-time">
+              <div class="time">9:00</div>
+              <div class="ampm">AM</div>
+            </div>
+            <div class="sched-divider"></div>
+            <div class="sched-info">
+              <h4>Yoga Mythology Flow</h4>
+              <p>Brent Honnerlaw · Mon</p>
+            </div>
+            <div class="sched-right">
+              <span class="sched-duration">60 min</span>
+              <a href="classes.html" class="btn btn-teal btn-sm">Register</a>
+            </div>
+          </div>
+          <div class="sched-card fade-in">
+            <div class="sched-time">
+              <div class="time">12:00</div>
+              <div class="ampm">PM</div>
+            </div>
+            <div class="sched-divider"></div>
+            <div class="sched-info">
+              <h4>Full Body Stretch</h4>
+              <p>Anna Fernandez · Mon</p>
+            </div>
+            <div class="sched-right">
+              <span class="sched-duration">60 min</span>
+              <a href="classes.html" class="btn btn-teal btn-sm">Register</a>
+            </div>
+          </div>
+          <div class="sched-card fade-in">
+            <div class="sched-time">
+              <div class="time">5:30</div>
+              <div class="ampm">PM</div>
+            </div>
+            <div class="sched-divider"></div>
+            <div class="sched-info">
+              <h4>Hatha Flow</h4>
+              <p>Amy Freeman · Mon</p>
+            </div>
+            <div class="sched-right">
+              <span class="sched-duration">60 min</span>
+              <a href="classes.html" class="btn btn-teal btn-sm">Register</a>
+            </div>
+          </div>
+          <div class="sched-card fade-in">
+            <div class="sched-time">
+              <div class="time">12:00</div>
+              <div class="ampm">PM</div>
+            </div>
+            <div class="sched-divider"></div>
+            <div class="sched-info">
+              <h4>OM Mat Pilates</h4>
+              <p>Jennifer Opaka · Tue</p>
+            </div>
+            <div class="sched-right">
+              <span class="sched-duration">60 min</span>
+              <a href="classes.html" class="btn btn-teal btn-sm">Register</a>
+            </div>
+          </div>
+          <div class="sched-card fade-in">
+            <div class="sched-time">
+              <div class="time">9:00</div>
+              <div class="ampm">AM</div>
+            </div>
+            <div class="sched-divider"></div>
+            <div class="sched-info">
+              <h4>Power Vinyasa</h4>
+              <p>Zach Brown · Wed</p>
+            </div>
+            <div class="sched-right">
+              <span class="sched-duration">60 min</span>
+              <a href="classes.html" class="btn btn-teal btn-sm">Register</a>
+            </div>
+          </div>
+          <div class="sched-card fade-in">
+            <div class="sched-time">
+              <div class="time">7:00</div>
+              <div class="ampm">PM</div>
+            </div>
+            <div class="sched-divider"></div>
+            <div class="sched-info">
+              <h4>Restorative &amp; Meditation</h4>
+              <p>India Bee · Tue</p>
+            </div>
+            <div class="sched-right">
+              <span class="sched-duration">60 min</span>
+              <a href="classes.html" class="btn btn-teal btn-sm">Register</a>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:40px;">
+          <a href="classes.html" class="btn btn-outline-orange btn-lg">View Full Schedule →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ PULL QUOTE -->
+    <section class="quote-banner" aria-label="Brand statement">
+      <div class="container">
+        <blockquote>
+          Feel Better In Your Body,<br>Create Ripples.
+        </blockquote>
+        <cite>Ripples of Healing</cite>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ TESTIMONIALS -->
+    <section class="testimonials-section" aria-labelledby="testimonials-heading">
+      <div class="container">
+        <div class="section-header fade-in" style="margin-bottom:56px;">
+          <span class="section-label">From Our Community</span>
+          <h2 id="testimonials-heading">Ripples of Change</h2>
+          <p>Real stories from real people who found healing through movement.</p>
+        </div>
+        <div class="testimonials-grid stagger-children">
+          <article class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">"I've tried many online yoga platforms but nothing compares to the depth of connection here. Anna's morning flow changed how I start every day. I feel centered, grounded, and genuinely alive."</p>
+            <div class="t-author">
+              <img class="t-avatar" src="https://placehold.co/48x48/E8C23A/2E2E2E?text=JL" alt="Jessica L." />
+              <div>
+                <div class="t-name">Jessica L.</div>
+                <div class="t-role">Member since 2023 · New York</div>
+              </div>
+            </div>
+          </article>
+          <article class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">"The somatic release classes literally changed my life. I had no idea how much tension I was holding until Marcus guided me through it. Three months in and I'm sleeping better than I have in years."</p>
+            <div class="t-author">
+              <img class="t-avatar" src="https://placehold.co/48x48/2A7F7F/FFFFFF?text=DM" alt="David M." />
+              <div>
+                <div class="t-name">David M.</div>
+                <div class="t-role">Member since 2022 · Los Angeles</div>
+              </div>
+            </div>
+          </article>
+          <article class="t-card">
+            <div class="t-stars">★★★★★</div>
+            <p class="t-text">"As a busy mom of three, I never thought I'd find time for self-care. The on-demand library lets me squeeze in a 30-minute class during nap time. This community has been a genuine lifeline."</p>
+            <div class="t-author">
+              <img class="t-avatar" src="https://placehold.co/48x48/E8793A/FFFFFF?text=AT" alt="Anika T." />
+              <div>
+                <div class="t-name">Anika T.</div>
+                <div class="t-role">Member since 2024 · Toronto</div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ PLATFORM FEATURES -->
+    <section class="platform-section" aria-labelledby="platform-heading">
+      <div class="container">
+        <div class="platform-inner">
+          <div class="platform-content fade-in">
+            <span class="section-label">Everything You Need</span>
+            <h2 id="platform-heading">A Whole Healing Ecosystem</h2>
+            <p>One membership unlocks your complete path — from live classes to community to your personal practice journal. Built for how real people actually live.</p>
+            <div class="platform-features-list">
+              <div class="platform-feat">
+                <div class="platform-feat-icon">🔴</div>
+                <div>
+                  <h4>Daily Live Classes</h4>
+                  <p>Multiple instructors, multiple styles — something live every day of the week</p>
+                </div>
+              </div>
+              <div class="platform-feat">
+                <div class="platform-feat-icon">🎬</div>
+                <div>
+                  <h4>Full On-Demand Library</h4>
+                  <p>500+ classes spanning yoga, somatic work, meditation, breathwork &amp; dance</p>
+                </div>
+              </div>
+              <div class="platform-feat">
+                <div class="platform-feat-icon">📊</div>
+                <div>
+                  <h4>Progress Tracking</h4>
+                  <p>Log your practice, track streaks, and celebrate your consistency</p>
+                </div>
+              </div>
+              <div class="platform-feat">
+                <div class="platform-feat-icon">💬</div>
+                <div>
+                  <h4>Instructor Access</h4>
+                  <p>Message your instructor, ask questions, and feel truly seen in your practice</p>
+                </div>
+              </div>
+              <div class="platform-feat">
+                <div class="platform-feat-icon">📱</div>
+                <div>
+                  <h4>Any Device, Anywhere</h4>
+                  <p>Stream seamlessly on phone, tablet, laptop, or cast to your TV</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="platform-mockup fade-in">
+            <div class="platform-card-stack">
+              <!-- Card 1: Currently streaming -->
+              <div class="p-card">
+                <div class="p-card-header">
+                  <div class="p-card-avatar">🧘</div>
+                  <div>
+                    <div class="p-card-title">Morning Flow Yoga</div>
+                    <div class="p-card-sub">Anna Fernandez · <span class="p-live-dot">Live</span></div>
+                  </div>
+                </div>
+                <div class="p-card-bar"><div class="p-card-bar-fill" style="width:62%;"></div></div>
+                <div class="p-card-progress-label"><span>28 min in</span><span>45 min total</span></div>
+              </div>
+              <!-- Card 2: Your progress -->
+              <div class="p-card">
+                <div style="margin-bottom:12px;">
+                  <div class="p-card-title" style="color:white;margin-bottom:8px;">Your Practice This Week</div>
+                </div>
+                <div class="p-card-row"><span class="p-card-label">Classes Completed</span><span class="p-card-value">4 of 5 🎯</span></div>
+                <div class="p-card-row"><span class="p-card-label">Total Minutes</span><span class="p-card-value">3h 20m</span></div>
+                <div class="p-card-row"><span class="p-card-label">Current Streak</span><span class="p-card-value">12 days 🔥</span></div>
+                <div class="p-card-row"><span class="p-card-label">Favourite Style</span><span class="p-card-value">Somatic Flow</span></div>
+              </div>
+              <!-- Card 3: Next up -->
+              <div class="p-card">
+                <div class="p-card-header">
+                  <div class="p-card-avatar">🌊</div>
+                  <div>
+                    <div class="p-card-title">Next: Somatic Release</div>
+                    <div class="p-card-sub">Jennifer Opaka · Today 9:30 AM</div>
+                  </div>
+                </div>
+                <div class="p-card-row"><span class="p-card-label">Duration</span><span class="p-card-value">60 min</span></div>
+                <div class="p-card-row"><span class="p-card-label">Spots Left</span><span class="p-card-value" style="color:#56BBA8;">8 remaining</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ INSTRUCTORS -->
+    <section class="instructors-preview" aria-labelledby="instructors-preview-heading">
+      <div class="container">
+        <div class="section-header fade-in" style="margin-bottom:0;">
+          <span class="section-label">Your Guides</span>
+          <h2 id="instructors-preview-heading">Learn from the Best</h2>
+          <p>Every instructor is hand-selected for their expertise, certification, and — most importantly — their heart.</p>
+        </div>
+        <div class="instructors-scroll stagger-children">
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/anna-fernandez.jpg" alt="Anna Fernandez" />
+            <h4>Anna Fernandez</h4>
+            <p class="spec">Founder &amp; Director</p>
+            <p class="classes-count">✦ 120 classes</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/IMG_4116.jpg" alt="Amy Freeman" />
+            <h4>Amy Freeman</h4>
+            <p class="spec">Mat Yoga</p>
+            <p class="classes-count">✦ 20 yrs teaching</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/tamara-leeper-1.jpg" alt="Tamara Leeper" />
+            <h4>Tamara Leeper</h4>
+            <p class="spec">Aerial Yoga</p>
+            <p class="classes-count">✦ 84 classes</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/Elka-Haeckel.jpg" alt="Elka Haeckel" />
+            <h4>Elka Haeckel</h4>
+            <p class="spec">Life Coaching</p>
+            <p class="classes-count">✦ ICF Accredited</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/Jennifer-Inman.jpg" alt="Jennifer Inman" />
+            <h4>Jennifer Inman</h4>
+            <p class="spec">Nutrition &amp; Health</p>
+            <p class="classes-count">✦ 52 classes</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/jenna.jpg" alt="Jenna" />
+            <h4>Jenna</h4>
+            <p class="spec">Massage &amp; Bodywork</p>
+            <p class="classes-count">✦ 43 classes</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/300-HR-PHOTO.jpg" alt="Jennifer Opaka" />
+            <h4>Jennifer Opaka</h4>
+            <p class="spec">Somatic Release</p>
+            <p class="classes-count">✦ 67 classes</p>
+          </div>
+          <div class="inst-mini-card">
+            <img class="inst-mini-avatar" src="images/instructors/kellie-900X900.jpg" alt="Kellie" />
+            <h4>Kellie</h4>
+            <p class="spec">Yoga &amp; Teacher Training</p>
+            <p class="classes-count">✦ 38 classes</p>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:48px;">
+          <a href="about.html" class="btn btn-teal btn-lg">Meet All Instructors</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════ FINAL CTA -->
+    <section class="final-cta" aria-labelledby="cta-heading">
+      <div class="final-cta-rings" aria-hidden="true">
+        <div class="final-cta-ring" style="width:200px;height:200px;"></div>
+        <div class="final-cta-ring" style="width:400px;height:400px;"></div>
+        <div class="final-cta-ring" style="width:600px;height:600px;"></div>
+        <div class="final-cta-ring" style="width:800px;height:800px;opacity:0.07;"></div>
+      </div>
+      <div class="container">
+        <span class="section-label" style="color:rgba(232,194,58,0.7);">Begin Today</span>
+        <h2 id="cta-heading">Start Your Healing Journey</h2>
+        <p>Join 2,400+ members transforming their lives through movement, breath, and community. First 7 days free.</p>
+        <form class="newsletter-form" aria-label="Newsletter signup">
+          <input type="email" placeholder="Enter your email address" required aria-label="Email address" />
+          <button type="submit">Get Started</button>
+        </form>
+        <p class="fine-print">No credit card required &nbsp;·&nbsp; Cancel anytime &nbsp;·&nbsp; 7-day free trial</p>
+        <div class="trust-row">
+          <span class="trust-item"><span>🔒</span>Secure &amp; Private</span>
+          <span class="trust-item"><span>⭐</span>4.9 / 5 Rating</span>
+          <span class="trust-item"><span>🌍</span>50+ Countries</span>
+          <span class="trust-item"><span>🎁</span>Free Trial</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
+          </div>
+          <p class="footer-tagline">Real. Guided. Transformative.<br>Live stream yoga and somatic healing for a more connected, vibrant life.</p>
+          <div class="footer-social" aria-label="Social media links">
+            <a href="#" aria-label="Instagram">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="#" aria-label="Facebook">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="#" aria-label="YouTube">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter / X">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Pages</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Classes</h4>
+          <ul>
+            <li><a href="classes.html">All Classes</a></li>
+            <li><a href="classes.html">Yoga</a></li>
+            <li><a href="classes.html">Healing Movement</a></li>
+            <li><a href="classes.html">Meditation</a></li>
+            <li><a href="classes.html">Breathwork</a></li>
+            <li><a href="classes.html">Live Schedule</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="pricing.html">FAQ</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">Community Forum</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    /* Lazy load fade-in */
+    document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
+      if (img.complete) { img.classList.add('loaded'); }
+      else { img.addEventListener('load', function() { img.classList.add('loaded'); }); }
+    });
+  </script>
+  <script>
+    /* Hero video autoplay */
+    (function () {
+      var video = document.getElementById('hero-video');
+      if (!video) return;
+      video.muted = true; video.volume = 0; video.loop = true; video.playsInline = true;
+      video.setAttribute('muted',''); video.setAttribute('playsinline','');
+      video.setAttribute('webkit-playsinline','');
+      var played = false;
+      function tryPlay() {
+        if (played) return;
+        var p = video.play();
+        if (p !== undefined) p.then(function(){ played=true; }).catch(function(){});
+      }
+      tryPlay();
+      ['loadstart','loadedmetadata','loadeddata','canplay','canplaythrough'].forEach(function(e){ video.addEventListener(e,tryPlay); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function(entries){ if(entries[0].isIntersecting) tryPlay(); },{threshold:0.1}).observe(video);
+      }
+      document.addEventListener('visibilitychange', function(){ if(!document.hidden) tryPlay(); });
+      var iEvents = ['click','touchstart','mousedown','keydown','scroll'];
+      function onInteraction(){ tryPlay(); if(played) iEvents.forEach(function(e){ document.removeEventListener(e,onInteraction); }); }
+      iEvents.forEach(function(e){ document.addEventListener(e,onInteraction,{passive:true}); });
+      [100,300,600,1000,2000].forEach(function(ms){ setTimeout(tryPlay,ms); });
+      video.load();
+    })();
+
+    /* Instructors grid → 4 col on larger screens, 8 items */
+    document.querySelectorAll('.instructors-scroll').forEach(function(el){
+      el.style.gridTemplateColumns = 'repeat(4, 1fr)';
+    });
+    if (window.innerWidth <= 1024) {
+      document.querySelectorAll('.instructors-scroll').forEach(function(el){
+        el.style.gridTemplateColumns = 'repeat(2, 1fr)';
+      });
+    }
+  </script>
+</body>
+</html>

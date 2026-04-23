@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing — Ripples of Healing</title>
+  <meta name="description" content="Simple, transparent pricing. Choose the plan that supports your healing journey." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav scrolled" id="main-nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html" class="active">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
+        <button class="nav-hamburger" aria-label="Open menu"><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+    <!-- PAGE HERO -->
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=1600&q=80&fit=crop&auto=format')">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Pricing</span></div>
+        <h1>Simple, Transparent Pricing</h1>
+        <p class="tagline">No hidden fees. No complicated tiers. Just the right plan for where you are on your journey.</p>
+      </div>
+    </section>
+
+    <!-- PRICING SECTION -->
+    <section class="section" aria-labelledby="pricing-heading">
+      <div class="container">
+
+        <!-- Billing Toggle -->
+        <div class="pricing-toggle-wrap fade-in">
+          <span id="monthly-label" style="color:var(--dark-charcoal);">Monthly</span>
+          <label class="pricing-toggle" aria-label="Toggle annual billing">
+            <input type="checkbox" id="pricing-toggle" />
+            <span class="pricing-toggle-slider"></span>
+          </label>
+          <span id="annual-label" style="color:var(--text-muted);">Annual</span>
+          <span class="discount-badge">Save 20%</span>
+        </div>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-grid stagger-children" id="pricing-heading">
+
+          <!-- Tier 1: Flow (Most Popular) -->
+          <div class="pricing-card popular fade-in">
+            <div class="popular-badge">⭐ Most Popular</div>
+            <p class="pricing-tier" style="color:var(--warm-orange);">Most Popular</p>
+            <h3>Ripple Flow</h3>
+            <div class="pricing-price">
+              <span class="currency">$</span>
+              <span class="amount" data-monthly="22" data-annual="18">22</span>
+              <span class="period price-period">/month</span>
+            </div>
+            <p class="pricing-desc">The sweet spot for committed practitioners who want unlimited on-demand plus live classes.</p>
+            <ul class="pricing-features">
+              <li class="pricing-feature"><span class="check">✓</span> Unlimited on-demand library</li>
+              <li class="pricing-feature"><span class="check">✓</span> 4 live classes per month</li>
+              <li class="pricing-feature"><span class="check">✓</span> Community forum access</li>
+              <li class="pricing-feature"><span class="check">✓</span> Weekly newsletter</li>
+              <li class="pricing-feature"><span class="check">✓</span> Progress tracking</li>
+              <li class="pricing-feature"><span class="check">✓</span> Class bookmarking</li>
+              <li class="pricing-feature disabled"><span class="check">✗</span> Instructor chat</li>
+              <li class="pricing-feature disabled"><span class="check">✗</span> Offline downloads</li>
+            </ul>
+            <a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start 7-Day Free Trial</a>
+          </div>
+
+          <!-- Tier 2: Unlimited -->
+          <div class="pricing-card fade-in">
+            <p class="pricing-tier" style="color:var(--ocean-blue);">Full Access</p>
+            <h3>Ripple Unlimited</h3>
+            <div class="pricing-price">
+              <span class="currency">$</span>
+              <span class="amount" data-monthly="59" data-annual="47">59</span>
+              <span class="period price-period">/month</span>
+            </div>
+            <p class="pricing-desc">The complete healing ecosystem — everything, unlimited, with direct access to instructors.</p>
+            <ul class="pricing-features">
+              <li class="pricing-feature"><span class="check">✓</span> Unlimited on-demand library</li>
+              <li class="pricing-feature"><span class="check">✓</span> Unlimited live classes</li>
+              <li class="pricing-feature"><span class="check">✓</span> Priority community access</li>
+              <li class="pricing-feature"><span class="check">✓</span> Direct instructor chat</li>
+              <li class="pricing-feature"><span class="check">✓</span> Offline downloads</li>
+              <li class="pricing-feature"><span class="check">✓</span> Custom program creation</li>
+              <li class="pricing-feature"><span class="check">✓</span> Early access to new classes</li>
+              <li class="pricing-feature"><span class="check">✓</span> Monthly 1-on-1 session</li>
+            </ul>
+            <a href="signup.html" class="btn btn-teal" style="width:100%;justify-content:center;">Start 7-Day Free Trial</a>
+          </div>
+
+        </div>
+
+        <!-- Guarantee note -->
+        <div style="text-align:center;margin-top:48px;" class="fade-in">
+          <p style="color:var(--text-muted);font-size:0.9rem;">
+            🔒 All plans include a <strong>7-day free trial</strong>. No credit card required to start. Cancel anytime.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURE COMPARISON TABLE -->
+    <section class="section bg-soft-grey" aria-labelledby="compare-heading">
+      <div class="container" style="max-width:900px;">
+        <div class="section-header fade-in">
+          <h2 id="compare-heading">Compare Plans</h2>
+        </div>
+        <div style="overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-md);">
+            <thead>
+              <tr style="background:var(--deep-teal);color:white;">
+                <th style="padding:18px 24px;text-align:left;font-size:0.9rem;">Feature</th>
+                <th style="padding:18px 24px;text-align:center;font-size:0.9rem;background:var(--warm-orange);">Ripple Flow — $22/mo</th>
+                <th style="padding:18px 24px;text-align:center;font-size:0.9rem;">Ripple Unlimited — $59/mo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-light);">
+                <td style="padding:16px 24px;font-size:0.9rem;">On-Demand Classes</td>
+                <td style="padding:16px 24px;text-align:center;color:var(--deep-teal);font-weight:700;">Unlimited</td>
+                <td style="padding:16px 24px;text-align:center;color:var(--deep-teal);font-weight:700;">Unlimited</td>
+              </tr>
+              <tr style="background:var(--soft-grey);border-bottom:1px solid var(--border-light);">
+                <td style="padding:16px 24px;font-size:0.9rem;">Live Classes</td>
+                <td style="padding:16px 24px;text-align:center;color:var(--text-muted);">4/month</td>
+                <td style="padding:16px 24px;text-align:center;color:var(--deep-teal);font-weight:700;">Unlimited</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-light);">
+                <td style="padding:16px 24px;font-size:0.9rem;">Instructor Chat</td>
+                <td style="padding:16px 24px;text-align:center;color:#EF4444;">✗</td>
+                <td style="padding:16px 24px;text-align:center;color:#10B981;font-weight:700;">✓</td>
+              </tr>
+              <tr style="background:var(--soft-grey);border-bottom:1px solid var(--border-light);">
+                <td style="padding:16px 24px;font-size:0.9rem;">Offline Downloads</td>
+                <td style="padding:16px 24px;text-align:center;color:#EF4444;">✗</td>
+                <td style="padding:16px 24px;text-align:center;color:#10B981;font-weight:700;">✓</td>
+              </tr>
+              <tr>
+                <td style="padding:16px 24px;font-size:0.9rem;">Monthly 1-on-1 Session</td>
+                <td style="padding:16px 24px;text-align:center;color:#EF4444;">✗</td>
+                <td style="padding:16px 24px;text-align:center;color:#10B981;font-weight:700;">✓</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRICING FAQ ACCORDION -->
+    <section class="section" aria-labelledby="pricing-faq-heading">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Questions Answered</span>
+          <h2 id="pricing-faq-heading">Pricing FAQ</h2>
+        </div>
+
+        <div class="faq-list">
+          <div class="faq-item" data-category="billing">
+            <button class="faq-question">Can I cancel my subscription at any time?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Yes. You can cancel your subscription at any time from your account settings. There are no cancellation fees and no hidden charges. If you cancel mid-cycle, you'll retain access until the end of your billing period.</p></div>
+          </div>
+          <div class="faq-item" data-category="billing">
+            <button class="faq-question">What payment methods do you accept?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>We accept all major credit and debit cards (Visa, Mastercard, Amex), PayPal, and Apple Pay. All payments are securely processed through Stripe.</p></div>
+          </div>
+          <div class="faq-item" data-category="billing">
+            <button class="faq-question">What happens after my free trial ends?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>After your 7-day free trial, you'll be automatically subscribed to your chosen plan. We'll send you a reminder email before the trial ends so you're never surprised.</p></div>
+          </div>
+          <div class="faq-item" data-category="billing">
+            <button class="faq-question">Can I switch between plans?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Absolutely. You can upgrade or downgrade your plan at any time. Upgrades take effect immediately, and you'll be prorated for the remainder of your current billing period.</p></div>
+          </div>
+          <div class="faq-item" data-category="billing">
+            <button class="faq-question">Do you offer discounts for students, teachers, or non-profits?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Yes! We offer a 30% discount for students, yoga teachers, healthcare professionals, and verified non-profit employees. Contact our team with proof of eligibility to claim your discount.</p></div>
+          </div>
+          <div class="faq-item" data-category="classes">
+            <button class="faq-question">What types of classes are available?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>We offer Hatha Yoga, Vinyasa Flow, Yin Yoga, Somatic Healing Movement, Meditation, Breathwork, Children's Yoga, and SUP Yoga. All classes are available as live stream sessions or on-demand recordings. New classes are added weekly.</p></div>
+          </div>
+          <div class="faq-item" data-category="classes">
+            <button class="faq-question">How do live stream classes work?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>After booking a live stream class, you'll receive a link via email 15 minutes before the session starts. You join directly in your browser — no app download needed. Your instructor can see and interact with you, making it a truly personal experience from your own home.</p></div>
+          </div>
+          <div class="faq-item" data-category="getting-started">
+            <button class="faq-question">Is there a free trial available?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Yes! Every new member gets a 7-day free trial with full access to the Ripple Flow plan features — including unlimited on-demand classes and 4 live stream sessions. No credit card required to start.</p></div>
+          </div>
+          <div class="faq-item" data-category="technical">
+            <button class="faq-question">What do I need to join a live stream class?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>All you need is a device with a camera and microphone (laptop, tablet, or smartphone), a stable internet connection (5+ Mbps recommended), and enough space to move comfortably. A yoga mat is helpful for most classes but not required.</p></div>
+          </div>
+          <div class="faq-item" data-category="billing">
+            <button class="faq-question">Can I gift a membership to someone?<span class="faq-icon">+</span></button>
+            <div class="faq-answer"><p>Absolutely! Gift memberships are available for 1, 3, or 6 months at any plan level. They make a beautiful, meaningful present. Contact us at hello@ripplesofhealing.com to arrange a gift membership.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHOTO SPLIT -->
+    <section style="background:var(--soft-grey);padding:80px 0;">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;">
+          <div>
+            <span class="section-label">Why Members Love Us</span>
+            <h2 style="margin-bottom:20px;">Real Practice. Real Results.</h2>
+            <p style="color:var(--text-muted);line-height:1.85;margin-bottom:16px;">Every plan gives you access to 21 live weekly classes taught by certified instructors — no pre-recorded substitutes, no algorithms. Just real guidance, in real time.</p>
+            <p style="color:var(--text-muted);line-height:1.85;margin-bottom:32px;">Whether you're brand new to yoga or returning after years away, our instructors meet you exactly where you are. Your first 7 days are completely free.</p>
+            <a href="signup.html" class="btn btn-primary">Start Free Trial</a>
+          </div>
+          <div style="border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-lg);">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&fit=crop&auto=format" alt="Members in a live yoga class" style="width:100%;height:420px;object-fit:cover;display:block;" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner">
+      <div class="container">
+        <h2>Your Healing Starts Now</h2>
+        <p>7 days free. No credit card needed. Cancel anytime.</p>
+        <a href="signup.html" class="btn btn-primary btn-lg">Start Your Free Trial</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><div class="footer-logo">
+            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
+          </div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Newsletter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // Pricing toggle: update displayed amounts
+    const toggle = document.getElementById('pricing-toggle');
+    if (toggle) {
+      toggle.addEventListener('change', function() {
+        const isAnnual = this.checked;
+        document.querySelectorAll('.pricing-price .amount').forEach(el => {
+          const monthly = el.getAttribute('data-monthly');
+          const annual = el.getAttribute('data-annual');
+          el.textContent = isAnnual ? annual : monthly;
+        });
+        document.querySelectorAll('.price-period').forEach(el => {
+          el.textContent = isAnnual ? '/mo, billed annually' : '/month';
+        });
+        document.getElementById('monthly-label').style.color = isAnnual ? 'var(--text-muted)' : 'var(--dark-charcoal)';
+        document.getElementById('annual-label').style.color = isAnnual ? 'var(--dark-charcoal)' : 'var(--text-muted)';
+      });
+    }
+  </script>
+</body>
+</html>

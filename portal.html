@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Portal — Ripples of Healing</title>
+  <meta name="description" content="Your Ripples of Healing member portal." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Portal Layout ──────────────────────────────── */
+    .portal-page {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #f0f8f8 0%, #fdf6f2 100%);
+      padding: var(--nav-height, 80px) 0 60px;
+    }
+    .portal-container {
+      max-width: 1060px;
+      margin: 0 auto;
+      padding: 40px 24px 0;
+    }
+
+    /* ── Welcome bar ────────────────────────────────── */
+    .portal-welcome {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .portal-welcome-text h1 {
+      font-size: 1.75rem;
+      font-weight: 800;
+      color: var(--dark-charcoal);
+      margin: 0 0 4px;
+    }
+    .portal-welcome-text p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin: 0;
+    }
+    .portal-avatar-lg {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--deep-teal), var(--warm-orange));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem; font-weight: 800; color: #fff;
+      flex-shrink: 0;
+    }
+
+    /* ── Stats row ──────────────────────────────────── */
+    .portal-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: #fff;
+      border-radius: var(--radius-md);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      padding: 20px 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .stat-icon {
+      font-size: 1.6rem;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 3px;
+    }
+    .stat-value {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--dark-charcoal);
+      line-height: 1;
+    }
+
+    /* ── Grid ───────────────────────────────────────── */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 700px) {
+      .portal-grid { grid-template-columns: 1fr; }
+      .portal-welcome-text h1 { font-size: 1.4rem; }
+    }
+
+    /* ── Cards ──────────────────────────────────────── */
+    .portal-card {
+      background: #fff;
+      border-radius: var(--radius-lg);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      padding: 28px;
+    }
+    .portal-card.full-width {
+      grid-column: 1 / -1;
+    }
+    .portal-card-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--dark-charcoal);
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* ── Membership card ────────────────────────────── */
+    .membership-card {
+      border-radius: var(--radius-md);
+      padding: 22px 24px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, var(--deep-teal) 0%, #0d7377 100%);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .membership-card::after {
+      content: '~';
+      position: absolute;
+      right: -10px; bottom: -30px;
+      font-size: 9rem;
+      opacity: 0.08;
+      font-family: var(--font-display);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .membership-plan-name {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.75;
+      margin-bottom: 6px;
+    }
+    .membership-plan-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .membership-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 99px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+    .membership-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-portal {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-portal-primary {
+      background: var(--warm-orange);
+      color: #fff;
+    }
+    .btn-portal-primary:hover { background: #e06c2a; }
+    .btn-portal-outline {
+      background: transparent;
+      border: 1.5px solid var(--border-light);
+      color: var(--dark-charcoal);
+    }
+    .btn-portal-outline:hover { border-color: var(--deep-teal); background: #f8fefe; }
+    .btn-portal-ghost {
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      font-size: 0.8rem;
+      padding: 7px 14px;
+    }
+    .btn-portal-ghost:hover { background: rgba(255,255,255,0.25); }
+    .btn-portal-danger {
+      background: transparent;
+      border: 1.5px solid #fecaca;
+      color: #dc2626;
+    }
+    .btn-portal-danger:hover { background: #fef2f2; }
+
+    /* ── Upcoming classes ───────────────────────────── */
+    .class-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+    .class-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .class-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--deep-teal);
+      flex-shrink: 0;
+    }
+    .class-dot.orange { background: var(--warm-orange); }
+    .class-info { flex: 1; }
+    .class-name { font-size: 0.93rem; font-weight: 700; color: var(--dark-charcoal); margin-bottom: 2px; }
+    .class-meta { font-size: 0.8rem; color: var(--text-muted); }
+    .class-badge {
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: #f0fdf4;
+      color: #15803d;
+      white-space: nowrap;
+    }
+    .class-badge.upcoming { background: #fff7ed; color: #c2410c; }
+
+    /* ── Quick links ────────────────────────────────── */
+    .quick-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .quick-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 16px;
+      border-radius: var(--radius-md);
+      border: 1.5px solid var(--border-light);
+      text-decoration: none;
+      color: var(--dark-charcoal);
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .quick-link:hover { border-color: var(--deep-teal); background: #f8fefe; }
+    .quick-link-icon { font-size: 1.2rem; flex-shrink: 0; }
+
+    /* ── Profile form ───────────────────────────────── */
+    .portal-form-group { margin-bottom: 18px; }
+    .portal-form-label {
+      display: block;
+      font-size: 0.83rem;
+      font-weight: 700;
+      color: var(--dark-charcoal);
+      margin-bottom: 6px;
+      letter-spacing: 0.02em;
+    }
+    .portal-form-input {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid var(--border-light);
+      border-radius: var(--radius-sm);
+      font-size: 0.93rem;
+      color: var(--dark-charcoal);
+      background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      outline: none;
+      box-sizing: border-box;
+    }
+    .portal-form-input:focus {
+      border-color: var(--deep-teal);
+      box-shadow: 0 0 0 3px rgba(13,115,119,0.1);
+    }
+    .portal-form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    @media (max-width: 520px) { .portal-form-row { grid-template-columns: 1fr; } }
+    .portal-save-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 6px;
+    }
+    .portal-save-msg {
+      font-size: 0.85rem;
+      color: #15803d;
+      font-weight: 600;
+      display: none;
+    }
+
+    /* ── Alert ──────────────────────────────────────── */
+    .portal-alert {
+      border-radius: var(--radius-sm);
+      padding: 12px 16px;
+      font-size: 0.88rem;
+      margin-bottom: 16px;
+      display: none;
+    }
+    .portal-alert.error   { background: #fef2f2; border: 1px solid #fecaca; color: #b91c1c; }
+    .portal-alert.success { background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; }
+
+    /* ── Section divider ────────────────────────────── */
+    .portal-section-divider {
+      border: none;
+      border-top: 1px solid var(--border-light);
+      margin: 22px 0;
+    }
+
+    /* ── Loading overlay ────────────────────────────── */
+    #portal-loading {
+      position: fixed; inset: 0;
+      background: linear-gradient(135deg, #f0f8f8 0%, #fdf6f2 100%);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 9999;
+      flex-direction: column; gap: 16px;
+    }
+    .portal-spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border-light);
+      border-top-color: var(--deep-teal);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #portal-loading p { color: var(--text-muted); font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+
+  <!-- Loading screen — hidden once auth confirmed -->
+  <div id="portal-loading">
+    <img src="logo.svg" alt="Ripples of Healing" style="height:40px;margin-bottom:8px;" />
+    <div class="portal-spinner"></div>
+    <p>Loading your portal…</p>
+  </div>
+
+  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <div class="nav-links">
+        <a href="classes.html">Classes</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="instructors.html">Instructors</a>
+        <a href="portal.html" class="active">My Portal</a>
+        <!-- nav-login replaced by main.js when logged in -->
+        <a href="login.html" class="nav-login" style="display:none"></a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="portal-page" id="portal-main" style="display:none">
+    <div class="portal-container">
+
+      <!-- Welcome -->
+      <div class="portal-welcome">
+        <div class="portal-welcome-text">
+          <h1>Welcome back, <span id="welcome-name">…</span> 👋</h1>
+          <p id="welcome-sub">Here's everything in your account.</p>
+        </div>
+        <div class="portal-avatar-lg" id="portal-avatar">?</div>
+      </div>
+
+      <!-- Stats -->
+      <div class="portal-stats">
+        <div class="stat-card">
+          <span class="stat-icon">🧘</span>
+          <div>
+            <div class="stat-label">Member Since</div>
+            <div class="stat-value" id="stat-since">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">💳</span>
+          <div>
+            <div class="stat-label">Current Plan</div>
+            <div class="stat-value" id="stat-plan">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">📅</span>
+          <div>
+            <div class="stat-label">Classes This Month</div>
+            <div class="stat-value">—</div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-icon">✨</span>
+          <div>
+            <div class="stat-label">Status</div>
+            <div class="stat-value" style="color:#15803d">Active</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main grid -->
+      <div class="portal-grid">
+
+        <!-- Membership card -->
+        <div class="portal-card">
+          <div class="portal-card-title">💳 My Membership</div>
+          <div class="membership-card" id="membership-card">
+            <div class="membership-plan-name">Current Plan</div>
+            <div class="membership-plan-title" id="membership-plan-title">Ripple Flow</div>
+            <div class="membership-badge">✦ Active Member</div>
+            <div class="membership-actions">
+              <a href="pricing.html" class="btn-portal btn-portal-ghost">Manage Plan</a>
+            </div>
+          </div>
+          <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">
+            <p style="margin:0 0 8px">Questions about billing or your plan? <a href="contact.html" style="color:var(--warm-orange);font-weight:600;">Contact us</a>.</p>
+            <p style="margin:0">Want to upgrade? <a href="pricing.html" style="color:var(--deep-teal);font-weight:600;">See all plans →</a></p>
+          </div>
+        </div>
+
+        <!-- Quick links -->
+        <div class="portal-card">
+          <div class="portal-card-title">⚡ Quick Access</div>
+          <div class="quick-links">
+            <a href="schedule.html" class="quick-link">
+              <span class="quick-link-icon">🗓️</span>Class Schedule
+            </a>
+            <a href="classes.html" class="quick-link">
+              <span class="quick-link-icon">🧘</span>Browse Classes
+            </a>
+            <a href="instructors.html" class="quick-link">
+              <span class="quick-link-icon">👩‍🏫</span>Instructors
+            </a>
+            <a href="blog.html" class="quick-link">
+              <span class="quick-link-icon">📖</span>Blog & Tips
+            </a>
+            <a href="faq.html" class="quick-link">
+              <span class="quick-link-icon">❓</span>FAQ
+            </a>
+            <a href="contact.html" class="quick-link">
+              <span class="quick-link-icon">💬</span>Contact Us
+            </a>
+          </div>
+        </div>
+
+        <!-- Upcoming classes -->
+        <div class="portal-card">
+          <div class="portal-card-title">📅 Upcoming Classes</div>
+          <div id="upcoming-classes">
+            <div class="class-item">
+              <div class="class-dot"></div>
+              <div class="class-info">
+                <div class="class-name">Sunrise Flow Yoga</div>
+                <div class="class-meta">Tomorrow · 7:00 AM · with Maya Chen</div>
+              </div>
+              <span class="class-badge">Booked</span>
+            </div>
+            <div class="class-item">
+              <div class="class-dot orange"></div>
+              <div class="class-info">
+                <div class="class-name">Restorative Yin</div>
+                <div class="class-meta">Thu · 6:30 PM · with Sarah Kim</div>
+              </div>
+              <span class="class-badge">Booked</span>
+            </div>
+            <div class="class-item">
+              <div class="class-dot" style="background:#9ca3af"></div>
+              <div class="class-info">
+                <div class="class-name">Power Vinyasa</div>
+                <div class="class-meta">Sat · 9:00 AM · with David Lim</div>
+              </div>
+              <span class="class-badge upcoming">Open</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <a href="schedule.html" class="btn-portal btn-portal-outline" style="width:100%;justify-content:center;">View Full Schedule →</a>
+          </div>
+        </div>
+
+        <!-- Profile edit -->
+        <div class="portal-card">
+          <div class="portal-card-title">👤 My Profile</div>
+          <div class="portal-alert" id="profile-alert"></div>
+          <form id="profile-form">
+            <div class="portal-form-row">
+              <div class="portal-form-group">
+                <label class="portal-form-label" for="profile-fname">First name</label>
+                <input class="portal-form-input" type="text" id="profile-fname" autocomplete="given-name" />
+              </div>
+              <div class="portal-form-group">
+                <label class="portal-form-label" for="profile-lname">Last name</label>
+                <input class="portal-form-input" type="text" id="profile-lname" autocomplete="family-name" />
+              </div>
+            </div>
+            <div class="portal-form-group">
+              <label class="portal-form-label" for="profile-email">Email address</label>
+              <input class="portal-form-input" type="email" id="profile-email" autocomplete="email" />
+            </div>
+            <div class="portal-save-row">
+              <button type="submit" class="btn-portal btn-portal-primary">Save Changes</button>
+              <span class="portal-save-msg" id="profile-save-msg">✓ Saved!</span>
+            </div>
+          </form>
+
+          <hr class="portal-section-divider" />
+
+          <div class="portal-card-title" style="margin-bottom:14px;">🔑 Change Password</div>
+          <div class="portal-alert" id="password-alert"></div>
+          <form id="password-form">
+            <div class="portal-form-group">
+              <label class="portal-form-label" for="new-password">New password</label>
+              <input class="portal-form-input" type="password" id="new-password" placeholder="At least 8 characters" autocomplete="new-password" />
+            </div>
+            <div class="portal-form-group">
+              <label class="portal-form-label" for="confirm-password">Confirm new password</label>
+              <input class="portal-form-input" type="password" id="confirm-password" placeholder="Repeat password" autocomplete="new-password" />
+            </div>
+            <div class="portal-save-row">
+              <button type="submit" class="btn-portal btn-portal-outline">Update Password</button>
+              <span class="portal-save-msg" id="password-save-msg">✓ Password updated!</span>
+            </div>
+          </form>
+        </div>
+
+        <!-- Account actions -->
+        <div class="portal-card full-width">
+          <div class="portal-card-title">⚙️ Account</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+            <div>
+              <div style="font-size:0.9rem;font-weight:600;color:var(--dark-charcoal);margin-bottom:3px;">Signed in as</div>
+              <div style="font-size:0.88rem;color:var(--text-muted);" id="account-email">—</div>
+            </div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;">
+              <button id="signout-btn" class="btn-portal btn-portal-outline">Sign Out</button>
+              <button id="delete-account-btn" class="btn-portal btn-portal-danger">Delete Account</button>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /portal-grid -->
+    </div><!-- /portal-container -->
+  </main>
+
+  <!-- Supabase CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    const loading   = document.getElementById('portal-loading');
+    const portalMain = document.getElementById('portal-main');
+
+    function showAlert(elId, msg, type) {
+      const el = document.getElementById(elId);
+      el.textContent = msg;
+      el.className = 'portal-alert ' + type;
+      el.style.display = 'block';
+      setTimeout(() => { el.style.display = 'none'; }, 5000);
+    }
+
+    function showSaveMsg(elId) {
+      const el = document.getElementById(elId);
+      el.style.display = 'inline';
+      setTimeout(() => { el.style.display = 'none'; }, 3000);
+    }
+
+    function populatePortal(user) {
+      const meta      = user.user_metadata || {};
+      const firstName = meta.first_name || '';
+      const lastName  = meta.last_name  || '';
+      const email     = user.email || '';
+      const plan      = meta.plan || 'flow';
+      const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || email[0]?.toUpperCase() || '?';
+      const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email.split('@')[0];
+      const planLabel = plan === 'unlimited' ? 'Ripple Unlimited' : 'Ripple Flow';
+
+      // Welcome bar
+      document.getElementById('welcome-name').textContent = firstName || email.split('@')[0];
+      document.getElementById('welcome-sub').textContent  = `Managing your ${planLabel} membership.`;
+      document.getElementById('portal-avatar').textContent = initials;
+
+      // Stats
+      const since = new Date(user.created_at);
+      document.getElementById('stat-since').textContent = since.toLocaleDateString('en-US', { month:'short', year:'numeric' });
+      document.getElementById('stat-plan').textContent  = planLabel;
+
+      // Membership card
+      document.getElementById('membership-plan-title').textContent = planLabel;
+      if (plan === 'unlimited') {
+        document.getElementById('membership-card').style.background = 'linear-gradient(135deg, #c2410c 0%, #ea580c 100%)';
+      }
+
+      // Profile form
+      document.getElementById('profile-fname').value  = firstName;
+      document.getElementById('profile-lname').value  = lastName;
+      document.getElementById('profile-email').value  = email;
+      document.getElementById('account-email').textContent = email;
+    }
+
+    // ── Auth gate ────────────────────────────────────────────────
+    sb.auth.getSession().then(async ({ data: { session } }) => {
+      if (!session) {
+        window.location.href = 'login.html';
+        return;
+      }
+      populatePortal(session.user);
+      loading.style.display = 'none';
+      portalMain.style.display = 'block';
+    });
+
+    // Re-populate if Google OAuth just redirected back
+    sb.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        populatePortal(session.user);
+        loading.style.display = 'none';
+        portalMain.style.display = 'block';
+      }
+      if (event === 'SIGNED_OUT') {
+        window.location.href = 'login.html';
+      }
+    });
+
+    // ── Profile save ─────────────────────────────────────────────
+    document.getElementById('profile-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const fname = document.getElementById('profile-fname').value.trim();
+      const lname = document.getElementById('profile-lname').value.trim();
+      const email = document.getElementById('profile-email').value.trim();
+
+      const { error } = await sb.auth.updateUser({
+        email,
+        data: { first_name: fname, last_name: lname }
+      });
+
+      if (error) {
+        showAlert('profile-alert', error.message, 'error');
+      } else {
+        // Also update profiles table
+        const { data: { user } } = await sb.auth.getUser();
+        if (user) {
+          await sb.from('profiles').upsert({ id: user.id, first_name: fname, last_name: lname });
+        }
+        showSaveMsg('profile-save-msg');
+        document.getElementById('welcome-name').textContent = fname || email.split('@')[0];
+      }
+    });
+
+    // ── Password change ──────────────────────────────────────────
+    document.getElementById('password-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const newPass  = document.getElementById('new-password').value;
+      const confPass = document.getElementById('confirm-password').value;
+
+      if (newPass.length < 8) {
+        showAlert('password-alert', 'Password must be at least 8 characters.', 'error');
+        return;
+      }
+      if (newPass !== confPass) {
+        showAlert('password-alert', 'Passwords do not match.', 'error');
+        return;
+      }
+
+      const { error } = await sb.auth.updateUser({ password: newPass });
+      if (error) {
+        showAlert('password-alert', error.message, 'error');
+      } else {
+        showSaveMsg('password-save-msg');
+        document.getElementById('new-password').value     = '';
+        document.getElementById('confirm-password').value = '';
+      }
+    });
+
+    // ── Sign out ─────────────────────────────────────────────────
+    document.getElementById('signout-btn').addEventListener('click', async () => {
+      await sb.auth.signOut();
+      window.location.href = 'index.html';
+    });
+
+    // ── Delete account ───────────────────────────────────────────
+    document.getElementById('delete-account-btn').addEventListener('click', async () => {
+      const confirmed = confirm('Are you sure you want to delete your account? This cannot be undone.');
+      if (!confirmed) return;
+      // Note: deleting a Supabase auth user requires a server-side call or Edge Function
+      // For now, sign them out and show a message
+      alert('Please contact us at hello@ripplesofhealing.com to delete your account and we\'ll take care of it within 24 hours.');
+    });
+  </script>
+</body>
+</html>

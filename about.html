@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Ripples of Healing</title>
+  <meta name="description" content="Learn about our story, mission, and the passionate team behind Ripples of Healing." />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="about.html" class="active">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
+        <button class="nav-hamburger" aria-label="Open menu">
+          <span style="background:var(--dark-charcoal);"></span>
+          <span style="background:var(--dark-charcoal);"></span>
+          <span style="background:var(--dark-charcoal);"></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="nav-drawer">
+    <nav class="nav-drawer-links">
+      <a href="index.html">Home</a>
+      <a href="classes.html">Classes &amp; Book</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="blog.html">Blog</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-drawer-actions">
+      <a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a>
+      <a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a>
+    </div>
+  </div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero" aria-label="About Us hero" style="background-image:url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600&q=80&fit=crop&auto=format')">
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="index.html">Home</a>
+          <span>›</span>
+          <span>About Us</span>
+        </div>
+        <h1>About Us</h1>
+        <p class="tagline">We believe healing is not a destination — it's a ripple that spreads outward from every breath, every movement, every act of self-compassion.</p>
+      </div>
+    </section>
+
+    <!-- OUR STORY & MISSION -->
+    <section class="about-story section" aria-labelledby="story-heading">
+      <div class="container">
+        <div class="about-story-inner">
+          <div class="fade-in">
+            <span class="section-label">Our Story &amp; Mission</span>
+            <h2 id="story-heading">Born From Healing</h2>
+            <p style="color:var(--text-muted);line-height:1.85;margin-bottom:20px;">Ripples of Healing was founded by Anna Fernandez after her own journey healing chronic pain from scoliosis through yoga. What began as a personal practice became a passion — and then a calling to share these tools with the world.</p>
+            <p style="color:var(--text-muted);line-height:1.85;margin-bottom:20px;">We exist to make transformative yoga and somatic healing accessible to every body, everywhere — guided by real human instructors who bring presence, skill, and heart to every session.</p>
+            <p style="color:var(--text-muted);line-height:1.85;margin-bottom:32px;font-style:italic;font-family:var(--font-display);font-size:1.1rem;">The ripple starts with you. When you heal, you show others it's possible. When you breathe, you invite others to breathe.</p>
+            <a href="classes.html" class="btn btn-primary">Explore Our Classes</a>
+          </div>
+          <div class="about-story-img fade-in">
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&q=80&fit=crop&auto=format" alt="Our founders practicing yoga together" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- INSTRUCTORS SECTION -->
+    <section class="section" aria-labelledby="instructors-merged-heading" style="background:var(--soft-grey);">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">Your Guides</span>
+          <h2 id="instructors-merged-heading">Meet Our Instructors</h2>
+          <p>Every instructor is hand-selected for their expertise, certification, and — most importantly — their heart.</p>
+        </div>
+        <div class="grid-3 stagger-children">
+
+          <!-- Anna Fernandez -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/anna-fernandez.jpg" alt="Anna Fernandez" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Anna Fernandez</h3>
+            <p class="instructor-specialty">Founder &amp; Lead Instructor</p>
+            <p class="instructor-bio">Anna has been practicing yoga for over 25 years and teaching since 2013. Her journey began with healing chronic pain from scoliosis and grew into a passion for helping others access their own healing power. She teaches gentle, nourishing classes that create space in the body, mind, and energy, easing stress and tension.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Amy Freeman -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/IMG_4116.jpg" alt="Amy Freeman" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Amy Freeman</h3>
+            <p class="instructor-specialty">Hatha, Vinyasa &amp; Restorative Yoga</p>
+            <p class="instructor-bio">Amy brings over 30 years of experience practicing and teaching yoga. She leads heart-centered classes in Hatha, Vinyasa, and restorative yoga, blending movement, breath, and mindfulness to cultivate calm, resilience, and balance. A devoted mother of two, Amy brings a grounded, empathetic presence to every class.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Alisha Ayaad -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/alisha-ayaad.jpeg" alt="Alisha Ayaad" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Alisha Ayaad</h3>
+            <p class="instructor-specialty">Yin Yoga</p>
+            <p class="instructor-bio">Alisha's path in yoga and the healing arts is rooted in a deep desire to help others reconnect with themselves. She teaches Yin yoga with a grounded, intuitive approach informed by massage therapy and traditional Eastern healing practices, inviting students to slow down, reset the nervous system, and restore balance.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Brent Honnerlaw -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/brent-honnerlaw.jpeg" alt="Brent Honnerlaw" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Brent Honnerlaw</h3>
+            <p class="instructor-specialty">Hatha, Vinyasa, Yin &amp; Qi Gong (E-RYT 500)</p>
+            <p class="instructor-bio">Brent is an experienced yoga teacher (E-RYT 500) who blends Hatha, Vinyasa, Yin, Restorative, meditation, and Qi Gong to create classes that support versatility, balance, and mindful presence. He integrates sound, storytelling, and yoga philosophy to help students deepen awareness and cultivate calm, focus, and resilience.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Carli Klingerman -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/carli-klingerman.jpeg" alt="Carli Klingerman" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Carli Klingerman</h3>
+            <p class="instructor-specialty">Vinyasa Flow</p>
+            <p class="instructor-bio">Carli's teaching began as a personal transformation and quickly became a calling. Her breath-led flows move with a steady, energizing rhythm — building heat, resilience, and creative momentum while staying deeply grounded. With an intuitive balance of strength and surrender, she creates space to move with intention and reconnect to the body's natural intelligence.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Chandler Price -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/chandler-price.jpeg" alt="Chandler Price" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Chandler Price</h3>
+            <p class="instructor-specialty">Yoga &amp; Meditation</p>
+            <p class="instructor-bio">Chandler leads yoga classes designed to help students reset mentally, physically, and emotionally. She creates a welcoming space for all levels to drop in, trust their experience, and fully receive the benefits of the practice, blending clear cueing, mindful breath, and restorative sequences tailored to the energy of the day.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Cintia Tavares -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/cintia-tavares.jpeg" alt="Cintia Tavares" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Cintia Tavares</h3>
+            <p class="instructor-specialty">Vinyasa &amp; Hatha Yoga</p>
+            <p class="instructor-bio">Cintia brings over 20 years of experience guiding students through yoga practices that cultivate strength, balance, and inner awareness. She leads Vinyasa and Hatha-based classes that blend mindful movement, breathwork, and relaxation in an accessible way for all levels, supporting physical vitality, mental clarity, and renewed energy.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- India Bee -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/india-bee.jpeg" alt="India Bee" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>India Bee</h3>
+            <p class="instructor-specialty">Yoga &amp; Yoga Nidra</p>
+            <p class="instructor-bio">India shares practices that nourish the nervous system and invite deep rest and renewal. With over 20 years of study, she teaches yoga and yoga nidra in a way that is accessible, grounding, and supportive for all levels. India believes that if you can breathe, you can practice yoga, and she welcomes students into a space of ease, presence, and community.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Jennifer Opaka -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/300-HR-PHOTO.jpg" alt="Jennifer Opaka" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Jennifer Opaka</h3>
+            <p class="instructor-specialty">Mat Pilates &amp; Roll &amp; Release</p>
+            <p class="instructor-bio">Jenny brings over 30 years of experience in movement and fitness, specializing in mat Pilates and functional strength practices. During her own healing journey through cancer, she created Roll &amp; Release Balls — a therapeutic method using small balls to ease tension, restore movement, and support recovery. She brings resilience, compassion, and lived experience to every class.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Nam Chanterrwyn -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/nam-chanterrwyn.jpeg" alt="Nam Chanterrwyn" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Nam Chanterrwyn</h3>
+            <p class="instructor-specialty">Functional Movement &amp; Vinyasa</p>
+            <p class="instructor-bio">Nam is an advanced yoga teacher trained in functional movement and anatomy, known for blending strength, precision, and mindful awareness. His classes are rooted in clear guidance and intentional sequencing, helping students build resilience, improve mobility, and deepen their understanding of movement. With experience working alongside professional athletes, he empowers students to move with confidence and clarity.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Olivia Hughes -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/olivia-hughes.jpeg" alt="Olivia Hughes" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Olivia Hughes</h3>
+            <p class="instructor-specialty">Vinyasa, Aerial Yoga &amp; Reiki Master</p>
+            <p class="instructor-bio">Olivia has taught yoga and Reiki since 2011, certified in Vinyasa, Hatha, Yin, and Aerial Yoga. A Reiki Master since 2018, she holds a master's degree in Spiritual Psychology and has co-led international retreats for over a decade. She is also co-founder of Yoga in the Park, a thriving community now in its 13th year.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Ruth Nazarian -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/ruth-nazarian.jpeg" alt="Ruth Nazarian" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Ruth Nazarian</h3>
+            <p class="instructor-specialty">Yoga, Breathwork &amp; Sound Healing</p>
+            <p class="instructor-bio">Ruth is an experienced yoga and meditation teacher with over 700 hours of training in movement, mindfulness, and stress management. She blends yoga, breathwork, and sound to help students release tension, restore balance, and feel more at ease. Her classes support nervous system regulation, clarity, and inner calm for students of all levels.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Valerie Sorrentino -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/valerie-sorrentino.png" alt="Valerie Sorrentino" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Valerie Sorrentino</h3>
+            <p class="instructor-specialty">Restorative Yoga &amp; Self-Care</p>
+            <p class="instructor-bio">Valerie is a yoga teacher and self-care guide who blends restorative practices with mindful presence to help students find calm, healing, and renewal. Through her guidance, she helps high-achieving, highly sensitive people bring balance and ease into their mind, body, and home, supporting authentic living and sustainable wellness.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+          <!-- Zachary Brown -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/zachary-brown.jpeg" alt="Zachary Brown" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true"><a href="#" aria-label="Instagram">📷</a></div>
+            </div>
+            <h3>Zachary Brown</h3>
+            <p class="instructor-specialty">Yoga, Meditation &amp; Contemplative Practice</p>
+            <p class="instructor-bio">Zach brings a thoughtful, reflective approach to movement and mindfulness, shaped by years of practice across yoga, meditation, and contemplative traditions. His classes emphasize presence, curiosity, and emotional awareness, offering space for students to slow down, reconnect, and explore their inner landscape with care.</p>
+            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="section bg-soft-grey" aria-labelledby="values-heading">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-label">What We Stand For</span>
+          <h2 id="values-heading">Our Values</h2>
+        </div>
+
+        <div class="values-grid stagger-children">
+          <div class="value-card">
+            <div class="value-icon">🌱</div>
+            <h3>Authenticity</h3>
+            <p>We show up real — no filters, no perfection. Every instructor, every class, every community interaction is grounded in genuine presence.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">💫</div>
+            <h3>Healing</h3>
+            <p>We believe the body holds wisdom. Our approach honors the deep intelligence within you, offering practices that restore rather than deplete.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🌊</div>
+            <h3>Community</h3>
+            <p>Healing is amplified in community. We cultivate a warm, inclusive space where every member is seen, supported, and celebrated.</p>
+          </div>
+          <div class="value-card">
+            <div class="value-icon">🦋</div>
+            <h3>Transformation</h3>
+            <p>We are committed to growth that goes beyond the mat — personal transformation that creates ripples of positive change in the wider world.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner" aria-labelledby="about-cta-heading">
+      <div class="container">
+        <h2 id="about-cta-heading">Ready to Start Your Journey?</h2>
+        <p>Join a community of healers, movers, and believers. Your first 7 days are free.</p>
+        <a href="signup.html" class="btn btn-primary btn-lg" style="margin-right:16px;">Start Free Trial</a>
+        <a href="classes.html" class="btn btn-outline-teal btn-lg">Browse Classes</a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
+          </div>
+          <p class="footer-tagline">Real. Guided. Transformative. Live stream yoga and somatic healing for a more connected life.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Instagram">📷</a>
+            <a href="#" aria-label="Facebook">f</a>
+            <a href="#" aria-label="YouTube">▶</a>
+            <a href="#" aria-label="Twitter">𝕏</a>
+          </div>
+        </div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Meditation</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Newsletter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p>
+        <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

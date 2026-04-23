@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Ripples of Healing</title>
+  <meta name="description" content="Wisdom, guidance, and inspiration for your yoga and healing journey." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── BLOG STYLES ─────────────────────────── */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-top: 48px;
+    }
+    .blog-card {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+    }
+    .blog-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
+    .blog-card-img {
+      width: 100%; height: 210px;
+      object-fit: cover; display: block;
+      transition: transform 0.4s ease;
+    }
+    .blog-card:hover .blog-card-img { transform: scale(1.04); }
+    .blog-card-img-wrap { overflow: hidden; }
+    .blog-card-body {
+      padding: 24px;
+      display: flex; flex-direction: column; flex: 1;
+    }
+    .blog-cat-tag {
+      display: inline-block;
+      padding: 3px 12px;
+      border-radius: 100px;
+      font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 12px;
+      background: rgba(42,127,127,0.1);
+      color: var(--deep-teal);
+    }
+    .blog-cat-tag.orange { background: rgba(232,121,58,0.1); color: var(--warm-orange); }
+    .blog-cat-tag.gold   { background: rgba(232,194,58,0.12); color: #92400E; }
+    .blog-cat-tag.blue   { background: rgba(58,111,168,0.1); color: var(--ocean-blue); }
+    .blog-card-body h3 {
+      font-size: 1.05rem; line-height: 1.45;
+      color: var(--dark-charcoal); margin-bottom: 8px;
+    }
+    .blog-card-meta {
+      font-size: 0.78rem; color: var(--text-muted);
+      margin-bottom: 12px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+    }
+    .blog-card-body p {
+      font-size: 0.88rem; color: var(--text-muted);
+      line-height: 1.7; flex: 1; margin-bottom: 16px;
+    }
+    .read-more-btn {
+      font-size: 0.85rem; font-weight: 700;
+      color: var(--deep-teal); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      transition: gap 0.2s ease, color 0.2s ease;
+      background: none; border: none; cursor: pointer; padding: 0;
+    }
+    .read-more-btn:hover { color: var(--warm-orange); gap: 10px; }
+
+    /* ── CATEGORY FILTER ─────────────────── */
+    .cat-filter {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 0;
+    }
+    .cat-btn {
+      padding: 8px 20px;
+      border-radius: 100px;
+      border: 1.5px solid var(--border-light);
+      background: var(--white);
+      font-size: 0.82rem; font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer; transition: all 0.2s ease;
+      letter-spacing: 0.02em;
+    }
+    .cat-btn:hover { border-color: var(--deep-teal); color: var(--deep-teal); }
+    .cat-btn.active { background: var(--deep-teal); border-color: var(--deep-teal); color: var(--white); }
+
+    /* ── FEATURED BANNER ─────────────────── */
+    .featured-banner {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      position: relative;
+      aspect-ratio: 21/9;
+      cursor: pointer;
+    }
+    .featured-banner img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.5s ease;
+    }
+    .featured-banner:hover img { transform: scale(1.03); }
+    .featured-banner-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.35) 55%, transparent 100%);
+    }
+    .featured-banner-body {
+      position: absolute; bottom: 0; left: 0;
+      padding: clamp(24px, 4vw, 48px);
+      max-width: 540px;
+    }
+
+    /* ── ARTICLE MODAL ───────────────────── */
+    .article-modal {
+      position: fixed; inset: 0; z-index: 10000;
+      display: flex; align-items: flex-start; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .article-modal.open { opacity: 1; pointer-events: all; }
+    .article-modal-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(4px);
+    }
+    .article-modal-panel {
+      position: relative; z-index: 1;
+      background: var(--white);
+      width: 100%; max-width: 760px;
+      max-height: 100vh;
+      overflow-y: auto;
+      border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+      transform: translateY(-40px);
+      transition: transform 0.35s ease;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.3);
+    }
+    .article-modal.open .article-modal-panel { transform: translateY(0); }
+    .article-modal-hero {
+      width: 100%; height: 320px;
+      object-fit: cover; display: block;
+    }
+    .article-modal-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.5);
+      border: none; color: white;
+      font-size: 1.2rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s ease;
+    }
+    .article-modal-close:hover { background: rgba(0,0,0,0.8); }
+    .article-modal-content { padding: 40px 48px 60px; }
+    .article-modal-content .blog-cat-tag { margin-bottom: 16px; }
+    .article-modal-content h2 {
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.3; margin-bottom: 14px;
+      color: var(--dark-charcoal);
+    }
+    .article-modal-byline {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.85rem; color: var(--text-muted);
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 28px;
+    }
+    .article-modal-byline strong { color: var(--dark-charcoal); }
+    .article-body p {
+      font-size: 1rem; line-height: 1.85;
+      color: #374151; margin-bottom: 20px;
+    }
+    .article-body h3 {
+      font-size: 1.2rem; color: var(--dark-charcoal);
+      margin: 32px 0 14px;
+    }
+    .article-body blockquote {
+      border-left: 3px solid var(--deep-teal);
+      padding: 12px 24px;
+      margin: 28px 0;
+      background: rgba(42,127,127,0.05);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic;
+      font-size: 1.05rem;
+      color: var(--dark-charcoal);
+      line-height: 1.7;
+    }
+    .article-cta {
+      margin-top: 40px; padding: 32px;
+      background: linear-gradient(135deg, rgba(42,127,127,0.08), rgba(58,111,168,0.06));
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(42,127,127,0.15);
+      text-align: center;
+    }
+    .article-cta h4 { font-size: 1.1rem; margin-bottom: 8px; color: var(--dark-charcoal); }
+    .article-cta p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 16px; }
+
+    /* ── NEWSLETTER TOAST ────────────────── */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--deep-teal); color: white;
+      padding: 14px 28px; border-radius: 100px;
+      font-weight: 700; font-size: 0.9rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+      z-index: 99999;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+      opacity: 0;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    /* ── HIDDEN CARD ─────────────────────── */
+    .blog-card.hidden { display: none; }
+
+    @media (max-width: 1024px) {
+      .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .blog-grid { grid-template-columns: 1fr; }
+      .article-modal-content { padding: 28px 24px 48px; }
+      .article-modal-hero { height: 220px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav scrolled" id="main-nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
+        <button class="nav-hamburger" aria-label="Open menu"><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1545389336-cf090694435e?w=1600&q=80&fit=crop&auto=format')">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Blog</span></div>
+        <h1>Ripples of Wisdom</h1>
+        <p class="tagline">Insights, practices, and stories to nourish your journey of healing and self-discovery.</p>
+      </div>
+    </section>
+
+    <!-- FEATURED STORY BANNER -->
+    <section style="background:var(--white);padding:72px 0 0;">
+      <div class="container">
+        <div class="featured-banner" onclick="openArticle('featured')" role="button" tabindex="0" aria-label="Read featured article">
+          <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=1400&q=80&fit=crop&auto=format" alt="Daily yoga practice" loading="lazy" />
+          <div class="featured-banner-overlay"></div>
+          <div class="featured-banner-body">
+            <span style="background:var(--warm-orange);color:white;border-radius:var(--radius-full);padding:4px 14px;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;display:inline-block;margin-bottom:14px;">Featured</span>
+            <h2 style="color:white;margin-bottom:12px;font-size:clamp(1.4rem,3vw,2.2rem);line-height:1.3;">How a Daily Yoga Practice Can Transform Your Nervous System</h2>
+            <p style="color:rgba(255,255,255,0.78);margin-bottom:20px;font-size:0.95rem;line-height:1.6;">The science behind somatic healing and why showing up — even for 20 minutes — creates ripples that last all day.</p>
+            <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();openArticle('featured')">Read Article</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOG GRID SECTION -->
+    <section class="section">
+      <div class="container">
+
+        <!-- Category Filter -->
+        <div class="cat-filter" role="navigation" aria-label="Filter articles by category">
+          <button class="cat-btn active" data-cat="all">All Posts</button>
+          <button class="cat-btn" data-cat="yoga-tips">Yoga Tips</button>
+          <button class="cat-btn" data-cat="healing">Healing</button>
+          <button class="cat-btn" data-cat="mindfulness">Mindfulness</button>
+          <button class="cat-btn" data-cat="breathwork">Breathwork</button>
+          <button class="cat-btn" data-cat="instructor-stories">Instructor Stories</button>
+        </div>
+
+        <!-- Blog Grid -->
+        <div class="blog-grid" id="blog-grid">
+
+          <!-- Post 1 — Yoga Tips -->
+          <article class="blog-card fade-in" data-cat="yoga-tips" onclick="openArticle('post1')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=420&fit=crop&q=80&auto=format" alt="Morning yoga" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag">Yoga Tips</span>
+              <h3>5 Morning Yoga Practices That Will Transform Your Day Before 8 AM</h3>
+              <div class="blog-card-meta">
+                <strong>Brent Honnerlaw</strong><span>·</span><span>Mar 8, 2025</span><span>·</span><span>5 min read</span>
+              </div>
+              <p>You don't need an hour on the mat to feel the difference. These five simple practices can shift your entire day in just 15 minutes.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 2 — Breathwork -->
+          <article class="blog-card fade-in" data-cat="breathwork" onclick="openArticle('post2')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=420&fit=crop&q=80&auto=format" alt="Breathwork practice" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag orange">Breathwork</span>
+              <h3>When Anxiety Strikes: A Breath-by-Breath Guide to Coming Home to Yourself</h3>
+              <div class="blog-card-meta">
+                <strong>India Bee</strong><span>·</span><span>Mar 3, 2025</span><span>·</span><span>6 min read</span>
+              </div>
+              <p>Anxiety lives in the future. The breath lives in the now. This guide will walk you back from the edge — gently, safely, and effectively.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 3 — Instructor Stories -->
+          <article class="blog-card fade-in" data-cat="instructor-stories" onclick="openArticle('post3')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=420&fit=crop&q=80&auto=format" alt="Instructor story" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag gold">Instructor Stories</span>
+              <h3>How a Chronic Illness Led Me to Teach Restorative Yoga</h3>
+              <div class="blog-card-meta">
+                <strong>Olivia Hughes</strong><span>·</span><span>Feb 24, 2025</span><span>·</span><span>7 min read</span>
+              </div>
+              <p>What came next was not the end of her active life — it was the beginning of her deepest teaching. A raw, honest, beautiful story.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 4 — Mindfulness -->
+          <article class="blog-card fade-in" data-cat="mindfulness" onclick="openArticle('post4')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1522898467493-49726bf28798?w=600&h=420&fit=crop&q=80&auto=format" alt="Yin yoga" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag">Mindfulness</span>
+              <h3>Yin Yoga and the Fascia: What Every Practitioner Needs to Know</h3>
+              <div class="blog-card-meta">
+                <strong>Alisha Ayyad</strong><span>·</span><span>Feb 17, 2025</span><span>·</span><span>8 min read</span>
+              </div>
+              <p>The fascia is the hidden architecture of the human body. Understanding it will change how you approach your practice — and your pain.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 5 — Healing -->
+          <article class="blog-card fade-in" data-cat="healing" onclick="openArticle('post5')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=420&fit=crop&q=80&auto=format" alt="Community yoga" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag blue">Community</span>
+              <h3>I Practiced Yoga Alone for 5 Years. Here's What a Live Stream Community Changed</h3>
+              <div class="blog-card-meta">
+                <strong>Ripples Community</strong><span>·</span><span>Feb 10, 2025</span><span>·</span><span>5 min read</span>
+              </div>
+              <p>A candid conversation with three long-time members about how practicing together — even through a screen — changed everything.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 6 — Healing -->
+          <article class="blog-card fade-in" data-cat="healing" onclick="openArticle('post6')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&h=420&fit=crop&q=80&auto=format" alt="Restorative yoga" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag">Healing</span>
+              <h3>Movement as Medicine: The Growing Evidence for Yoga in Trauma Recovery</h3>
+              <div class="blog-card-meta">
+                <strong>Nam Chanterrwynn</strong><span>·</span><span>Feb 3, 2025</span><span>·</span><span>9 min read</span>
+              </div>
+              <p>A review of the most compelling research on yoga, somatic movement, and trauma recovery — written for curious practitioners.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 7 — Yoga Tips -->
+          <article class="blog-card fade-in" data-cat="yoga-tips" onclick="openArticle('post7')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1475823678248-624fc6f85785?w=600&h=420&fit=crop&q=80&auto=format" alt="Yoga alignment" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag">Yoga Tips</span>
+              <h3>The 3 Alignment Mistakes Almost Everyone Makes (And How to Fix Them)</h3>
+              <div class="blog-card-meta">
+                <strong>Amy Freeman</strong><span>·</span><span>Jan 27, 2025</span><span>·</span><span>6 min read</span>
+              </div>
+              <p>Small tweaks in your foundation create massive changes in your practice. Amy walks through the most common misalignments she sees.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 8 — Mindfulness -->
+          <article class="blog-card fade-in" data-cat="mindfulness" onclick="openArticle('post8')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=600&h=420&fit=crop&q=80&auto=format" alt="Meditation practice" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag">Mindfulness</span>
+              <h3>What 30 Days of Daily Meditation Actually Did to My Brain</h3>
+              <div class="blog-card-meta">
+                <strong>Chandler Price</strong><span>·</span><span>Jan 20, 2025</span><span>·</span><span>7 min read</span>
+              </div>
+              <p>Not the polished version — the honest, sometimes frustrating, ultimately transformative truth about building a meditation habit from scratch.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+          <!-- Post 9 — Instructor Stories -->
+          <article class="blog-card fade-in" data-cat="instructor-stories" onclick="openArticle('post9')">
+            <div class="blog-card-img-wrap">
+              <img class="blog-card-img" src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=600&h=420&fit=crop&q=80&auto=format" alt="Vinyasa instructor" loading="lazy" />
+            </div>
+            <div class="blog-card-body">
+              <span class="blog-cat-tag gold">Instructor Stories</span>
+              <h3>From Corporate Burnout to Full-Time Yogi: Zachary's Journey</h3>
+              <div class="blog-card-meta">
+                <strong>Zachary Brown</strong><span>·</span><span>Jan 13, 2025</span><span>·</span><span>6 min read</span>
+              </div>
+              <p>He walked away from a six-figure salary to teach Power Vinyasa. Three years later, he's never looked back — and he's never felt more alive.</p>
+              <button class="read-more-btn">Read More →</button>
+            </div>
+          </article>
+
+        </div>
+
+        <div style="text-align:center;margin-top:56px;" id="no-results" style="display:none;">
+          <p style="color:var(--text-muted);font-size:1rem;">No articles found in this category yet. Check back soon!</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- NEWSLETTER CTA -->
+    <section class="cta-banner">
+      <div class="container">
+        <span class="section-label" style="color:rgba(255,255,255,0.7);">Stay Inspired</span>
+        <h2>Wisdom in Your Inbox, Weekly</h2>
+        <p>Our newsletter brings you the best articles, practice tips, and class recommendations every Thursday morning.</p>
+        <form class="newsletter-form" id="blog-newsletter" aria-label="Blog newsletter signup">
+          <input type="email" placeholder="Enter your email address" required />
+          <button type="submit">Subscribe Free</button>
+        </form>
+        <p style="margin-top:14px;font-size:0.82rem;color:rgba(255,255,255,0.5);">No spam. Unsubscribe anytime. We respect your inbox.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand"><div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
+        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Newsletter</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
+    </div>
+  </footer>
+
+  <!-- ARTICLE MODAL -->
+  <div class="article-modal" id="article-modal" role="dialog" aria-modal="true" aria-label="Article">
+    <div class="article-modal-backdrop" onclick="closeArticle()"></div>
+    <div class="article-modal-panel">
+      <img class="article-modal-hero" id="modal-img" src="" alt="" />
+      <button class="article-modal-close" onclick="closeArticle()" aria-label="Close article">✕</button>
+      <div class="article-modal-content">
+        <span class="blog-cat-tag" id="modal-cat"></span>
+        <h2 id="modal-title"></h2>
+        <div class="article-modal-byline">
+          <strong id="modal-author"></strong>
+          <span>·</span>
+          <span id="modal-date"></span>
+          <span>·</span>
+          <span id="modal-read"></span>
+        </div>
+        <div class="article-body" id="modal-body"></div>
+        <div class="article-cta">
+          <h4>Ready to experience this on the mat?</h4>
+          <p>Join a live class with our instructors and put these practices into motion.</p>
+          <a href="classes.html" class="btn btn-primary">Browse Classes</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-client.js"></script>
+  <script src="main.js"></script>
+  <script>
+    // ── ARTICLE DATA ────────────────────────────────────────
+    const articles = {
+      featured: {
+        img: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Healing', catClass: '',
+        title: 'How a Daily Yoga Practice Can Transform Your Nervous System',
+        author: 'Ripples of Healing Team', date: 'March 15, 2025', read: '8 min read',
+        body: `
+          <p>We talk a lot about flexibility, strength, and stress relief when it comes to yoga. But there's a deeper conversation happening in neuroscience labs and somatic therapy offices around the world — one that's rewriting what we thought we knew about the mind-body connection.</p>
+          <h3>Your Nervous System Is Listening</h3>
+          <p>The autonomic nervous system governs the body's involuntary functions — heart rate, digestion, breath, the stress response. It operates in two primary modes: the sympathetic ("fight or flight") and the parasympathetic ("rest and digest"). Most people in modern life are chronically stuck in sympathetic overdrive — anxious, reactive, and exhausted.</p>
+          <p>Yoga, practiced consistently, creates a measurable shift toward parasympathetic dominance. This isn't mysticism — it's measurable through heart rate variability (HRV), cortisol levels, and brain imaging studies.</p>
+          <blockquote>"The body is not just a vehicle for the mind. It is a storehouse of wisdom, memory, and healing potential." — Dr. Bessel van der Kolk</blockquote>
+          <h3>What 20 Minutes Actually Does</h3>
+          <p>Research published in the Journal of Alternative and Complementary Medicine found that even a single 20-minute yoga session significantly reduced participants' cortisol levels and self-reported stress. The effects compounded with regular practice — practitioners with 6+ months of daily practice showed structural changes in brain regions associated with emotional regulation.</p>
+          <p>At Ripples of Healing, this is why we build every class around the nervous system first. Whether it's a Gentle Flow or a Power Vinyasa, our instructors are trained in trauma-informed movement principles — meeting the body exactly where it is today.</p>
+          <h3>How to Start</h3>
+          <p>You don't need to practice for an hour. You don't need a perfect mat, a quiet room, or a particular state of mind. You need 20 minutes and a willingness to begin. Over time, the ripples from that decision extend far beyond the mat — into your sleep, your relationships, your resilience.</p>
+          <p>Start with one of our Gentle Flow or Restorative classes. Show up consistently. The nervous system remembers — and it heals.</p>
+        `
+      },
+      post1: {
+        img: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Yoga Tips', catClass: '',
+        title: '5 Morning Yoga Practices That Will Transform Your Day Before 8 AM',
+        author: 'Brent Honnerlaw', date: 'March 8, 2025', read: '5 min read',
+        body: `
+          <p>You don't need an hour on the mat to feel the difference. These five simple practices — each taking just a few minutes — can shift your nervous system, clear mental fog, and set a grounded tone for everything that follows.</p>
+          <h3>1. Cat-Cow with Conscious Breath (3 minutes)</h3>
+          <p>Start in tabletop. Inhale and drop the belly, lifting the heart and tailbone (cow). Exhale and round the spine, tucking chin to chest (cat). Slow the breath down further than feels natural. This gentle spinal mobilization wakes up the body while activating the parasympathetic nervous system.</p>
+          <h3>2. Sun Salutation A — Just Two Rounds (5 minutes)</h3>
+          <p>Two slow, intentional Sun Salutations are enough to raise core temperature, lubricate the joints, and build focus. Keep them unhurried. Breathe into every transition.</p>
+          <h3>3. Standing Forward Fold with Bent Knees (2 minutes)</h3>
+          <p>Hang heavy. Release the neck, shake the head slowly yes and no. Let gravity do the work. This is one of the fastest ways to shift from a stressed state to a calm one — the inversion of the head below the heart calms the vagus nerve almost immediately.</p>
+          <blockquote>"How you begin the morning shapes everything that follows. The mat is the best place I know to begin it well." — Brent Honnerlaw</blockquote>
+          <h3>4. Seated Spinal Twist (2 minutes each side)</h3>
+          <p>Twists stimulate digestion, decompress the spine, and are deeply energizing. Sit tall, lengthen the spine on the inhale, and twist gently on the exhale. Hold for five slow breaths each side.</p>
+          <h3>5. Nadi Shodhana (Alternate Nostril Breathing) — 5 rounds</h3>
+          <p>This pranayama technique balances the left and right hemispheres of the brain and creates immediate mental clarity. Use the right thumb to close the right nostril, inhale through the left. Close both, then exhale through the right. Inhale right, exhale left. That's one round. Five rounds is enough to notice a difference.</p>
+          <p>The total time: about 20 minutes. The result: a body that's awake, a mind that's clear, and a nervous system that's ready for whatever the day brings.</p>
+        `
+      },
+      post2: {
+        img: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Breathwork', catClass: 'orange',
+        title: 'When Anxiety Strikes: A Breath-by-Breath Guide to Coming Home to Yourself',
+        author: 'India Bee', date: 'March 3, 2025', read: '6 min read',
+        body: `
+          <p>Anxiety is a future-tense experience. It thrives on "what if" — on projecting worst-case scenarios onto a moment that hasn't happened yet. The breath, by contrast, only ever exists in the present. It is always right now.</p>
+          <p>This is why breathwork is one of the most effective tools we have for anxiety — not because it distracts you from it, but because it physiologically interrupts the stress response and brings you back into your body.</p>
+          <h3>Understanding the Anxiety Cycle</h3>
+          <p>When anxiety peaks, the sympathetic nervous system activates. Breathing becomes shallow and fast. The chest tightens. The mind races. Each shallow breath signals danger to the nervous system — which escalates the response. It's a feedback loop, and the breath is the fastest way to break it.</p>
+          <h3>The 4-7-8 Technique</h3>
+          <p>Developed by Dr. Andrew Weil, this technique is one of the most researched breathing methods for acute anxiety. Inhale quietly through the nose for 4 counts. Hold the breath for 7 counts. Exhale completely through the mouth for 8 counts. That's one cycle. Repeat four times.</p>
+          <blockquote>"The breath is always available. In the middle of a meeting, on the subway, at 2am in the dark. It is always, always a door back to yourself." — India Bee</blockquote>
+          <h3>Box Breathing (When You Need to Function)</h3>
+          <p>Box breathing is used by Navy SEALs, surgeons, and first responders for a reason: it works under pressure. Inhale for 4 counts. Hold for 4. Exhale for 4. Hold for 4. The equal-ratio breathing activates the body's relaxation response while keeping you alert and functional.</p>
+          <h3>Extending the Exhale</h3>
+          <p>The single most accessible technique: simply make your exhale longer than your inhale. Inhale for 4, exhale for 6 or 8. The extended exhale directly activates the vagus nerve and puts the brake on the stress response. You can do this anywhere, anytime, without anyone noticing.</p>
+          <p>Breathwork is a skill, and like all skills, it gets easier and more effective with practice. In our live breathwork classes, we guide you through these techniques together — so when you need them most, they're already familiar.</p>
+        `
+      },
+      post3: {
+        img: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Instructor Stories', catClass: 'gold',
+        title: 'How a Chronic Illness Led Me to Teach Restorative Yoga',
+        author: 'Olivia Hughes', date: 'February 24, 2025', read: '7 min read',
+        body: `
+          <p>I was 29 when the fatigue started. Not the kind that a good night's sleep fixes — the kind that lives in your bones. After two years of doctors, specialists, and tests, I was diagnosed with an autoimmune condition that would permanently change how I relate to my body.</p>
+          <p>Before that diagnosis, I had been a vinyasa teacher for four years. Strong, sweaty, fast. I loved the fire of it. And then the fire went out.</p>
+          <h3>The Grief of Losing the Practice I Knew</h3>
+          <p>What nobody tells you about chronic illness is that the grief isn't just about the physical limitations — it's about the identity that goes with them. I didn't know who I was without my strong, capable practice. For months, I stayed away from the mat entirely.</p>
+          <blockquote>"I had to learn that the mat isn't just for the strong days. It might be most powerful on the hard ones." — Olivia Hughes</blockquote>
+          <h3>Finding Restorative Yoga</h3>
+          <p>A mentor suggested I try a restorative class. I went expecting to be bored. I left crying — not from sadness, but from the relief of being held. For the first time in years, I had let my body rest without guilt. The practice met me exactly where I was. Not where I used to be. Not where I wished I was. Where I was.</p>
+          <h3>Coming Back to Teach</h3>
+          <p>I trained in restorative yoga and trauma-informed teaching over the following year. I rebuilt my practice from the ground up — slower, quieter, and more honest than it had ever been. The students who come to my classes now often come because nothing else has worked. Because they're tired or hurting or afraid. I know exactly how they feel. That's exactly why I can help.</p>
+          <p>Healing isn't linear. Some weeks I still struggle. But I believe now, more than ever, that the body is not the enemy. It is our greatest teacher — especially when it asks us to slow down.</p>
+        `
+      },
+      post4: {
+        img: 'https://images.unsplash.com/photo-1522898467493-49726bf28798?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Mindfulness', catClass: '',
+        title: 'Yin Yoga and the Fascia: What Every Practitioner Needs to Know',
+        author: 'Alisha Ayyad', date: 'February 17, 2025', read: '8 min read',
+        body: `
+          <p>There's a tissue in your body that connects everything to everything else. It surrounds your organs, encases your muscles, and forms the sheaths around your nerves and blood vessels. It's called fascia — and until recently, it was one of the most overlooked structures in both medicine and yoga.</p>
+          <h3>What Is Fascia?</h3>
+          <p>Fascia is a web of connective tissue made primarily of collagen. In a healthy, hydrated state it's fluid and elastic. When we're stressed, sedentary, dehydrated, or recovering from injury or trauma, fascia can become dense, sticky, and restrictive — contributing to chronic pain, reduced range of motion, and that pervasive feeling of "tightness" that no amount of stretching seems to relieve.</p>
+          <h3>Why Yin Yoga Works on Fascia (And Stretching Doesn't)</h3>
+          <p>Dynamic stretching works primarily on muscle tissue. But because muscle responds quickly to stretching stimulus (the "stretch reflex"), it doesn't create lasting change in the fascia. Yin Yoga works differently: by holding poses for 3-5 minutes, with the muscles relaxed, the sustained gentle stress is transferred to the connective tissue — the fascia, ligaments, and joint capsules. This is called "plastic deformation" — a slow, lasting reshaping of tissue.</p>
+          <blockquote>"Yin isn't passive. It's a different kind of intensity — the intensity of staying, of waiting, of being present with discomfort without fighting it." — Alisha Ayyad</blockquote>
+          <h3>The Emotional Layer</h3>
+          <p>Fascia also stores the physical imprints of emotional experience. Trauma, grief, anxiety, and chronic stress all leave structural signatures in the body's connective tissue. This is why so many people have unexpected emotional releases in Yin Yoga — a long hold in Sleeping Swan or Dragon can unlock something that has been held in the tissue for years.</p>
+          <p>This is not something to push or force. It is simply something to allow, with a good instructor and a safe container. That's precisely what our Yin classes at Ripples of Healing are designed to provide.</p>
+        `
+      },
+      post5: {
+        img: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Community', catClass: 'blue',
+        title: 'I Practiced Yoga Alone for 5 Years. Here\'s What a Live Stream Community Changed',
+        author: 'Ripples Community', date: 'February 10, 2025', read: '5 min read',
+        body: `
+          <p>For years, the home yoga practice was a solitary one. A mat in the living room, a YouTube video, headphones in. It worked — until it didn't. Three of our longest-standing members sat down with us to talk honestly about why practicing together changed something they couldn't change alone.</p>
+          <h3>"I Finally Showed Up Consistently"</h3>
+          <p>Sarah, who has been a member since the platform launched, put it simply: "When I knew someone would see me on the Zoom — even if we never spoke — I showed up. There's something about being witnessed, even quietly, that changes everything."</p>
+          <p>Research on behavior change backs this up: social accountability is one of the strongest predictors of habit formation. Not because we fear judgment, but because we are fundamentally wired for connection. We do hard things better in community.</p>
+          <h3>"My Instructor Actually Knows Me"</h3>
+          <p>Marcus, who joined for the Power Vinyasa classes, noticed something unexpected: "After a few weeks, Zach started calling out adjustments by name. He noticed when I was favoring my left side. He remembered that I'd mentioned a shoulder issue. That doesn't happen with a recorded video."</p>
+          <blockquote>"Community isn't a nice-to-have in healing. It's part of the medicine." — Ripples of Healing</blockquote>
+          <h3>"I Stopped Quitting"</h3>
+          <p>Tanisha's experience echoes what we hear over and over: "I quit every solo practice I ever started. Three weeks in, every time. With live classes, I've been consistent for eight months. I think it's because when I'm struggling, I can see other people struggling too — and still showing up. That changes how I see myself."</p>
+          <p>The screen, it turns out, is not a barrier to connection. It is, for many people, the very thing that makes connection possible.</p>
+        `
+      },
+      post6: {
+        img: 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Healing', catClass: '',
+        title: 'Movement as Medicine: The Growing Evidence for Yoga in Trauma Recovery',
+        author: 'Nam Chanterrwynn', date: 'February 3, 2025', read: '9 min read',
+        body: `
+          <p>The research is in. Yoga works for trauma recovery — not as a replacement for therapy, but as a powerful somatic complement that addresses what talk therapy alone cannot reach: the body.</p>
+          <h3>Why Trauma Lives in the Body</h3>
+          <p>Dr. Bessel van der Kolk's landmark work "The Body Keeps the Score" established what somatic practitioners have known for decades: traumatic experience is stored not just in memory, but in the nervous system, the muscles, and the connective tissue. The body holds the imprint of what the mind cannot fully process.</p>
+          <p>This means that healing from trauma cannot happen through insight alone. It requires the body to participate — to complete the stress response cycles that were interrupted, to re-establish a sense of safety in physical form.</p>
+          <h3>What the Studies Show</h3>
+          <p>A landmark 2014 study published in the Journal of Traumatic Stress found that trauma-sensitive yoga significantly reduced PTSD symptoms in women who had not responded to conventional treatments. A 2018 meta-analysis across 12 studies found consistent reductions in anxiety, depression, and PTSD symptom severity across diverse populations.</p>
+          <blockquote>"The goal is not to eliminate discomfort. It is to build a body that can be present with discomfort without being overwhelmed by it." — Nam Chanterrwynn</blockquote>
+          <h3>Trauma-Sensitive vs. Regular Yoga</h3>
+          <p>Not all yoga is created equal when it comes to trauma recovery. Trauma-sensitive yoga emphasizes choice over instruction, curiosity over correction, and internal experience over external form. Cues like "notice what this feels like for you" replace directives like "straighten your leg." This language returns agency to the practitioner — which is exactly what trauma takes away.</p>
+          <p>Every instructor at Ripples of Healing is trained in trauma-informed principles. If you are on a healing journey, you are in the right place.</p>
+        `
+      },
+      post7: {
+        img: 'https://images.unsplash.com/photo-1475823678248-624fc6f85785?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Yoga Tips', catClass: '',
+        title: 'The 3 Alignment Mistakes Almost Everyone Makes (And How to Fix Them)',
+        author: 'Amy Freeman', date: 'January 27, 2025', read: '6 min read',
+        body: `
+          <p>In ten years of teaching, I've watched thousands of students move through the same patterns. The good news: the most common alignment issues are also the easiest to correct, once you know what to look for. Small shifts in your foundation create massive changes throughout the entire body.</p>
+          <h3>Mistake 1: Collapsing the Arches in Standing Poses</h3>
+          <p>The feet are the foundation of every standing posture — but most students let the inner arches collapse toward the floor. This creates a chain reaction upward: the knees track inward, the hips lose stability, the lower back compensates. The fix: lift all four corners of each foot, spread the toes, and feel the arches rise. You'll feel it all the way to your core.</p>
+          <h3>Mistake 2: Locking the Knees in Forward Folds</h3>
+          <p>Hyperextending the knees in forward folds places excessive stress on the ligaments and actually prevents the hamstrings from lengthening fully. Micro-bend the knees slightly. This shifts the work into the muscle belly where it belongs — and you'll feel a dramatically deeper stretch.</p>
+          <blockquote>"Alignment isn't about looking right from the outside. It's about creating space and safety from the inside." — Amy Freeman</blockquote>
+          <h3>Mistake 3: Tension in the Jaw and Face</h3>
+          <p>This one surprises people. The jaw is deeply connected to the pelvic floor through the fascial network of the body. A clenched jaw creates a clenched pelvis — which means you are working against yourself in every hip-opening pose. Consciously soften the jaw, part the lips slightly, and feel what happens in the hips. The change is immediate and remarkable.</p>
+          <p>These aren't technical corrections — they're invitations to inhabit your practice more fully. Come to class and we'll work through them together.</p>
+        `
+      },
+      post8: {
+        img: 'https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Mindfulness', catClass: '',
+        title: 'What 30 Days of Daily Meditation Actually Did to My Brain',
+        author: 'Chandler Price', date: 'January 20, 2025', read: '7 min read',
+        body: `
+          <p>I'll be honest: I didn't want to do it. I had started meditation practices probably eight times over the years and abandoned all of them by day 10. Too restless. Too skeptical. Too busy. This time felt different only because I had run out of other options — the anxiety was winning, and I needed to try something I hadn't tried all the way.</p>
+          <h3>The First Two Weeks: Uncomfortable Truths</h3>
+          <p>Days 1 through 14 were not peaceful. They were illuminating in the least comfortable sense of that word. When you stop moving and stop consuming — no phone, no podcast, no distraction — you discover exactly what has been running underneath the surface. For me it was: a low-grade anxiety I had normalized, a relentless inner critic I had mistaken for ambition, and a deep exhaustion I had been outrunning for years.</p>
+          <p>Sitting with all of that was not pleasant. But it was honest. And honesty, I've come to believe, is where healing starts.</p>
+          <h3>Weeks 3 and 4: Something Shifted</h3>
+          <p>Around day 18, I noticed something different in my reactions. A frustrating email that would have ruined my morning instead passed through me like weather. I noticed the irritation, let it move, and got on with the day. Small. But significant.</p>
+          <blockquote>"Meditation doesn't stop the thoughts. It teaches you that you are not the thoughts. That gap changes everything." — Chandler Price</blockquote>
+          <h3>What 30 Days Produced</h3>
+          <p>I slept better. My resting heart rate dropped by 4 BPM. My focus improved measurably — I could sustain attention on a single task for longer without reaching for my phone. Most meaningfully: the relationship between me and my own mind became less adversarial. The noise is still there. But I am no longer convinced it's telling the truth.</p>
+          <p>I still practice daily. Start with 10 minutes. You don't need more than that to begin noticing the difference.</p>
+        `
+      },
+      post9: {
+        img: 'https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=760&h=320&fit=crop&q=80&auto=format',
+        cat: 'Instructor Stories', catClass: 'gold',
+        title: 'From Corporate Burnout to Full-Time Yogi: Zachary\'s Journey',
+        author: 'Zachary Brown', date: 'January 13, 2025', read: '6 min read',
+        body: `
+          <p>Three years ago I was a senior project manager at a tech company, working 70-hour weeks, sleeping poorly, and practicing yoga on weekends to keep myself functional. I was good at my job. I was also slowly disappearing.</p>
+          <h3>The Moment Everything Changed</h3>
+          <p>It wasn't dramatic. I was in downward dog on a Tuesday morning before a 7am call when it hit me: this 20-minute window was the only part of my day I felt like myself. Everything else was performance. This was real.</p>
+          <p>I sat with that for six months before I did anything about it. I enrolled in a 200-hour teacher training while still working full time — partly to test whether I was serious, partly to delay the scary decision I knew was coming.</p>
+          <h3>Leaving the Salary</h3>
+          <p>The math didn't work, and everyone told me so. Yoga teachers don't make enough. You're throwing away your career. What about your retirement account? All of it true, and none of it the point. The point was that I had one life and I was spending it doing work that was emptying me out, not filling me up.</p>
+          <blockquote>"The mat taught me that strength and rigidity are not the same thing. I applied that lesson to my life." — Zachary Brown</blockquote>
+          <h3>Three Years Later</h3>
+          <p>I teach Power Vinyasa and Hatha Flow at Ripples of Healing. I work less and live more. I have students I've watched transform — not just physically, but fundamentally. The most rewarding work I've ever done pays less than what I left. I have never once regretted the trade.</p>
+          <p>I'm not suggesting everyone quit their job. I'm suggesting that if there's something in your life that makes you feel like yourself — protect it. Feed it. Dare to follow it somewhere unexpected.</p>
+        `
+      }
+    };
+
+    // ── OPEN ARTICLE MODAL ──────────────────────────────────
+    function openArticle(id) {
+      const a = articles[id];
+      if (!a) return;
+      document.getElementById('modal-img').src = a.img;
+      document.getElementById('modal-img').alt = a.title;
+      const catEl = document.getElementById('modal-cat');
+      catEl.textContent = a.cat;
+      catEl.className = 'blog-cat-tag' + (a.catClass ? ' ' + a.catClass : '');
+      document.getElementById('modal-title').textContent = a.title;
+      document.getElementById('modal-author').textContent = a.author;
+      document.getElementById('modal-date').textContent = a.date;
+      document.getElementById('modal-read').textContent = a.read;
+      document.getElementById('modal-body').innerHTML = a.body;
+      const modal = document.getElementById('article-modal');
+      modal.classList.add('open');
+      modal.querySelector('.article-modal-panel').scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeArticle() {
+      document.getElementById('article-modal').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeArticle(); });
+
+    // ── CATEGORY FILTER ─────────────────────────────────────
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        let visible = 0;
+        document.querySelectorAll('#blog-grid .blog-card').forEach(card => {
+          const match = cat === 'all' || card.dataset.cat === cat;
+          card.classList.toggle('hidden', !match);
+          if (match) visible++;
+        });
+        const noResults = document.getElementById('no-results');
+        if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+      });
+    });
+
+    // ── NEWSLETTER FORM ─────────────────────────────────────
+    document.getElementById('blog-newsletter').addEventListener('submit', e => {
+      e.preventDefault();
+      e.target.reset();
+      showToast('You\'re subscribed! Wisdom incoming every Thursday. 🌊');
+    });
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 4000);
+    }
+  </script>
+</body>
+</html>
