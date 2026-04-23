@@ -81,32 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ============================================
      STAGGER FADE-IN for grids (must run BEFORE observer)
      ============================================ */
+  // Scroll animations disabled — all content visible immediately
+  document.querySelectorAll('.fade-in, .stagger-children').forEach(el => {
+    el.classList.add('visible');
+  });
   document.querySelectorAll('.stagger-children').forEach(parent => {
-    Array.from(parent.children).forEach((child, i) => {
-      child.classList.add('fade-in');
-      child.style.transitionDelay = `${i * 0.1}s`;
+    Array.from(parent.children).forEach(child => {
+      child.classList.add('visible');
+      child.style.transitionDelay = '0s';
     });
   });
-
-  /* ============================================
-     SCROLL ANIMATIONS (fade-in on scroll)
-     ============================================ */
-  const observerOptions = {
-    threshold: 0.12,
-    rootMargin: '0px 0px -40px 0px'
-  };
-
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        observer.unobserve(entry.target);
-      }
-    });
-  }, observerOptions);
-
-  // Query AFTER stagger has added fade-in to children
-  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
   /* Pricing toggle is handled inline in pricing.html */
 
