@@ -4,20 +4,124 @@
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://images.unsplash.com" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Classes — Ripples of Healing</title>
-  <meta name="description" content="Browse our full library of yoga, healing movement, meditation, and breathwork classes." />
+  <title>Classes &amp; Schedule — Ripples of Healing</title>
+  <meta name="description" content="Browse live classes and book your spot at Ripples of Healing." />
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    .classes-page { background: #f7f9f9; min-height: 100vh; padding-bottom: 60px; }
+
+    /* ── Today strip ─────────────────────────── */
+    .today-strip { background:#fff; border-bottom:1px solid var(--border-light); padding:32px 0 36px; }
+    .today-label { font-size:0.75rem; font-weight:800; letter-spacing:0.12em; text-transform:uppercase; color:var(--deep-teal); margin-bottom:6px; }
+    .today-heading { font-size:1.6rem; font-weight:800; color:var(--dark-charcoal); margin:0 0 24px; }
+    .today-cards { display:flex; gap:16px; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
+    .today-cards::-webkit-scrollbar { display:none; }
+    .today-card {
+      background:#fff; border:1.5px solid var(--border-light); border-radius:14px;
+      padding:20px 22px; min-width:230px; flex-shrink:0; cursor:pointer; transition:all 0.2s;
+    }
+    .today-card:hover { border-color:var(--deep-teal); box-shadow:0 4px 20px rgba(13,115,119,0.1); transform:translateY(-2px); }
+    .today-card.live { border-color:var(--warm-orange); background:#fff8f4; }
+    .live-badge { display:inline-flex; align-items:center; gap:5px; background:var(--warm-orange); color:#fff; font-size:0.7rem; font-weight:800; letter-spacing:0.06em; padding:3px 9px; border-radius:99px; margin-bottom:10px; text-transform:uppercase; }
+    .live-dot { width:6px; height:6px; border-radius:50%; background:#fff; animation:ldot 1.2s infinite; }
+    @keyframes ldot{0%,100%{opacity:1}50%{opacity:0.3}}
+    .today-card-time { font-size:0.82rem; font-weight:700; color:var(--text-muted); margin-bottom:5px; }
+    .today-card-name { font-size:1rem; font-weight:800; color:var(--dark-charcoal); margin-bottom:3px; }
+    .today-card-instructor { font-size:0.82rem; color:var(--text-muted); margin-bottom:14px; }
+    .today-card-footer { display:flex; align-items:center; justify-content:space-between; }
+    .today-card-cat { font-size:0.72rem; font-weight:700; padding:3px 9px; border-radius:99px; background:#f0f8f8; color:var(--deep-teal); }
+    .today-card-cat.healing { background:#fff5f0; color:var(--warm-orange); }
+    .today-card-cat.meditation { background:#f5f0ff; color:#7c3aed; }
+    .btn-book { background:var(--deep-teal); color:#fff; border:none; border-radius:8px; padding:8px 16px; font-size:0.82rem; font-weight:700; cursor:pointer; transition:background 0.2s; }
+    .btn-book:hover { background:#0a5f63; }
+    .btn-book.live-join { background:var(--warm-orange); }
+    .btn-book.live-join:hover { background:#c2410c; }
+    .btn-book.booked { background:#10B981; cursor:default; }
+    .no-today { color:var(--text-muted); font-size:0.95rem; padding:8px 0; }
+
+    /* ── Zoom info bar ───────────────────────── */
+    .zoom-bar {
+      background:linear-gradient(135deg,var(--deep-teal),#0d6b6f);
+      color:#fff; padding:14px 0;
+    }
+    .zoom-bar-inner { display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; font-size:0.88rem; }
+    .zoom-item { display:flex; align-items:center; gap:7px; }
+    .zoom-label { opacity:0.7; font-size:0.78rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
+    .zoom-val { font-weight:800; }
+    .zoom-divider { width:1px; height:20px; background:rgba(255,255,255,0.2); }
+
+    /* ── Calendar ────────────────────────────── */
+    .calendar-section { padding:40px 0; }
+    .calendar-header { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:28px; }
+    .calendar-title { font-size:1.25rem; font-weight:800; color:var(--dark-charcoal); }
+    .cal-nav { display:flex; align-items:center; gap:10px; }
+    .cal-nav-btn { width:36px; height:36px; border-radius:50%; border:1.5px solid var(--border-light); background:#fff; cursor:pointer; font-size:1.1rem; display:flex; align-items:center; justify-content:center; transition:all 0.15s; color:var(--dark-charcoal); }
+    .cal-nav-btn:hover { border-color:var(--deep-teal); color:var(--deep-teal); }
+    .cal-week-label { font-size:0.9rem; font-weight:700; color:var(--dark-charcoal); min-width:160px; text-align:center; }
+    .cal-legend { display:flex; gap:14px; flex-wrap:wrap; }
+    .cal-legend-item { display:flex; align-items:center; gap:5px; font-size:0.78rem; color:var(--text-muted); font-weight:600; }
+    .cal-legend-dot { width:10px; height:10px; border-radius:2px; }
+
+    .cal-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:10px; }
+    @media(max-width:860px){ .cal-grid{ grid-template-columns:repeat(4,1fr); } }
+    @media(max-width:560px){ .cal-grid{ grid-template-columns:repeat(2,1fr); } }
+
+    .cal-day { background:#fff; border:1.5px solid var(--border-light); border-radius:14px; overflow:hidden; }
+    .cal-day.today { border-color:var(--deep-teal); box-shadow:0 0 0 3px rgba(13,115,119,0.08); }
+    .cal-day-header { padding:10px 14px 8px; border-bottom:1px solid var(--border-light); display:flex; align-items:center; justify-content:space-between; }
+    .cal-day-name { font-size:0.72rem; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; color:var(--text-muted); }
+    .cal-day-num { font-size:1rem; font-weight:800; color:var(--dark-charcoal); width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+    .cal-day.today .cal-day-num { background:var(--deep-teal); color:#fff; }
+    .cal-day-classes { padding:8px; display:flex; flex-direction:column; gap:5px; }
+    .cal-pill { border-radius:0 7px 7px 0; padding:6px 9px; cursor:pointer; transition:all 0.15s; border-left:3px solid; }
+    .cal-pill.yoga      { background:#f0f8f8; border-left-color:var(--deep-teal); }
+    .cal-pill.healing   { background:#fff5f0; border-left-color:var(--warm-orange); }
+    .cal-pill.meditation{ background:#f5f0ff; border-left-color:#7c3aed; }
+    .cal-pill:hover { filter:brightness(0.95); transform:translateX(2px); }
+    .cal-pill-time { font-size:0.68rem; font-weight:700; color:var(--text-muted); }
+    .cal-pill-name { font-size:0.78rem; font-weight:700; color:var(--dark-charcoal); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .cal-empty { padding:14px; font-size:0.8rem; color:#ccc; }
+    .cal-past { opacity:0.4; }
+
+    /* ── Modal ───────────────────────────────── */
+    .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.45); backdrop-filter:blur(4px); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity 0.2s; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:#fff; border-radius:20px; padding:36px; max-width:460px; width:100%; box-shadow:0 32px 80px rgba(0,0,0,0.2); transform:translateY(16px); transition:transform 0.2s; }
+    .modal-overlay.open .modal { transform:translateY(0); }
+    .modal-cat { font-size:0.72rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:8px; }
+    .modal-cat.yoga       { color:var(--deep-teal); }
+    .modal-cat.healing    { color:var(--warm-orange); }
+    .modal-cat.meditation { color:#7c3aed; }
+    .modal-title { font-size:1.45rem; font-weight:800; color:var(--dark-charcoal); margin-bottom:4px; }
+    .modal-instructor { font-size:0.9rem; color:var(--text-muted); margin-bottom:6px; }
+    .modal-desc { font-size:0.88rem; color:var(--text-muted); line-height:1.7; margin-bottom:20px; }
+    .modal-details { background:#f7f9f9; border-radius:12px; padding:16px 18px; margin-bottom:20px; }
+    .modal-row { display:flex; justify-content:space-between; padding:5px 0; font-size:0.88rem; }
+    .modal-row:not(:last-child){ border-bottom:1px solid var(--border-light); }
+    .modal-lbl { color:var(--text-muted); font-weight:600; }
+    .modal-val { font-weight:700; color:var(--dark-charcoal); }
+    .zoom-box { background:#f0f8f8; border:1px solid rgba(13,115,119,0.15); border-radius:10px; padding:14px 16px; margin-bottom:20px; font-size:0.85rem; }
+    .zoom-box-title { font-weight:800; color:var(--deep-teal); margin-bottom:6px; font-size:0.82rem; text-transform:uppercase; letter-spacing:0.06em; }
+    .zoom-box-row { display:flex; gap:8px; margin-bottom:3px; }
+    .zoom-box-lbl { color:var(--text-muted); font-weight:600; width:80px; }
+    .zoom-box-val { font-weight:700; color:var(--dark-charcoal); }
+    .modal-actions { display:flex; gap:10px; }
+    .btn-modal-join { flex:1; padding:14px; border:none; border-radius:10px; background:var(--deep-teal); color:#fff; font-size:0.95rem; font-weight:800; cursor:pointer; transition:background 0.2s; text-decoration:none; display:flex; align-items:center; justify-content:center; }
+    .btn-modal-join:hover { background:#0a5f63; }
+    .btn-modal-close { padding:14px 20px; border:1.5px solid var(--border-light); border-radius:10px; background:#fff; color:var(--dark-charcoal); font-size:0.95rem; font-weight:700; cursor:pointer; transition:all 0.2s; }
+    .btn-modal-close:hover { border-color:#999; }
+    .modal-success { text-align:center; padding:8px 0; }
+    .modal-success-icon { font-size:2.5rem; margin-bottom:10px; }
+    .modal-success-msg { font-size:1rem; font-weight:700; color:#15803d; }
+    .modal-success-sub { font-size:0.85rem; color:var(--text-muted); margin-top:4px; line-height:1.6; }
+  </style>
 </head>
 <body>
 
-  <!-- NAVIGATION -->
   <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo">
-        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
-      </a>
+      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" /></a>
       <ul class="nav-links" role="list">
         <li><a href="index.html">Home</a></li>
         <li><a href="classes.html" class="active">Classes &amp; Book</a></li>
@@ -29,570 +133,88 @@
       <div class="nav-actions">
         <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
         <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
-        <button class="nav-hamburger" aria-label="Open menu">
-          <span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span>
-        </button>
+        <button class="nav-hamburger" aria-label="Open menu"><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span></button>
       </div>
     </div>
   </nav>
   <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
   <div class="nav-overlay" aria-hidden="true"></div>
 
-  <main>
-    <!-- PAGE HERO -->
-    <section class="page-hero" aria-label="Classes page hero" style="background-image:url('images/classes/classes-hero.png')">
-      <div class="container">
-        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Classes</span></div>
-        <h1>Our Classes</h1>
-        <p class="tagline">Browse our full library or book a live stream session — every class meets you exactly where you are.</p>
-      </div>
-    </section>
+  <main class="classes-page" style="padding-top:var(--nav-height,80px);">
 
-    <!-- Main Tab Bar -->
-    <div style="background:var(--white);border-bottom:2px solid var(--border-light);position:sticky;top:var(--nav-height);z-index:91;box-shadow:var(--shadow-sm);">
+    <!-- TODAY'S CLASSES -->
+    <div class="today-strip">
       <div class="container">
-        <div style="display:flex;gap:0;border-bottom:none;">
-          <button class="main-tab-btn active" data-tab="browse" style="padding:20px 36px;font-size:0.95rem;font-weight:700;background:none;border:none;border-bottom:3px solid var(--warm-orange);color:var(--warm-orange);cursor:pointer;transition:all 0.3s;font-family:var(--font-body);">Browse Classes</button>
-          <button class="main-tab-btn" data-tab="schedule" style="padding:20px 36px;font-size:0.95rem;font-weight:700;background:none;border:none;border-bottom:3px solid transparent;color:var(--text-muted);cursor:pointer;transition:all 0.3s;font-family:var(--font-body);">Live Schedule &amp; Book</button>
+        <div class="today-label">Today's Classes</div>
+        <h2 class="today-heading" id="today-heading">Loading…</h2>
+        <div class="today-cards" id="today-cards"></div>
+      </div>
+    </div>
+
+    <!-- ZOOM INFO BAR -->
+    <div class="zoom-bar">
+      <div class="container">
+        <div class="zoom-bar-inner">
+          <div class="zoom-item">
+            <span style="font-size:1.1rem;">📹</span>
+            <div><div class="zoom-label">All Classes Stream on</div><div class="zoom-val">Zoom — Live with your instructor</div></div>
+          </div>
+          <div class="zoom-divider"></div>
+          <div class="zoom-item">
+            <div><div class="zoom-label">Meeting ID</div><div class="zoom-val">724 254 2678</div></div>
+          </div>
+          <div class="zoom-divider"></div>
+          <div class="zoom-item">
+            <div><div class="zoom-label">Passcode</div><div class="zoom-val">JXKB7R</div></div>
+          </div>
+          <div class="zoom-divider"></div>
+          <div class="zoom-item">
+            <div><div class="zoom-label">Times</div><div class="zoom-val">All Pacific Time (PT)</div></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Browse Classes Tab — category filters -->
-    <div id="tab-browse" class="tab-panel">
-      <div class="classes-filters" aria-label="Class category filters" style="position:sticky;top:calc(var(--nav-height) + 61px);z-index:90;background:var(--soft-grey);border-bottom:1px solid var(--border-light);padding:16px 0;box-shadow:var(--shadow-sm);">
-        <div class="container">
-          <div class="filter-tabs" role="tablist">
-            <button class="filter-tab active" data-filter="all" role="tab" aria-selected="true">All Classes</button>
-            <button class="filter-tab" data-filter="yoga" role="tab" aria-selected="false">Yoga</button>
-            <button class="filter-tab" data-filter="healing" role="tab" aria-selected="false">Healing Movement</button>
-            <button class="filter-tab" data-filter="meditation" role="tab" aria-selected="false">Meditation &amp; Rest</button>
+    <!-- WEEKLY CALENDAR -->
+    <div class="calendar-section">
+      <div class="container">
+        <div class="calendar-header">
+          <div>
+            <div class="calendar-title">Weekly Schedule</div>
+            <div class="cal-legend" style="margin-top:8px;">
+              <div class="cal-legend-item"><span class="cal-legend-dot" style="background:var(--deep-teal)"></span>Yoga</div>
+              <div class="cal-legend-item"><span class="cal-legend-dot" style="background:var(--warm-orange)"></span>Healing Movement</div>
+              <div class="cal-legend-item"><span class="cal-legend-dot" style="background:#7c3aed"></span>Meditation &amp; Rest</div>
+            </div>
+          </div>
+          <div class="cal-nav">
+            <button class="cal-nav-btn" id="cal-prev">‹</button>
+            <div class="cal-week-label" id="cal-week-label"></div>
+            <button class="cal-nav-btn" id="cal-next">›</button>
           </div>
         </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <p style="text-align:center;margin-top:20px;font-size:0.85rem;color:var(--text-muted);">
+          Click any class to view details and get the Zoom link. All classes are also recorded and available on-demand within 2 hours.
+        </p>
       </div>
-
-    <!-- CLASSES LAYOUT -->
-    <div class="container">
-      <div class="classes-layout">
-
-        <!-- SIDEBAR -->
-        <aside class="classes-sidebar" aria-label="Class filters">
-          <div class="sidebar-widget">
-            <h4>Day</h4>
-            <label class="sidebar-option"><input type="checkbox" /> Monday</label>
-            <label class="sidebar-option"><input type="checkbox" /> Tuesday</label>
-            <label class="sidebar-option"><input type="checkbox" /> Wednesday</label>
-            <label class="sidebar-option"><input type="checkbox" /> Thursday</label>
-            <label class="sidebar-option"><input type="checkbox" /> Friday</label>
-            <label class="sidebar-option"><input type="checkbox" /> Saturday</label>
-            <label class="sidebar-option"><input type="checkbox" /> Sunday</label>
-          </div>
-          <div class="sidebar-widget">
-            <h4>Time of Day</h4>
-            <label class="sidebar-option"><input type="checkbox" /> Early Morning (7 AM)</label>
-            <label class="sidebar-option"><input type="checkbox" /> Morning (9–10 AM)</label>
-            <label class="sidebar-option"><input type="checkbox" /> Midday (12 PM)</label>
-            <label class="sidebar-option"><input type="checkbox" /> Evening (5:30–7 PM)</label>
-          </div>
-          <div class="sidebar-widget">
-            <h4>Instructor</h4>
-            <label class="sidebar-option"><input type="checkbox" /> Anna Fernandez</label>
-            <label class="sidebar-option"><input type="checkbox" /> Amy Freeman</label>
-            <label class="sidebar-option"><input type="checkbox" /> Alisha Ayyad</label>
-            <label class="sidebar-option"><input type="checkbox" /> Brent Honnerlaw</label>
-            <label class="sidebar-option"><input type="checkbox" /> Carli Klingerman</label>
-            <label class="sidebar-option"><input type="checkbox" /> India Bee</label>
-            <label class="sidebar-option"><input type="checkbox" /> Jennifer Opaka</label>
-            <label class="sidebar-option"><input type="checkbox" /> Nam Chanterrwynn</label>
-            <label class="sidebar-option"><input type="checkbox" /> Olivia Hughes</label>
-            <label class="sidebar-option"><input type="checkbox" /> Zach Brown</label>
-          </div>
-          <div class="sidebar-widget">
-            <h4>All Times Pacific</h4>
-            <p style="font-size:0.82rem;color:var(--text-muted);line-height:1.6;margin:0;">All live classes stream weekly on Zoom. Join from anywhere in the world.</p>
-          </div>
-        </aside>
-
-        <!-- CLASS GRID -->
-        <section aria-label="Class listings">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
-            <p style="color:var(--text-muted);font-size:0.9rem;"><strong style="color:var(--dark-charcoal);">21 live classes</strong> weekly — all times Pacific</p>
-            <span style="display:inline-flex;align-items:center;gap:6px;background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:var(--radius-full);padding:5px 14px;font-size:0.78rem;font-weight:700;letter-spacing:0.04em;">
-              <span style="width:7px;height:7px;border-radius:50%;background:#dc2626;display:inline-block;animation:pulse 1.5s ease-in-out infinite;"></span>
-              Live on Zoom
-            </span>
-          </div>
-
-          <div class="classes-grid" id="classes-grid">
-
-            <!-- Yoga Mythology Flow -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=300&fit=crop&q=80&auto=format" alt="Yoga Mythology Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Mon 9:00 AM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Brent Honnerlaw</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Yoga Mythology Flow</h3>
-                <p>Storytelling woven into a dynamic all-levels Vinyasa — dive into Yoga Philosophy and embody the ancient teachings as you flow.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Full Body Stretch -->
-            <article class="card class-card-item" data-category="healing">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=300&fit=crop&q=80&auto=format" alt="Full Body Stretch" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Mon &amp; Fri 12 PM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Anna Fernandez</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Full Body Stretch</h3>
-                <p>A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Hatha Flow -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="images/classes/hatha-flow.jpg" alt="Hatha Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Mon 5:30 PM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Amy Freeman</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Hatha Flow</h3>
-                <p>Grounded yet uplifting — mindful, slow postures and steady breath help you develop alignment, awareness, and inner calm.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Gentle Flow -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="images/classes/gentle-flow.webp" alt="Gentle Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue, Thu &amp; Fri</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Olivia Hughes · India Bee · Zach Brown</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Gentle Flow</h3>
-                <p>Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">Beginner Friendly</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- OM Mat Pilates -->
-            <article class="card class-card-item" data-category="healing">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=300&fit=crop&q=80&auto=format" alt="OM Mat Pilates" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue &amp; Thu 12 PM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Jennifer Opaka</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>OM Mat Pilates</h3>
-                <p>Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Vinyasa -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=600&h=300&fit=crop&q=80&auto=format" alt="Vinyasa" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue, Thu &amp; Sat</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Brent Honnerlaw · Zach Brown · Amy Freeman</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Vinyasa</h3>
-                <p>A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-intermediate">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Restorative & Meditation (Nidra) -->
-            <article class="card class-card-item" data-category="meditation">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&h=300&fit=crop&q=80&auto=format" alt="Restorative &amp; Meditation" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Tue &amp; Thu 7 PM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">India Bee</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Restorative &amp; Meditation (Nidra)</h3>
-                <p>A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Slow Flow -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="images/classes/slow-flow.jpeg" alt="Slow Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed 7:00 AM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Zach Brown</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Slow Flow</h3>
-                <p>Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm to start your day with presence.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Power Vinyasa -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=600&h=300&fit=crop&q=80&auto=format" alt="Power Vinyasa" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed 9:00 AM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Zach Brown</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Power Vinyasa</h3>
-                <p>An empowering, dynamic flow designed to build strength, stamina, and focus. Expect heat, challenge, and the satisfaction of moving beyond your limits with intention.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-intermediate">Intermediate</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Gentle Deep Stretch -->
-            <article class="card class-card-item" data-category="healing">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="images/classes/gentle-deep-stretch.webp" alt="Gentle Deep Stretch" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed &amp; Sat 9–12</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Amy Freeman · Anna Fernandez</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Gentle Deep Stretch: Happy Hips, Back &amp; Shoulders</h3>
-                <p>Focused attention on the body's most tension-prone areas. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Slow & Strong Mobility Flow -->
-            <article class="card class-card-item" data-category="healing">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="images/classes/strong-mobility-flow.jpg" alt="Slow &amp; Strong Mobility Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Wed 5:30 PM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Nam Chanterrwynn</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Slow &amp; Strong Mobility Flow</h3>
-                <p>A fusion of strength and mobility that awakens your body, opens your joints, and builds core stability. Leave strong, fluid, and fully energized.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-intermediate">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Chakra Vinyasa -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1510894347713-fc3ed6fdf539?w=600&h=300&fit=crop&q=80&auto=format" alt="Chakra Vinyasa" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Fri 9:00 AM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Amy Freeman</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Chakra Vinyasa</h3>
-                <p>Journey through the body's energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Yin -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="images/classes/yin.webp" alt="Yin" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Fri 5:30 PM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Alisha Ayyad</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Yin</h3>
-                <p>A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Serenity Roll & Release -->
-            <article class="card class-card-item" data-category="healing">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=600&h=300&fit=crop&q=80&auto=format" alt="Serenity Roll &amp; Release" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Sun 9:00 AM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Jennifer Opaka</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Serenity Roll &amp; Release</h3>
-                <p>Guided self-massage with fascia release balls to relieve tightness, reduce stress, and enhance natural mobility. Opaka Method Ball Kit or rolled towel as alternative.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-beginner">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-            <!-- Detox Flow -->
-            <article class="card class-card-item" data-category="yoga">
-              <div style="position:relative;overflow:hidden;height:200px;">
-                <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&h=300&fit=crop&q=80&auto=format" alt="Detox Flow" loading="lazy" style="width:100%;height:200px;object-fit:cover;display:block;" />
-                <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.15),rgba(0,0,0,0.4));"></div>
-                <span class="badge badge-live" style="position:absolute;top:12px;left:12px;">● Live</span>
-                <span style="position:absolute;top:12px;right:12px;background:rgba(0,0,0,0.5);color:white;border-radius:var(--radius-sm);padding:3px 10px;font-size:0.75rem;font-weight:600;">Sun 10:30 AM</span>
-              </div>
-              <div class="card-body">
-                <div class="class-card-meta">
-                  <span class="instructor">Carli Klingerman</span>
-                  <span class="class-card-duration">⏱ 60 min</span>
-                </div>
-                <h3>Detox Flow</h3>
-                <p>A purifying, faster-paced sequence of twists, breathwork, and energizing postures. Stimulates circulation, supports digestion, and leaves you feeling light and revitalized.</p>
-                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-                  <span class="badge badge-intermediate">All Levels</span>
-                  <a href="https://us05web.zoom.us/j/7242542678?pwd=5CixteVVVRCZylpsbUbNgJox85vqgn.1" target="_blank" rel="noopener" class="btn btn-teal btn-sm">Join Class</a>
-                </div>
-              </div>
-            </article>
-
-          </div><!-- end classes-grid -->
-        </section>
-
-      </div><!-- end classes-layout -->
     </div>
-
-    <!-- WEEKLY SCHEDULE AT A GLANCE -->
-<section style="background:var(--soft-grey);padding:64px 0;margin-top:48px;">
-  <div class="container">
-    <div class="section-header fade-in" style="margin-bottom:36px;">
-      <span class="section-label">All Times Pacific</span>
-      <h2>Weekly Schedule at a Glance</h2>
-      <p>21 live classes every week — join from anywhere on Zoom</p>
-    </div>
-    <div style="overflow-x:auto;border-radius:var(--radius-lg);box-shadow:var(--shadow-md);">
-      <table style="width:100%;border-collapse:collapse;background:white;font-size:0.88rem;">
-        <thead>
-          <tr style="background:linear-gradient(135deg,var(--deep-teal),#1a5060);color:white;">
-            <th style="padding:16px 18px;text-align:left;font-weight:700;">Time</th>
-            <th style="padding:16px 12px;text-align:center;">Monday</th>
-            <th style="padding:16px 12px;text-align:center;">Tuesday</th>
-            <th style="padding:16px 12px;text-align:center;">Wednesday</th>
-            <th style="padding:16px 12px;text-align:center;">Thursday</th>
-            <th style="padding:16px 12px;text-align:center;">Friday</th>
-            <th style="padding:16px 12px;text-align:center;">Saturday</th>
-            <th style="padding:16px 12px;text-align:center;">Sunday</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--border-light);">
-            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">7:00 AM</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Slow Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border-light);background:#FAFCFD;">
-            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">9:00 AM</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Yoga Mythology Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Brent Honnerlaw</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Olivia Hughes</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Power Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">India Bee</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Chakra Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#FFF4EE;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Deep Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Anna Fernandez</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Serenity Roll &amp; Release</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Jennifer Opaka</span></div></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border-light);">
-            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">10:30 AM</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Detox Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Carli Klingerman</span></div></td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border-light);background:#FAFCFD;">
-            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">12:00 PM</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Full Body Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Anna Fernandez</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#F4EEFF;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">OM Mat Pilates</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Jennifer Opaka</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Gentle Deep Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#F4EEFF;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">OM Mat Pilates</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Jennifer Opaka</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Full Body Stretch</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Anna Fernandez</span></div></td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-          </tr>
-          <tr style="border-bottom:1px solid var(--border-light);">
-            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">5:30 PM</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Hatha Flow</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Amy Freeman</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Brent Honnerlaw</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Slow &amp; Strong Mobility</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Nam Chanterrwynn</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#E8F4F4;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Vinyasa</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Zach Brown</span></div></td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#EFF4F6;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;">Yin</strong><br><span style="color:var(--text-muted);font-size:0.75rem;">Alisha Ayyad</span></div></td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-          </tr>
-          <tr>
-            <td style="padding:14px 18px;font-weight:700;color:var(--text-muted);white-space:nowrap;">7:00 PM</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#1C3C6E;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;color:white;">Restorative &amp; Nidra</strong><br><span style="color:rgba(255,255,255,0.7);font-size:0.75rem;">India Bee</span></div></td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;"><div style="background:#1C3C6E;border-radius:8px;padding:8px;"><strong style="font-size:0.82rem;color:white;">Restorative &amp; Meditation</strong><br><span style="color:rgba(255,255,255,0.7);font-size:0.75rem;">India Bee</span></div></td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-            <td style="padding:14px 12px;text-align:center;">—</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="text-align:center;margin-top:16px;color:var(--text-muted);font-size:0.83rem;">All classes run live on Zoom weekly · Meeting ID: 724 254 2678 · Passcode: JXKB7R</p>
-  </div>
-</section>
-
-    <!-- CTA -->
-    <section class="cta-banner section-sm" style="margin-top:64px;">
-      <div class="container">
-        <h2>See the Full Weekly Schedule</h2>
-        <p>All 21 classes run live on Zoom every week. Check the live schedule to book your spot.</p>
-        <button onclick="document.querySelector('[data-tab=schedule]').click()" class="btn btn-primary btn-lg" style="margin-right:16px;">See Live Schedule</button>
-        <a href="contact.html" class="btn btn-outline-teal btn-lg">Contact Us</a>
-      </div>
-    </section>
-</div><!-- end tab-browse -->
-
-<!-- Live Schedule Tab Panel -->
-<div id="tab-schedule" class="tab-panel" style="display:none;">
-  <div style="background:var(--soft-grey);padding:60px 0;">
-    <div class="container" style="max-width:800px;text-align:center;">
-      <span class="section-label">Book a Class</span>
-      <h2 style="margin-bottom:12px;">View the Full Schedule</h2>
-      <p style="color:var(--text-muted);margin-bottom:32px;">See today's classes and book upcoming sessions in advance on our schedule page.</p>
-      <a href="schedule.html" class="btn btn-primary btn-lg">Go to Schedule →</a>
-      <p style="margin-top:20px;font-size:0.83rem;color:var(--text-muted);">
-        Can't find a time that works? <a href="contact.html" style="color:var(--warm-orange);font-weight:600;text-decoration:none;">Contact us</a> to request a private session.
-      </p>
-    </div>
-  </div>
-</div>
 
   </main>
+
+  <!-- MODAL -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal"><div id="modal-content"></div></div>
+  </div>
 
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-brand">
-          <div class="footer-logo">
-            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
-          </div>
-          <p class="footer-tagline">Real. Guided. Transformative.</p>
-          <div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div>
-        </div>
+        <div class="footer-brand"><div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
         <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Meditation</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
-        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
-        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Newsletter</a></li></ul></div>
+        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
     </div>
@@ -602,45 +224,172 @@
   <script src="supabase-client.js"></script>
   <script src="main.js"></script>
   <script>
-    /* Lazy load fade-in */
-    document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
-      if (img.complete) { img.classList.add('loaded'); }
-      else { img.addEventListener('load', function() { img.classList.add('loaded'); }); }
-    });
-  </script>
-  <script>
-  // Category filter tabs
-  document.querySelectorAll('.filter-tab').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.filter-tab').forEach(function(b) {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      this.classList.add('active');
-      this.setAttribute('aria-selected', 'true');
-      var filter = this.getAttribute('data-filter');
-      document.querySelectorAll('.class-card-item').forEach(function(card) {
-        card.style.display = (filter === 'all' || card.getAttribute('data-category') === filter) ? '' : 'none';
-      });
-    });
-  });
+  // ── CLASS DATA ─────────────────────────────────────────────────
+  // day: 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
+  const CLASSES = [
+    // MONDAY
+    { id:1,  day:1, time:'9:00 AM',  name:'Yoga Mythology Flow',           instructor:'Brent Honnerlaw',                    duration:'60 min', cat:'yoga',       desc:'Storytelling woven into a dynamic all-levels Vinyasa — dive into Yoga Philosophy and embody the ancient teachings as you flow.' },
+    { id:2,  day:1, time:'12:00 PM', name:'Full Body Stretch',             instructor:'Anna Fernandez',                     duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
+    { id:3,  day:1, time:'5:30 PM',  name:'Hatha Flow',                   instructor:'Amy Freeman',                        duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful, slow postures and steady breath help you develop alignment, awareness, and inner calm.' },
+    // TUESDAY
+    { id:4,  day:2, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'Olivia Hughes',                      duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
+    { id:5,  day:2, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Brent Honnerlaw',                    duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:6,  day:2, time:'12:00 PM', name:'OM Mat Pilates',               instructor:'Jennifer Opaka',                     duration:'60 min', cat:'healing',    desc:'Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.' },
+    { id:7,  day:2, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',                          duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
+    // WEDNESDAY
+    { id:8,  day:3, time:'7:00 AM',  name:'Slow Flow',                    instructor:'Zach Brown',                         duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm to start your day with presence.' },
+    { id:9,  day:3, time:'9:00 AM',  name:'Power Vinyasa',                instructor:'Zach Brown',                         duration:'60 min', cat:'yoga',       desc:'An empowering, dynamic flow designed to build strength, stamina, and focus. Expect heat, challenge, and the satisfaction of moving beyond your limits with intention.' },
+    { id:10, day:3, time:'11:00 AM', name:'Gentle Deep Stretch',          instructor:'Amy Freeman',                        duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
+    { id:11, day:3, time:'5:30 PM',  name:'Slow & Strong Mobility Flow',  instructor:'Nam Chanterrwynn',                   duration:'60 min', cat:'healing',    desc:'A fusion of strength and mobility that awakens your body, opens your joints, and builds core stability. Leave strong, fluid, and fully energized.' },
+    // THURSDAY
+    { id:12, day:4, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'India Bee',                          duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
+    { id:13, day:4, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Zach Brown',                         duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:14, day:4, time:'12:00 PM', name:'OM Mat Pilates',               instructor:'Jennifer Opaka',                     duration:'60 min', cat:'healing',    desc:'Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.' },
+    { id:15, day:4, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',                          duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
+    // FRIDAY
+    { id:16, day:5, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'Zach Brown',                         duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
+    { id:17, day:5, time:'9:00 AM',  name:'Chakra Vinyasa',               instructor:'Amy Freeman',                        duration:'60 min', cat:'yoga',       desc:'Journey through the body\'s energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.' },
+    { id:18, day:5, time:'12:00 PM', name:'Full Body Stretch',            instructor:'Anna Fernandez',                     duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
+    { id:19, day:5, time:'5:30 PM',  name:'Yin',                         instructor:'Alisha Ayyad',                       duration:'60 min', cat:'yoga',       desc:'A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.' },
+    // SATURDAY
+    { id:20, day:6, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Amy Freeman',                        duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:21, day:6, time:'11:00 AM', name:'Gentle Deep Stretch',          instructor:'Anna Fernandez',                     duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
+    // SUNDAY
+    { id:22, day:0, time:'9:00 AM',  name:'Serenity Roll & Release',      instructor:'Jennifer Opaka',                     duration:'60 min', cat:'healing',    desc:'Guided self-massage with fascia release balls to relieve tightness, reduce stress, and enhance natural mobility. A rolled towel works as an alternative.' },
+    { id:23, day:0, time:'10:30 AM', name:'Detox Flow',                   instructor:'Carli Klingerman',                   duration:'60 min', cat:'yoga',       desc:'A purifying, faster-paced sequence of twists, breathwork, and energizing postures. Stimulates circulation, supports digestion, and leaves you feeling light and revitalized.' },
+  ];
 
-  // Main tab switching
-  document.querySelectorAll('.main-tab-btn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.main-tab-btn').forEach(function(b) {
-        b.style.borderBottomColor = 'transparent';
-        b.style.color = 'var(--text-muted)';
-        b.classList.remove('active');
-      });
-      this.style.borderBottomColor = 'var(--warm-orange)';
-      this.style.color = 'var(--warm-orange)';
-      this.classList.add('active');
-      var tab = this.getAttribute('data-tab');
-      document.getElementById('tab-browse').style.display = tab === 'browse' ? '' : 'none';
-      document.getElementById('tab-schedule').style.display = tab === 'schedule' ? '' : 'none';
-    });
-  });
+  const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const MONTHS    = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const ZOOM_ID   = '724 254 2678';
+  const ZOOM_PASS = 'JXKB7R';
+  const ZOOM_URL  = 'https://zoom.us/j/7242542678?pwd=JXKB7R';
+
+  const booked = new Set();
+  let weekOffset = 0;
+
+  function getMonday(offset=0) {
+    const now=new Date(), day=now.getDay();
+    const mon=new Date(now);
+    mon.setDate(now.getDate()-(day===0?6:day-1)+offset*7);
+    mon.setHours(0,0,0,0); return mon;
+  }
+
+  function isLiveNow(cls) {
+    const now=new Date();
+    if(now.getDay()!==cls.day) return false;
+    const [time,ampm]=cls.time.split(' ');
+    let [h,m]=time.split(':').map(Number);
+    if(ampm==='PM'&&h!==12) h+=12;
+    if(ampm==='AM'&&h===12) h=0;
+    const start=new Date(); start.setHours(h,m,0,0);
+    const end=new Date(start.getTime()+60*60*1000);
+    return now>=start&&now<end;
+  }
+
+  function catColor(cat) {
+    return cat==='healing'?'var(--warm-orange)':cat==='meditation'?'#7c3aed':'var(--deep-teal)';
+  }
+
+  function openModal(cls, dateStr) {
+    const live=isLiveNow(cls), isBooked=booked.has(cls.id);
+    document.getElementById('modal-content').innerHTML=`
+      <div class="modal-cat ${cls.cat}">${cls.cat==='healing'?'Healing Movement':cls.cat==='meditation'?'Meditation & Rest':'Yoga'}</div>
+      <div class="modal-title">${cls.name}</div>
+      <div class="modal-instructor">with ${cls.instructor}</div>
+      <div class="modal-desc">${cls.desc}</div>
+      <div class="modal-details">
+        <div class="modal-row"><span class="modal-lbl">Date</span><span class="modal-val">${dateStr}</span></div>
+        <div class="modal-row"><span class="modal-lbl">Time</span><span class="modal-val">${cls.time} PT</span></div>
+        <div class="modal-row"><span class="modal-lbl">Duration</span><span class="modal-val">${cls.duration}</span></div>
+        <div class="modal-row"><span class="modal-lbl">Instructor</span><span class="modal-val">${cls.instructor}</span></div>
+      </div>
+      <div class="zoom-box">
+        <div class="zoom-box-title">📹 Zoom Details</div>
+        <div class="zoom-box-row"><span class="zoom-box-lbl">Meeting ID</span><span class="zoom-box-val">${ZOOM_ID}</span></div>
+        <div class="zoom-box-row"><span class="zoom-box-lbl">Passcode</span><span class="zoom-box-val">${ZOOM_PASS}</span></div>
+      </div>
+      <div class="modal-actions">
+        <a href="${ZOOM_URL}" target="_blank" class="btn-modal-join">${live?'🔴 Join Live Now':'Open in Zoom'}</a>
+        <button class="btn-modal-close" id="modal-close-btn">Close</button>
+      </div>
+    `;
+    document.getElementById('modal-overlay').classList.add('open');
+    document.getElementById('modal-close-btn').onclick=closeModal;
+  }
+
+  function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+  document.getElementById('modal-overlay').addEventListener('click',e=>{ if(e.target===document.getElementById('modal-overlay'))closeModal(); });
+
+  // ── Today ──────────────────────────────────────────────────────
+  function renderToday() {
+    const now=new Date(), todayDay=now.getDay();
+    const todayClasses=CLASSES.filter(c=>c.day===todayDay);
+    const dateStr=`${DAY_NAMES[todayDay]}, ${MONTHS[now.getMonth()]} ${now.getDate()}`;
+    document.getElementById('today-heading').textContent=dateStr;
+    const container=document.getElementById('today-cards');
+    if(!todayClasses.length){
+      container.innerHTML=`<div class="no-today">No classes today — check the calendar below for the full weekly schedule.</div>`;
+      return;
+    }
+    container.innerHTML=todayClasses.map(cls=>{
+      const live=isLiveNow(cls);
+      return `
+        <div class="today-card${live?' live':''}" onclick='openModal(${JSON.stringify(cls)},"${dateStr}")'>
+          ${live?'<div class="live-badge"><span class="live-dot"></span>Live Now</div>':''}
+          <div class="today-card-time">${cls.time} PT</div>
+          <div class="today-card-name">${cls.name}</div>
+          <div class="today-card-instructor">with ${cls.instructor}</div>
+          <div class="today-card-footer">
+            <span class="today-card-cat ${cls.cat}">${cls.cat==='healing'?'Healing':cls.cat==='meditation'?'Meditation':'Yoga'}</span>
+            <button class="btn-book${live?' live-join':''}" onclick="event.stopPropagation();openModal(${JSON.stringify(cls)},'${dateStr}')">${live?'Join Now':'Details'}</button>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  // ── Calendar ───────────────────────────────────────────────────
+  function renderCalendar() {
+    const monday=getMonday(weekOffset);
+    const sunday=new Date(monday); sunday.setDate(monday.getDate()+6);
+    const todayNum=new Date().setHours(0,0,0,0);
+    const fmt=d=>`${MONTHS[d.getMonth()].slice(0,3)} ${d.getDate()}`;
+    document.getElementById('cal-week-label').textContent=`${fmt(monday)} – ${fmt(sunday)}`;
+    const grid=document.getElementById('cal-grid');
+    grid.innerHTML='';
+    for(let i=0;i<7;i++){
+      const date=new Date(monday); date.setDate(monday.getDate()+i);
+      const dayIdx=date.getDay();
+      const dateMs=date.setHours(0,0,0,0);
+      const isToday=dateMs===todayNum, isPast=dateMs<todayNum;
+      const dateStr=`${DAY_NAMES[dayIdx]}, ${MONTHS[new Date(dateMs).getMonth()]} ${new Date(dateMs).getDate()}`;
+      const dayClasses=CLASSES.filter(c=>c.day===dayIdx);
+      const col=document.createElement('div');
+      col.className=`cal-day${isToday?' today':''}`;
+      col.innerHTML=`
+        <div class="cal-day-header">
+          <span class="cal-day-name">${DAY_SHORT[dayIdx]}</span>
+          <span class="cal-day-num">${new Date(dateMs).getDate()}</span>
+        </div>
+        <div class="cal-day-classes">
+          ${dayClasses.length
+            ?dayClasses.map(cls=>`
+              <div class="cal-pill ${cls.cat}${isPast?' cal-past':''}" onclick='openModal(${JSON.stringify(cls)},"${dateStr}")'>
+                <div class="cal-pill-time">${cls.time}</div>
+                <div class="cal-pill-name">${cls.name}</div>
+              </div>`).join('')
+            :'<div class="cal-empty">Rest day</div>'}
+        </div>`;
+      grid.appendChild(col);
+    }
+  }
+
+  document.getElementById('cal-prev').addEventListener('click',()=>{weekOffset--;renderCalendar();});
+  document.getElementById('cal-next').addEventListener('click',()=>{weekOffset++;renderCalendar();});
+
+  renderToday();
+  renderCalendar();
   </script>
 </body>
 </html>
