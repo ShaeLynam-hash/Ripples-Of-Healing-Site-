@@ -67,15 +67,11 @@
           </div>
           <div class="zoom-divider"></div>
           <div class="zoom-item">
-            <div><div class="zoom-label">Meeting ID</div><div class="zoom-val">724 254 2678</div></div>
-          </div>
-          <div class="zoom-divider"></div>
-          <div class="zoom-item">
-            <div><div class="zoom-label">Passcode</div><div class="zoom-val">JXKB7R</div></div>
-          </div>
-          <div class="zoom-divider"></div>
-          <div class="zoom-item">
             <div><div class="zoom-label">Times</div><div class="zoom-val">All Pacific Time (PT)</div></div>
+          </div>
+          <div class="zoom-divider"></div>
+          <div class="zoom-item guest-only">
+            <div><div class="zoom-label">Members only</div><div class="zoom-val"><a href="signup.html" style="color:var(--warm-orange);font-weight:700;">Join to access Zoom links →</a></div></div>
           </div>
         </div>
       </div>
@@ -205,9 +201,32 @@
     return now>=start&&now<end;
   }
 
-  function openModal(cls, dateStr) {
-    const live=isLiveNow(cls);
-    document.getElementById('modal-content').innerHTML=`
+  async function openModal(cls, dateStr) {
+    const live = isLiveNow(cls);
+
+    // Check membership
+    let isMember = false;
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      isMember = !!user;
+    } catch(e) {}
+
+    const zoomSection = isMember
+      ? `<div class="modal-actions">
+           <a href="${ZOOM_URL}" target="_blank" class="btn-modal-join">${live ? 'Join Live Now' : 'Join on Zoom'}</a>
+           <button class="btn-modal-close" id="modal-close-btn">Close</button>
+         </div>`
+      : `<div class="zoom-box" style="background:rgba(224,90,30,0.07);border:1px solid rgba(224,90,30,0.2);border-radius:12px;padding:20px;text-align:center;">
+           <div style="font-size:1.4rem;margin-bottom:8px;">🔒</div>
+           <div style="font-weight:700;color:var(--dark-charcoal);margin-bottom:6px;">Members Only</div>
+           <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">Join Ripples of Healing to access live Zoom classes.</div>
+           <a href="signup.html" class="btn-modal-join" style="display:inline-block;">Start Free Trial</a>
+         </div>
+         <div class="modal-actions" style="margin-top:12px;">
+           <button class="btn-modal-close" id="modal-close-btn" style="width:100%;">Close</button>
+         </div>`;
+
+    document.getElementById('modal-content').innerHTML = `
       <div class="modal-cat ${cls.cat}">${cls.cat==='healing'?'Healing Movement':cls.cat==='meditation'?'Meditation & Rest':'Yoga'}</div>
       <div class="modal-title">${cls.name}</div>
       <div class="modal-instructor">with ${cls.instructor}</div>
@@ -218,18 +237,10 @@
         <div class="modal-row"><span class="modal-lbl">Duration</span><span class="modal-val">${cls.duration}</span></div>
         <div class="modal-row"><span class="modal-lbl">Instructor</span><span class="modal-val">${cls.instructor}</span></div>
       </div>
-      <div class="zoom-box">
-        <div class="zoom-box-title">Zoom Details</div>
-        <div class="zoom-box-row"><span class="zoom-box-lbl">Meeting ID</span><span class="zoom-box-val">${ZOOM_ID}</span></div>
-        <div class="zoom-box-row"><span class="zoom-box-lbl">Passcode</span><span class="zoom-box-val">${ZOOM_PASS}</span></div>
-      </div>
-      <div class="modal-actions">
-        <a href="${ZOOM_URL}" target="_blank" class="btn-modal-join">${live?'Join Live Now':'Open in Zoom'}</a>
-        <button class="btn-modal-close" id="modal-close-btn">Close</button>
-      </div>
+      ${zoomSection}
     `;
     document.getElementById('modal-overlay').classList.add('open');
-    document.getElementById('modal-close-btn').onclick=closeModal;
+    document.getElementById('modal-close-btn').onclick = closeModal;
   }
 
   function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
