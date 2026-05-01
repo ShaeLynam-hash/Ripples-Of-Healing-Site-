@@ -260,17 +260,24 @@
     container.innerHTML=todayClasses.map(cls=>{
       const live=isLiveNow(cls);
       return `
-        <div class="today-card${live?' live':''}" onclick='openModal(${JSON.stringify(cls)},"${dateStr}")'>
+        <div class="today-card${live?' live':''}" data-cls-id="${cls.id}" data-date="${dateStr}">
           ${live?'<div class="live-badge" style="margin-bottom:10px;">Live Now</div>':''}
           <div class="today-card-time">${cls.time} PT</div>
           <div class="today-card-name">${cls.name}</div>
           <div class="today-card-instructor">with ${cls.instructor}</div>
           <div class="today-card-footer">
             <span class="today-card-cat ${cls.cat}">${cls.cat==='healing'?'Healing':cls.cat==='meditation'?'Meditation':'Yoga'}</span>
-            <button class="btn-book${live?' live-join':''}" onclick="event.stopPropagation();openModal(${JSON.stringify(cls)},'${dateStr}')">${live?'Join Now':'Details'}</button>
+            <button class="btn-book${live?' live-join':''}" data-cls-id="${cls.id}" data-date="${dateStr}">${live?'Join Now':'Details'}</button>
           </div>
         </div>`;
     }).join('');
+    container.querySelectorAll('[data-cls-id]').forEach(el=>{
+      el.addEventListener('click', e=>{
+        e.stopPropagation();
+        const id=parseInt(el.dataset.clsId);
+        openModal(CLASSES.find(c=>c.id===id), el.dataset.date);
+      });
+    });
   }
 
   // ── Calendar ───────────────────────────────────────────────────
@@ -299,12 +306,18 @@
         <div class="cal-day-classes">
           ${dayClasses.length
             ?dayClasses.map(cls=>`
-              <div class="cal-pill ${cls.cat}${isPast?' cal-past':''}" onclick='openModal(${JSON.stringify(cls)},"${dateStr}")'>
+              <div class="cal-pill ${cls.cat}${isPast?' cal-past':''}" data-cls-id="${cls.id}" data-date="${dateStr}">
                 <div class="cal-pill-time">${cls.time}</div>
                 <div class="cal-pill-name">${cls.name}</div>
               </div>`).join('')
             :'<div class="cal-empty">Rest day</div>'}
         </div>`;
+      col.querySelectorAll('.cal-pill[data-cls-id]').forEach(el=>{
+        el.addEventListener('click', ()=>{
+          const id=parseInt(el.dataset.clsId);
+          openModal(CLASSES.find(c=>c.id===id), el.dataset.date);
+        });
+      });
       grid.appendChild(col);
     }
   }
