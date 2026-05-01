@@ -8,218 +8,52 @@
   <title>Class Schedule — Ripples of Healing</title>
   <meta name="description" content="View today's classes and book upcoming sessions at Ripples of Healing." />
   <link rel="stylesheet" href="styles.css" />
+  <!-- Styles for schedule-specific overrides are handled in styles.css -->
   <style>
-    .schedule-page { background: #f7f9f9; min-height: 100vh; padding-bottom: 60px; }
-
-    /* ── Today strip ───────────────────────────── */
-    .today-strip {
-      background: #fff;
-      border-bottom: 1px solid var(--border-light);
-      padding: 32px 0 36px;
-    }
-    .today-label {
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--deep-teal);
-      margin-bottom: 6px;
-    }
-    .today-heading {
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--dark-charcoal);
-      margin: 0 0 24px;
-    }
-    .today-cards {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      scrollbar-width: none;
-    }
-    .today-cards::-webkit-scrollbar { display: none; }
-    .today-card {
-      background: #fff;
-      border: 1.5px solid var(--border-light);
-      border-radius: 14px;
-      padding: 20px 22px;
-      min-width: 220px;
-      flex-shrink: 0;
-      cursor: pointer;
-      transition: all 0.2s;
-      position: relative;
-    }
-    .today-card:hover { border-color: var(--deep-teal); box-shadow: 0 4px 20px rgba(13,115,119,0.1); transform: translateY(-2px); }
-    .today-card.live { border-color: var(--warm-orange); background: #fff8f4; }
-    .live-badge {
-      display: inline-flex; align-items: center; gap: 5px;
-      background: var(--warm-orange); color: #fff;
-      font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em;
-      padding: 3px 9px; border-radius: 99px; margin-bottom: 10px;
-      text-transform: uppercase;
-    }
-    .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: pulse 1.2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
-    .today-card-time { font-size: 0.82rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
-    .today-card-name { font-size: 1rem; font-weight: 800; color: var(--dark-charcoal); margin-bottom: 4px; }
-    .today-card-instructor { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; }
-    .today-card-footer { display: flex; align-items: center; justify-content: space-between; }
-    .today-card-duration { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); background: #f3f4f6; padding: 3px 9px; border-radius: 99px; }
-    .btn-book {
-      background: var(--deep-teal); color: #fff;
-      border: none; border-radius: 8px;
-      padding: 8px 16px; font-size: 0.82rem; font-weight: 700;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .btn-book:hover { background: #0a5f63; }
-    .btn-book.booked { background: #10B981; cursor: default; }
-    .btn-book.live-join { background: var(--warm-orange); }
-    .btn-book.live-join:hover { background: #c2410c; }
-    .no-classes-today {
-      text-align: center; padding: 32px;
-      color: var(--text-muted); font-size: 0.95rem;
-    }
-
-    /* ── Calendar ───────────────────────────────── */
-    .calendar-section { padding: 40px 0; }
-    .calendar-header {
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 16px; margin-bottom: 28px;
-    }
-    .calendar-title { font-size: 1.25rem; font-weight: 800; color: var(--dark-charcoal); }
-    .cal-nav { display: flex; align-items: center; gap: 10px; }
-    .cal-nav-btn {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1.5px solid var(--border-light);
-      background: #fff; cursor: pointer; font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s; color: var(--dark-charcoal);
-    }
-    .cal-nav-btn:hover { border-color: var(--deep-teal); color: var(--deep-teal); }
-    .cal-week-label { font-size: 0.9rem; font-weight: 700; color: var(--dark-charcoal); min-width: 160px; text-align: center; }
-
-    /* Week day headers */
-    .cal-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-    }
-    @media (max-width: 760px) {
-      .cal-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-    @media (max-width: 480px) {
-      .cal-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    .cal-day {
-      background: #fff;
-      border: 1.5px solid var(--border-light);
-      border-radius: 14px;
-      overflow: hidden;
-      min-height: 120px;
-    }
-    .cal-day.today { border-color: var(--deep-teal); box-shadow: 0 0 0 3px rgba(13,115,119,0.08); }
-    .cal-day-header {
-      padding: 10px 14px 8px;
-      border-bottom: 1px solid var(--border-light);
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .cal-day-name { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); }
-    .cal-day-num {
-      font-size: 1rem; font-weight: 800; color: var(--dark-charcoal);
-      width: 28px; height: 28px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .cal-day.today .cal-day-num { background: var(--deep-teal); color: #fff; }
-    .cal-day-classes { padding: 8px; display: flex; flex-direction: column; gap: 5px; }
-    .cal-class-pill {
-      background: #f0f8f8;
-      border-left: 3px solid var(--deep-teal);
-      border-radius: 0 7px 7px 0;
-      padding: 6px 9px;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .cal-class-pill:hover { background: #daf0f0; }
-    .cal-class-pill.orange { background: #fff5f0; border-left-color: var(--warm-orange); }
-    .cal-class-pill.orange:hover { background: #ffe8dc; }
-    .cal-class-pill-time { font-size: 0.68rem; font-weight: 700; color: var(--text-muted); }
-    .cal-class-pill-name { font-size: 0.78rem; font-weight: 700; color: var(--dark-charcoal); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .cal-empty { padding: 16px 14px; font-size: 0.8rem; color: #ccc; }
-
-    /* ── Booking modal ──────────────────────────── */
-    .modal-overlay {
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.45);
-      backdrop-filter: blur(4px);
-      z-index: 9999;
-      display: flex; align-items: center; justify-content: center;
-      padding: 20px;
-      opacity: 0; pointer-events: none; transition: opacity 0.2s;
-    }
-    .modal-overlay.open { opacity: 1; pointer-events: all; }
-    .modal {
-      background: #fff;
-      border-radius: 20px;
-      padding: 36px;
-      max-width: 440px; width: 100%;
-      box-shadow: 0 32px 80px rgba(0,0,0,0.2);
-      transform: translateY(16px); transition: transform 0.2s;
-    }
-    .modal-overlay.open .modal { transform: translateY(0); }
-    .modal-tag { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--deep-teal); margin-bottom: 8px; }
-    .modal-title { font-size: 1.5rem; font-weight: 800; color: var(--dark-charcoal); margin-bottom: 4px; }
-    .modal-meta { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 24px; }
-    .modal-details { background: #f7f9f9; border-radius: 12px; padding: 16px 18px; margin-bottom: 24px; }
-    .modal-detail-row { display: flex; justify-content: space-between; padding: 5px 0; font-size: 0.88rem; }
-    .modal-detail-row:not(:last-child) { border-bottom: 1px solid var(--border-light); }
-    .modal-detail-label { color: var(--text-muted); font-weight: 600; }
-    .modal-detail-val { font-weight: 700; color: var(--dark-charcoal); }
-    .modal-actions { display: flex; gap: 10px; }
-    .btn-modal-book {
-      flex: 1; padding: 14px; border: none; border-radius: 10px;
-      background: var(--deep-teal); color: #fff;
-      font-size: 0.95rem; font-weight: 800; cursor: pointer;
-      transition: background 0.2s;
-    }
-    .btn-modal-book:hover { background: #0a5f63; }
-    .btn-modal-cancel {
-      padding: 14px 20px; border: 1.5px solid var(--border-light);
-      border-radius: 10px; background: #fff; color: var(--dark-charcoal);
-      font-size: 0.95rem; font-weight: 700; cursor: pointer;
-      transition: all 0.2s;
-    }
-    .btn-modal-cancel:hover { border-color: #999; }
-    .modal-success { text-align: center; padding: 12px 0; }
-    .modal-success-icon { font-size: 2.5rem; margin-bottom: 10px; }
-    .modal-success-msg { font-size: 1rem; font-weight: 700; color: #15803d; }
-    .modal-success-sub { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+    @media (max-width: 760px) { .cal-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 480px) { .cal-grid { grid-template-columns: repeat(2, 1fr); } }
+    .no-classes-today { text-align: center; padding: 32px; color: var(--text-muted); font-size: 0.95rem; }
+    .today-card-duration { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); background: var(--cream); padding: 3px 10px; border-radius: var(--radius-full); }
   </style>
 </head>
 <body>
 
   <!-- NAVIGATION -->
-  <nav class="nav scrolled" id="main-nav" role="navigation">
+  <nav class="nav light-nav scrolled" id="main-nav" role="navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
       <ul class="nav-links" role="list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="classes.html">Classes</a></li>
-        <li><a href="schedule.html" class="active">Schedule</a></li>
+        <li><a href="classes.html" class="active">Classes</a></li>
+        <li><a href="instructors.html">Instructors</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-actions">
-        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
-        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
-        <button class="nav-hamburger" aria-label="Open menu"><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span></button>
+        <a href="login.html" class="nav-login guest-only">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm guest-only">Join Now</a>
+        <a href="classes.html" class="btn btn-primary btn-sm auth-only">My Classes</a>
+        <button class="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
-  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes</a><a href="schedule.html">Schedule</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-drawer">
+    <nav class="nav-drawer-links">
+      <a href="classes.html">Classes</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-drawer-actions">
+      <a href="login.html" class="btn btn-outline-cream" style="width:100%;justify-content:center;">Log In</a>
+      <a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Join Now</a>
+    </div>
+  </div>
   <div class="nav-overlay" aria-hidden="true"></div>
 
   <main class="schedule-page" style="padding-top: var(--nav-height, 80px);">
@@ -263,10 +97,10 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-brand"><div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
-        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="schedule.html">Schedule</a></li><li><a href="pricing.html">Pricing</a></li></ul></div>
-        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-brand"><div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">&#9728;</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">&#9654;</a></div></div>
+        <div class="footer-col"><h4>Practice</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="instructors.html">Instructors</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
         <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>

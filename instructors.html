@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Instructors — Ripples of Healing</title>
   <meta name="description" content="Meet the certified, passionate instructors who guide your yoga and healing movement journey." />
@@ -10,152 +12,286 @@
 <body>
 
   <!-- NAVIGATION -->
-  <nav class="nav scrolled" id="main-nav" role="navigation">
+  <nav class="nav light-nav scrolled" id="main-nav" role="navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
         <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
       <ul class="nav-links" role="list">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="classes.html">Classes &amp; Book</a></li>
+        <li><a href="classes.html">Classes</a></li>
+        <li><a href="instructors.html" class="active">Instructors</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="pricing.html">Pricing</a></li>
-        <li><a href="blog.html">Blog</a></li>
+        <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
       <div class="nav-actions">
-        <a href="login.html" class="nav-login" style="color:var(--dark-charcoal);">Log In</a>
-        <a href="signup.html" class="btn btn-primary btn-sm">Start Free</a>
-        <button class="nav-hamburger" aria-label="Open menu"><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span><span style="background:var(--dark-charcoal);"></span></button>
+        <a href="login.html" class="nav-login guest-only">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm guest-only">Join Now</a>
+        <a href="classes.html" class="btn btn-primary btn-sm auth-only">My Classes</a>
+        <button class="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
-  <div class="nav-drawer"><nav class="nav-drawer-links"><a href="index.html">Home</a><a href="classes.html">Classes &amp; Book</a><a href="about.html">About</a><a href="pricing.html">Pricing</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></nav><div class="nav-drawer-actions"><a href="login.html" class="btn btn-outline-orange" style="width:100%;justify-content:center;">Log In</a><a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Start Free Trial</a></div></div>
+  <div class="nav-drawer">
+    <nav class="nav-drawer-links">
+      <a href="classes.html">Classes</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-drawer-actions">
+      <a href="login.html" class="btn btn-outline-cream" style="width:100%;justify-content:center;">Log In</a>
+      <a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Join Now</a>
+    </div>
+  </div>
   <div class="nav-overlay" aria-hidden="true"></div>
 
   <main>
     <!-- PAGE HERO -->
-    <section class="page-hero">
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=1600&q=80&fit=crop&auto=format')">
       <div class="container">
         <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Instructors</span></div>
-        <h1>Your Guides on the Journey</h1>
-        <p class="tagline">Each instructor brings unique depth, wisdom, and heart. They are not just teachers — they are fellow travelers on the path of healing.</p>
+        <h1>Your Guides<br>on the Journey</h1>
+        <p class="tagline">Each instructor brings unique depth, wisdom, and heart. They are not just teachers &mdash; they are fellow travelers on the path of healing.</p>
       </div>
     </section>
 
     <!-- INSTRUCTORS GRID -->
-    <section class="section" aria-labelledby="instructors-heading">
+    <section class="section" style="background:var(--cream);" aria-labelledby="instructors-heading">
       <div class="container">
         <div class="section-header fade-in">
           <span class="section-label">Our Faculty</span>
           <h2 id="instructors-heading">Meet the Instructors</h2>
-          <p>Certified, passionate, and deeply committed to your well-being — every instructor is hand-selected for their expertise and their humanity.</p>
+          <p>Certified, passionate, and deeply committed to your well-being &mdash; every instructor is hand-selected for their expertise and their humanity.</p>
         </div>
 
         <div class="grid-3 stagger-children">
 
-          <!-- Instructor 1 — Anna Fernandez -->
+          <!-- Anna Fernandez -->
           <article class="instructor-card">
             <div class="instructor-photo-wrap">
-              <img class="instructor-photo" src="https://piertopointwellness.com/wp-content/uploads/2021/03/anna-fernandez.jpg" alt="Anna Fernandez" />
+              <img class="instructor-photo" src="images/instructors/anna-fernandez.jpg" alt="Anna Fernandez" loading="lazy" />
               <div class="instructor-overlay" aria-hidden="true">
                 <a href="#" aria-label="Anna Fernandez on Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-                </a>
-                <a href="#" aria-label="Anna Fernandez on YouTube">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
                 </a>
               </div>
             </div>
             <h3>Anna Fernandez</h3>
             <p class="instructor-specialty">Founder &amp; Lead Instructor</p>
-            <p class="instructor-bio">Anna discovered the beauty of yoga over 20 years ago while searching for relief from chronic pain caused by scoliosis — and received far more than she ever imagined, on and off the mat. After selling her former business in 2012, she completed Elka Yoga Teacher Training in 2013, igniting a lifelong passion for teaching and a deep commitment to helping others discover their own innate healing power. Yoga not only healed her body — it guided her to embody the art of Living Yoga in every area of life. Anna holds certifications in Hatha, Vinyasa, Children's Yoga, and SUP Yoga, and is a Reiki Level 2 Practitioner. Her classes speak to the body, mind, energy &amp; spirit, creating a safe healing space for Every Body.</p>
-            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+            <p class="instructor-bio">Anna has been practicing yoga for over 25 years and teaching since 2013. Her journey began with healing chronic pain from scoliosis and grew into a passion for helping others access their own healing power. She teaches gentle, nourishing classes that create space in the body, mind, and energy.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
           </article>
 
-          <!-- Instructor 2 -->
+          <!-- Amy Freeman -->
           <article class="instructor-card">
             <div class="instructor-photo-wrap">
-              <img class="instructor-photo" src="https://placehold.co/140x140/E8793A/FFFFFF?text=MR" alt="Marcus Rivera" />
+              <img class="instructor-photo" src="images/instructors/IMG_4116.jpg" alt="Amy Freeman" loading="lazy" />
               <div class="instructor-overlay" aria-hidden="true">
-                <a href="#" aria-label="Marcus Rivera on Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-                </a>
-                <a href="#" aria-label="Marcus Rivera website">🌐</a>
-              </div>
-            </div>
-            <h3>Marcus Rivera</h3>
-            <p class="instructor-specialty">Somatic Healing &amp; Trauma-Informed Movement</p>
-            <p class="instructor-bio">A licensed somatic therapist and movement educator, Marcus brings clinical depth to every class. His trauma-informed approach creates a profoundly safe container for healing — particularly for those navigating grief, anxiety, and chronic pain.</p>
-            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
-          </article>
-
-          <!-- Instructor 3 -->
-          <article class="instructor-card">
-            <div class="instructor-photo-wrap">
-              <img class="instructor-photo" src="https://placehold.co/140x140/3A6FA8/FFFFFF?text=PK" alt="Priya Kapoor" />
-              <div class="instructor-overlay" aria-hidden="true">
-                <a href="#" aria-label="Priya Kapoor on Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-                </a>
-                <a href="#" aria-label="Priya Kapoor on YouTube">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/></svg>
+                <a href="#" aria-label="Amy Freeman on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
                 </a>
               </div>
             </div>
-            <h3>Priya Kapoor</h3>
-            <p class="instructor-specialty">Meditation &amp; Breathwork</p>
-            <p class="instructor-bio">Born in Mumbai and trained in the Vipassana tradition, Priya has spent a decade guiding meditation retreats globally. Her breathwork methodology synthesizes pranayama, Wim Hof techniques, and somatic nervous system regulation.</p>
-            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+            <h3>Amy Freeman</h3>
+            <p class="instructor-specialty">Hatha, Vinyasa &amp; Restorative Yoga</p>
+            <p class="instructor-bio">Amy brings over 30 years of experience practicing and teaching yoga. She leads heart-centered classes blending movement, breath, and mindfulness to cultivate calm, resilience, and balance. A devoted mother of two, Amy brings a grounded, empathetic presence to every class.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
           </article>
 
-          <!-- Instructor 4 -->
+          <!-- Alisha Ayaad -->
           <article class="instructor-card">
             <div class="instructor-photo-wrap">
-              <img class="instructor-photo" src="https://placehold.co/140x140/E8C23A/2E2E2E?text=EV" alt="Elena Vasquez" />
+              <img class="instructor-photo" src="images/instructors/alisha-ayaad.jpeg" alt="Alisha Ayaad" loading="lazy" />
               <div class="instructor-overlay" aria-hidden="true">
-                <a href="#" aria-label="Elena Vasquez on Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                <a href="#" aria-label="Alisha Ayaad on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
                 </a>
               </div>
             </div>
-            <h3>Elena Vasquez</h3>
-            <p class="instructor-specialty">Restorative Yoga &amp; Yoga Nidra</p>
-            <p class="instructor-bio">Elena's gentle, deeply nurturing classes offer respite for the depleted and overwhelmed. Specializing in Yoga Nidra and restorative practices, she helps students access the profound healing intelligence of deep rest.</p>
-            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+            <h3>Alisha Ayaad</h3>
+            <p class="instructor-specialty">Yin Yoga</p>
+            <p class="instructor-bio">Alisha's path in yoga and the healing arts is rooted in a deep desire to help others reconnect with themselves. She teaches Yin yoga with a grounded, intuitive approach informed by massage therapy and traditional Eastern healing practices.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
           </article>
 
-          <!-- Instructor 5 -->
+          <!-- Brent Honnerlaw -->
           <article class="instructor-card">
             <div class="instructor-photo-wrap">
-              <img class="instructor-photo" src="https://placehold.co/140x140/1a4a4a/FFFFFF?text=JO" alt="James Okafor" />
+              <img class="instructor-photo" src="images/instructors/brent-honnerlaw.jpeg" alt="Brent Honnerlaw" loading="lazy" />
               <div class="instructor-overlay" aria-hidden="true">
-                <a href="#" aria-label="James Okafor on Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
-                </a>
-                <a href="#" aria-label="James Okafor website">🌐</a>
-              </div>
-            </div>
-            <h3>James Okafor</h3>
-            <p class="instructor-specialty">Yin Yoga &amp; Qigong</p>
-            <p class="instructor-bio">A practitioner of both Yin yoga and traditional Chinese Qigong for over 20 years, James bridges Eastern healing arts with modern understanding of the fascia and connective tissue system. His classes are profoundly still and deeply transformative.</p>
-            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
-          </article>
-
-          <!-- Instructor 6 -->
-          <article class="instructor-card">
-            <div class="instructor-photo-wrap">
-              <img class="instructor-photo" src="https://placehold.co/140x140/6B7280/FFFFFF?text=LN" alt="Lena Novak" />
-              <div class="instructor-overlay" aria-hidden="true">
-                <a href="#" aria-label="Lena Novak on Instagram">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                <a href="#" aria-label="Brent Honnerlaw on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
                 </a>
               </div>
             </div>
-            <h3>Lena Novak</h3>
-            <p class="instructor-specialty">Ashtanga Yoga &amp; Advanced Alignment</p>
-            <p class="instructor-bio">A dedicated Ashtanga practitioner who has studied at the KPJAYI institute in Mysore, Lena brings unwavering precision and genuine warmth to her classes. Her teaching challenges you to grow while honoring your body's limits.</p>
-            <a href="classes.html" class="btn btn-outline-orange btn-sm">View Classes</a>
+            <h3>Brent Honnerlaw</h3>
+            <p class="instructor-specialty">Hatha, Vinyasa, Yin &amp; Qi Gong (E-RYT 500)</p>
+            <p class="instructor-bio">Brent is an experienced yoga teacher (E-RYT 500) who blends Hatha, Vinyasa, Yin, Restorative, meditation, and Qi Gong. He integrates sound, storytelling, and yoga philosophy to help students deepen awareness and cultivate calm, focus, and resilience.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Carli Klingerman -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/carli-klingerman.jpeg" alt="Carli Klingerman" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Carli Klingerman on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Carli Klingerman</h3>
+            <p class="instructor-specialty">Vinyasa Flow</p>
+            <p class="instructor-bio">Carli's breath-led flows move with a steady, energizing rhythm — building heat, resilience, and creative momentum while staying deeply grounded. She creates space to move with intention and reconnect to the body's natural intelligence.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Chandler Price -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/chandler-price.jpeg" alt="Chandler Price" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Chandler Price on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Chandler Price</h3>
+            <p class="instructor-specialty">Yoga &amp; Meditation</p>
+            <p class="instructor-bio">Chandler leads yoga classes designed to help students reset mentally, physically, and emotionally. She creates a welcoming space for all levels to drop in, trust their experience, and fully receive the benefits of the practice.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Cintia Tavares -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/cintia-tavares.jpeg" alt="Cintia Tavares" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Cintia Tavares on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Cintia Tavares</h3>
+            <p class="instructor-specialty">Vinyasa &amp; Hatha Yoga</p>
+            <p class="instructor-bio">Cintia brings over 20 years of experience guiding students through yoga practices that cultivate strength, balance, and inner awareness. She leads Vinyasa and Hatha-based classes accessible for all levels.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- India Bee -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/india-bee.jpeg" alt="India Bee" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="India Bee on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>India Bee</h3>
+            <p class="instructor-specialty">Yoga &amp; Yoga Nidra</p>
+            <p class="instructor-bio">India shares practices that nourish the nervous system and invite deep rest and renewal. With over 20 years of study, she teaches yoga and yoga nidra in a way that is accessible, grounding, and supportive for all levels.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Jennifer Opaka -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/300-HR-PHOTO.jpg" alt="Jennifer Opaka" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Jennifer Opaka on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Jennifer Opaka</h3>
+            <p class="instructor-specialty">Mat Pilates &amp; Roll &amp; Release</p>
+            <p class="instructor-bio">Jenny brings over 30 years of experience in movement and fitness. During her own healing journey through cancer, she created Roll &amp; Release Balls — a therapeutic method to ease tension, restore movement, and support recovery.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Nam Chanterrwyn -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/nam-chanterrwyn.jpeg" alt="Nam Chanterrwyn" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Nam Chanterrwyn on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Nam Chanterrwyn</h3>
+            <p class="instructor-specialty">Functional Movement &amp; Vinyasa</p>
+            <p class="instructor-bio">Nam is an advanced yoga teacher trained in functional movement and anatomy, known for blending strength, precision, and mindful awareness. With experience working alongside professional athletes, he empowers students to move with confidence.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Olivia Hughes -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/olivia-hughes.jpeg" alt="Olivia Hughes" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Olivia Hughes on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Olivia Hughes</h3>
+            <p class="instructor-specialty">Vinyasa, Aerial Yoga &amp; Reiki Master</p>
+            <p class="instructor-bio">Olivia has taught yoga and Reiki since 2011, certified in Vinyasa, Hatha, Yin, and Aerial Yoga. A Reiki Master and Spiritual Psychology graduate, she is also co-founder of Yoga in the Park, now in its 13th year.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Ruth Nazarian -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/ruth-nazarian.jpeg" alt="Ruth Nazarian" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Ruth Nazarian on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Ruth Nazarian</h3>
+            <p class="instructor-specialty">Yoga, Breathwork &amp; Sound Healing</p>
+            <p class="instructor-bio">Ruth is an experienced yoga and meditation teacher with over 700 hours of training in movement, mindfulness, and stress management. She blends yoga, breathwork, and sound to help students release tension and restore balance.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Valerie Sorrentino -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/valerie-sorrentino.png" alt="Valerie Sorrentino" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Valerie Sorrentino on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Valerie Sorrentino</h3>
+            <p class="instructor-specialty">Restorative Yoga &amp; Self-Care</p>
+            <p class="instructor-bio">Valerie is a yoga teacher and self-care guide who blends restorative practices with mindful presence to help students find calm, healing, and renewal. She helps high-achieving, highly sensitive people bring balance and ease into their lives.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
+          </article>
+
+          <!-- Zachary Brown -->
+          <article class="instructor-card">
+            <div class="instructor-photo-wrap">
+              <img class="instructor-photo" src="images/instructors/zachary-brown.jpeg" alt="Zachary Brown" loading="lazy" />
+              <div class="instructor-overlay" aria-hidden="true">
+                <a href="#" aria-label="Zachary Brown on Instagram">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                </a>
+              </div>
+            </div>
+            <h3>Zachary Brown</h3>
+            <p class="instructor-specialty">Yoga, Meditation &amp; Contemplative Practice</p>
+            <p class="instructor-bio">Zach brings a thoughtful, reflective approach to movement and mindfulness, shaped by years of practice across yoga, meditation, and contemplative traditions. His classes emphasize presence, curiosity, and emotional awareness.</p>
+            <a href="classes.html" class="btn btn-outline-terra btn-sm">View Classes</a>
           </article>
 
         </div>
@@ -163,12 +299,12 @@
     </section>
 
     <!-- TEACH WITH US BANNER -->
-    <section class="cta-banner">
+    <section class="cta-banner" aria-labelledby="teach-cta-heading">
       <div class="container">
-        <span class="section-label" style="color:rgba(255,255,255,0.7);">Join Our Faculty</span>
-        <h2>Teach With Ripples of Healing</h2>
+        <span class="section-label" style="color:rgba(255,255,255,0.65);">Join Our Faculty</span>
+        <h2 id="teach-cta-heading">Teach With Ripples of Healing</h2>
         <p>Are you a certified yoga teacher or somatic healer with a passion for live stream teaching? We'd love to hear from you.</p>
-        <a href="contact.html" class="btn btn-primary btn-lg">Apply to Teach</a>
+        <a href="contact.html" class="btn btn-outline-cream btn-lg">Apply to Teach</a>
       </div>
     </section>
 
@@ -177,12 +313,14 @@
   <footer class="footer" role="contentinfo">
     <div class="container">
       <div class="footer-top">
-        <div class="footer-brand"><div class="footer-logo">
-            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
-          </div><p class="footer-tagline">Real. Guided. Transformative.</p><div class="footer-social"><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">▶</a></div></div>
-        <div class="footer-col"><h4>Pages</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About Us</a></li><li><a href="blog.html">Blog</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div class="footer-col"><h4>Classes</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
-        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="pricing.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
+        <div class="footer-brand">
+          <div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div>
+          <p class="footer-tagline">Real. Guided. Transformative.</p>
+          <div class="footer-social"><a href="#" aria-label="Instagram">&#9728;</a><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="YouTube">&#9654;</a></div>
+        </div>
+        <div class="footer-col"><h4>Practice</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="instructors.html">Instructors</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li><li><a href="#">Privacy Policy</a></li></ul></div>
         <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li><li><a href="#">Newsletter</a></li></ul></div>
       </div>
       <div class="footer-bottom"><p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a><a href="#">Accessibility</a></div></div>
