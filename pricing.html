@@ -64,17 +64,6 @@
     <section class="section" style="background:var(--cream);" aria-labelledby="pricing-heading">
       <div class="container">
 
-        <!-- Billing Toggle -->
-        <div class="pricing-toggle-wrap fade-in">
-          <span id="monthly-label" style="font-weight:700;color:var(--navy);">Monthly</span>
-          <label class="pricing-toggle" aria-label="Toggle annual billing">
-            <input type="checkbox" id="pricing-toggle" />
-            <span class="pricing-toggle-slider"></span>
-          </label>
-          <span id="annual-label" style="color:var(--text-muted);">Annual</span>
-          <span class="discount-badge">Save 20%</span>
-        </div>
-
         <!-- Single Pricing Card -->
         <div style="display:flex;justify-content:center;" class="stagger-children" id="pricing-heading">
 
@@ -83,8 +72,8 @@
             <h3>Ripples Membership</h3>
             <div class="pricing-price">
               <span class="currency">$</span>
-              <span class="amount" data-monthly="22" data-annual="18">22</span>
-              <span class="period price-period">/month</span>
+              <span class="amount">22</span>
+              <span class="period">/month</span>
             </div>
             <p class="pricing-desc">Complete access to everything Ripples of Healing has to offer — unlimited live classes, the full on-demand library, and direct connection with our instructors.</p>
             <ul class="pricing-features">
@@ -105,7 +94,7 @@
         <!-- Guarantee -->
         <div style="text-align:center;margin-top:40px;" class="fade-in">
           <p style="color:var(--text-muted);font-size:0.88rem;">
-            Includes a <strong>7-day free trial</strong>. No credit card required to start. Cancel anytime.
+            Includes a <strong>7-day free trial</strong>. Card required — you won't be charged until day 8. Cancel anytime.
           </p>
         </div>
       </div>
@@ -205,24 +194,5 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-client.js"></script>
   <script src="main.js"></script>
-  <script>
-    // Pricing toggle
-    const toggle = document.getElementById('pricing-toggle');
-    if (toggle) {
-      toggle.addEventListener('change', function() {
-        const isAnnual = this.checked;
-        document.querySelectorAll('.pricing-price .amount').forEach(el => {
-          el.textContent = isAnnual ? el.getAttribute('data-annual') : el.getAttribute('data-monthly');
-        });
-        document.querySelectorAll('.price-period').forEach(el => {
-          el.textContent = isAnnual ? '/mo, billed annually' : '/month';
-        });
-        document.getElementById('monthly-label').style.color = isAnnual ? 'var(--text-muted)' : 'var(--navy)';
-        document.getElementById('monthly-label').style.fontWeight = isAnnual ? '400' : '700';
-        document.getElementById('annual-label').style.color = isAnnual ? 'var(--navy)' : 'var(--text-muted)';
-        document.getElementById('annual-label').style.fontWeight = isAnnual ? '700' : '400';
-      });
-    }
-  </script>
 </body>
 </html>
