@@ -394,7 +394,7 @@
           <span class="stat-icon">📅</span>
           <div>
             <div class="stat-label">Classes This Month</div>
-            <div class="stat-value">—</div>
+            <div class="stat-value" id="stat-month-classes">—</div>
           </div>
         </div>
         <div class="stat-card">
@@ -676,6 +676,19 @@
         document.getElementById('confirm-password').value = '';
       }
     });
+
+    // ── Classes this month (fixed weekly schedule) ───────────────
+    (function() {
+      // Classes per day: Sun=2, Mon=3, Tue=4, Wed=4, Thu=4, Fri=4, Sat=2
+      const perDay = [2, 3, 4, 4, 4, 4, 2];
+      const now = new Date();
+      const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
+      let total = 0;
+      for (let d = 1; d <= daysInMonth; d++) {
+        total += perDay[new Date(now.getFullYear(), now.getMonth(), d).getDay()];
+      }
+      document.getElementById('stat-month-classes').textContent = total;
+    })();
 
     // ── Sign out ─────────────────────────────────────────────────
     document.getElementById('signout-btn').addEventListener('click', async () => {
