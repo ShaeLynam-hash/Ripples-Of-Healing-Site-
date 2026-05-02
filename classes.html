@@ -218,43 +218,61 @@
   }
 
   async function openModal(cls, dateStr, dateMs) {
-    const now=new Date();
+    const now = new Date();
     const ended = now > classEndTime(cls, dateMs);
-    const live = !ended && isLiveNow(cls);
+    const live  = !ended && isLiveNow(cls);
 
-    // Check membership
-    let isMember = false;
+    // Check membership + existing booking in parallel
+    let isMember = false, isBooked = false, userId = null;
     try {
       const { data: { user } } = await supabase.auth.getUser();
-      isMember = !!user;
+      if (user) {
+        isMember = true;
+        userId = user.id;
+        // format date as YYYY-MM-DD for the booking lookup
+        const d = new Date(dateMs);
+        const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const { data } = await supabase
+          .from('bookings')
+          .select('id')
+          .eq('user_id', user.id)
+          .eq('class_id', cls.id)
+          .eq('class_date', dateISO)
+          .maybeSingle();
+        isBooked = !!data;
+      }
     } catch(e) {}
 
     let zoomSection;
     if (ended) {
-      zoomSection = `<div class="zoom-box" style="background:rgba(94,122,142,0.07);border:1px solid rgba(94,122,142,0.2);border-radius:12px;padding:20px;text-align:center;">
-           <div style="font-size:1.4rem;margin-bottom:8px;">⏱️</div>
-           <div style="font-weight:700;color:var(--dark-charcoal);margin-bottom:6px;">Class Has Ended</div>
-           <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">This class has already finished. Check the schedule for upcoming sessions.</div>
-           <a href="schedule.html" class="btn-modal-join" style="display:inline-block;background:var(--deep-teal);">View Schedule</a>
-         </div>
-         <div class="modal-actions" style="margin-top:12px;">
-           <button class="btn-modal-close" id="modal-close-btn" style="width:100%;">Close</button>
-         </div>`;
+      zoomSection = `
+        <div class="zoom-box" style="background:rgba(94,122,142,0.07);border:1px solid rgba(94,122,142,0.2);border-radius:12px;padding:20px;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">⏱️</div>
+          <div style="font-weight:700;color:var(--dark-charcoal);margin-bottom:6px;">Class Has Ended</div>
+          <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">This class has already finished. Check the schedule for upcoming sessions.</div>
+          <a href="schedule.html" class="btn-modal-join" style="display:inline-block;background:var(--deep-teal);">View Schedule</a>
+        </div>
+        <div class="modal-actions" style="margin-top:12px;">
+          <button class="btn-modal-close" id="modal-close-btn" style="width:100%;">Close</button>
+        </div>`;
     } else if (isMember) {
-      zoomSection = `<div class="modal-actions">
-           <a href="${ZOOM_URL}" target="_blank" class="btn-modal-join">${live ? 'Join Live Now' : 'Join on Zoom'}</a>
-           <button class="btn-modal-close" id="modal-close-btn">Close</button>
-         </div>`;
+      zoomSection = `
+        <div class="modal-actions" style="flex-direction:column;gap:10px;">
+          <a href="${ZOOM_URL}" target="_blank" class="btn-modal-join" style="text-align:center;">${live ? 'Join Live Now' : 'Join on Zoom'}</a>
+          <button id="book-btn" class="btn-modal-close" style="background:${isBooked?'#f0fdf4':'var(--soft-grey)'};color:${isBooked?'#15803d':'var(--dark-charcoal)'};border:1.5px solid ${isBooked?'#bbf7d0':'var(--border-light)'};">${isBooked ? '✓ Booked' : 'Book This Class'}</button>
+          <button class="btn-modal-close" id="modal-close-btn">Close</button>
+        </div>`;
     } else {
-      zoomSection = `<div class="zoom-box" style="background:rgba(224,90,30,0.07);border:1px solid rgba(224,90,30,0.2);border-radius:12px;padding:20px;text-align:center;">
-           <div style="font-size:1.4rem;margin-bottom:8px;">🔒</div>
-           <div style="font-weight:700;color:var(--dark-charcoal);margin-bottom:6px;">Members Only</div>
-           <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">Join Ripples of Healing to access live Zoom classes.</div>
-           <a href="signup.html" class="btn-modal-join" style="display:inline-block;">Start Free Trial</a>
-         </div>
-         <div class="modal-actions" style="margin-top:12px;">
-           <button class="btn-modal-close" id="modal-close-btn" style="width:100%;">Close</button>
-         </div>`;
+      zoomSection = `
+        <div class="zoom-box" style="background:rgba(224,90,30,0.07);border:1px solid rgba(224,90,30,0.2);border-radius:12px;padding:20px;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:8px;">🔒</div>
+          <div style="font-weight:700;color:var(--dark-charcoal);margin-bottom:6px;">Members Only</div>
+          <div style="font-size:0.88rem;color:var(--text-muted);margin-bottom:16px;">Join Ripples of Healing to access live Zoom classes.</div>
+          <a href="signup.html" class="btn-modal-join" style="display:inline-block;">Start Free Trial</a>
+        </div>
+        <div class="modal-actions" style="margin-top:12px;">
+          <button class="btn-modal-close" id="modal-close-btn" style="width:100%;">Close</button>
+        </div>`;
     }
 
     document.getElementById('modal-content').innerHTML = `
@@ -272,6 +290,34 @@
     `;
     document.getElementById('modal-overlay').classList.add('open');
     document.getElementById('modal-close-btn').onclick = closeModal;
+
+    // Book button handler
+    const bookBtn = document.getElementById('book-btn');
+    if (bookBtn && !isBooked) {
+      bookBtn.addEventListener('click', async () => {
+        bookBtn.textContent = 'Saving…';
+        bookBtn.disabled = true;
+        const d = new Date(dateMs);
+        const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+        const { error } = await supabase.from('bookings').insert({
+          user_id:    userId,
+          class_id:   cls.id,
+          class_name: cls.name,
+          class_date: dateISO,
+          class_time: cls.time,
+          instructor: cls.instructor
+        });
+        if (error) {
+          bookBtn.textContent = 'Error — try again';
+          bookBtn.disabled = false;
+        } else {
+          bookBtn.textContent = '✓ Booked!';
+          bookBtn.style.background = '#f0fdf4';
+          bookBtn.style.color = '#15803d';
+          bookBtn.style.border = '1.5px solid #bbf7d0';
+        }
+      });
+    }
   }
 
   function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }

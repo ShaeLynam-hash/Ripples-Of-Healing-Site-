@@ -611,6 +611,7 @@
         return;
       }
       populatePortal(session.user);
+      loadBookings(session.user.id);
       loading.style.display = 'none';
       portalMain.style.display = 'block';
     });
@@ -619,6 +620,7 @@
     sb.auth.onAuthStateChange((event, session) => {
       if (event === 'SIGNED_IN' && session) {
         populatePortal(session.user);
+        loadBookings(session.user.id);
         loading.style.display = 'none';
         portalMain.style.display = 'block';
       }
@@ -677,18 +679,47 @@
       }
     });
 
-    // ── Classes this month (fixed weekly schedule) ───────────────
-    (function() {
-      // Classes per day: Sun=2, Mon=3, Tue=4, Wed=4, Thu=4, Fri=4, Sat=2
-      const perDay = [2, 3, 4, 4, 4, 4, 2];
+    // ── Real booking stats ────────────────────────────────────────
+    async function loadBookings(userId) {
       const now = new Date();
-      const daysInMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
-      let total = 0;
-      for (let d = 1; d <= daysInMonth; d++) {
-        total += perDay[new Date(now.getFullYear(), now.getMonth(), d).getDay()];
+      const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
+      const monthEnd   = new Date(now.getFullYear(), now.getMonth()+1, 0).toISOString().slice(0,10);
+
+      const { data: bookings } = await sb.from('bookings')
+        .select('*')
+        .eq('user_id', userId)
+        .order('class_date', { ascending: true });
+
+      if (!bookings) return;
+
+      // Classes booked this month
+      const thisMonth = bookings.filter(b => b.class_date >= monthStart && b.class_date <= monthEnd);
+      document.getElementById('stat-month-classes').textContent = thisMonth.length || '0';
+
+      // Upcoming bookings (today or future)
+      const todayISO = now.toISOString().slice(0,10);
+      const upcoming = bookings.filter(b => b.class_date >= todayISO).slice(0, 3);
+
+      if (upcoming.length) {
+        const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        document.getElementById('upcoming-classes').innerHTML = upcoming.map(b => {
+          const d = new Date(b.class_date + 'T12:00:00');
+          const label = b.class_date === todayISO ? 'Today' : `${DAY_NAMES[d.getDay()]} ${d.getMonth()+1}/${d.getDate()}`;
+          return `
+            <div class="class-item">
+              <div class="class-dot"></div>
+              <div class="class-info">
+                <div class="class-name">${b.class_name}</div>
+                <div class="class-meta">${label} · ${b.class_time} PT · with ${b.instructor}</div>
+              </div>
+              <span class="class-badge">Booked</span>
+            </div>`;
+        }).join('');
+      } else {
+        document.getElementById('upcoming-classes').innerHTML =
+          `<div style="color:var(--text-muted);font-size:0.88rem;padding:16px 0;">No upcoming bookings. <a href="classes.html" style="color:var(--warm-orange);font-weight:600;">Browse classes →</a></div>`;
       }
-      document.getElementById('stat-month-classes').textContent = total;
-    })();
+    }
 
     // ── Sign out ─────────────────────────────────────────────────
     document.getElementById('signout-btn').addEventListener('click', async () => {
