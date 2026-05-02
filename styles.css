@@ -79,6 +79,7 @@ body {
   color: var(--text-body);
   background: var(--white);
   line-height: 1.65;
+  overflow-x: hidden;
 }
 
 img, video { display: block; max-width: 100%; }
@@ -858,7 +859,9 @@ p { line-height: 1.75; }
   justify-content: center;
   font-size: 1.35rem;
   margin-bottom: 4px;
+  color: var(--warm-orange);
 }
+.feature-icon svg { flex-shrink: 0; }
 
 .feature-item h4 {
   font-family: var(--font-body);
@@ -1103,7 +1106,7 @@ p { line-height: 1.75; }
 .how-steps-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
+  gap: 24px;
   margin-top: 64px;
 }
 
@@ -2501,7 +2504,7 @@ p { line-height: 1.75; }
 }
 
 .btn-book {
-  background: var(--navy);
+  background: var(--terracotta);
   color: var(--white);
   border: none;
   border-radius: var(--radius-full);
@@ -2511,7 +2514,7 @@ p { line-height: 1.75; }
   cursor: pointer;
   transition: background var(--transition);
 }
-.btn-book:hover { background: var(--navy-mid); }
+.btn-book:hover { background: var(--terra-dark); }
 .btn-book.live-join { background: var(--terracotta); }
 .btn-book.live-join:hover { background: var(--terra-dark); }
 .btn-book.booked { background: var(--sage); cursor: default; }
