@@ -414,15 +414,14 @@
           <div class="portal-card-title">💳 My Membership</div>
           <div class="membership-card" id="membership-card">
             <div class="membership-plan-name">Current Plan</div>
-            <div class="membership-plan-title" id="membership-plan-title">Ripple Flow</div>
+            <div class="membership-plan-title" id="membership-plan-title">Ripples Membership</div>
             <div class="membership-badge">✦ Active Member</div>
             <div class="membership-actions">
               <a href="pricing.html" class="btn-portal btn-portal-ghost">Manage Plan</a>
             </div>
           </div>
           <div style="font-size:0.85rem;color:var(--text-muted);line-height:1.6;">
-            <p style="margin:0 0 8px">Questions about billing or your plan? <a href="contact.html" style="color:var(--warm-orange);font-weight:600;">Contact us</a>.</p>
-            <p style="margin:0">Want to upgrade? <a href="pricing.html" style="color:var(--deep-teal);font-weight:600;">See all plans →</a></p>
+            <p style="margin:0">Questions about billing or your plan? <a href="contact.html" style="color:var(--warm-orange);font-weight:600;">Contact us</a>.</p>
           </div>
         </div>
 
@@ -493,11 +492,11 @@
             <div class="portal-form-row">
               <div class="portal-form-group">
                 <label class="portal-form-label" for="profile-fname">First name</label>
-                <input class="portal-form-input" type="text" id="profile-fname" autocomplete="given-name" />
+                <input class="portal-form-input" type="text" id="profile-fname" name="first_name" placeholder="First name" autocomplete="given-name" />
               </div>
               <div class="portal-form-group">
                 <label class="portal-form-label" for="profile-lname">Last name</label>
-                <input class="portal-form-input" type="text" id="profile-lname" autocomplete="family-name" />
+                <input class="portal-form-input" type="text" id="profile-lname" name="last_name" placeholder="Last name" autocomplete="family-name" />
               </div>
             </div>
             <div class="portal-form-group">
@@ -549,6 +548,10 @@
     </div><!-- /portal-container -->
   </main>
 
+  <footer style="background:var(--dark-charcoal);color:rgba(255,255,255,0.45);text-align:center;padding:24px 32px;font-size:0.83rem;margin-top:60px;">
+    <p>&copy; 2025 Ripples of Healing. All Rights Reserved. &nbsp;·&nbsp; <a href="contact.html" style="color:rgba(255,255,255,0.6);">Contact</a> &nbsp;·&nbsp; <a href="faq.html" style="color:rgba(255,255,255,0.6);">FAQ</a></p>
+  </footer>
+
   <!-- Supabase CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-client.js"></script>
@@ -579,7 +582,7 @@
       const plan      = meta.plan || 'flow';
       const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || email[0]?.toUpperCase() || '?';
       const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email.split('@')[0];
-      const planLabel = plan === 'unlimited' ? 'Ripple Unlimited' : 'Ripple Flow';
+      const planLabel = 'Ripples Membership';
 
       // Welcome bar
       document.getElementById('welcome-name').textContent = firstName || email.split('@')[0];
@@ -593,9 +596,6 @@
 
       // Membership card
       document.getElementById('membership-plan-title').textContent = planLabel;
-      if (plan === 'unlimited') {
-        document.getElementById('membership-card').style.background = 'linear-gradient(135deg, #c2410c 0%, #ea580c 100%)';
-      }
 
       // Profile form
       document.getElementById('profile-fname').value  = firstName;
