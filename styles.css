@@ -9,16 +9,16 @@
    CSS CUSTOM PROPERTIES
    ============================================= */
 :root {
-  --warm-orange:   #E05A1E;
-  --deep-teal:     #4090A3;
-  --ocean-blue:    #1C3C6E;
+  --warm-orange:   #F06B22;
+  --deep-teal:     #1FBAD6;
+  --ocean-blue:    #2256A0;
   --warm-gold:     #F5C200;
-  --mint:          #56BBA8;
-  --soft-grey:     #EFF4F6;
-  --dark-charcoal: #112236;
+  --mint:          #3ECAB5;
+  --soft-grey:     #FAF7F3;
+  --dark-charcoal: #1C3248;
   --white:         #FFFFFF;
-  --text-muted:    #5E7A8E;
-  --border-light:  #D8E6EC;
+  --text-muted:    #6B8EA8;
+  --border-light:  #E4EDF3;
 
   /* Aliases for backward-compat with existing class references */
   --navy:        var(--dark-charcoal);
@@ -36,10 +36,10 @@
   --text-light:  var(--text-muted);
   --border:      var(--border-light);
 
-  --shadow-sm:   0 1px 4px rgba(17,34,54,0.06), 0 1px 2px rgba(17,34,54,0.04);
-  --shadow-md:   0 4px 20px rgba(17,34,54,0.10), 0 2px 8px rgba(17,34,54,0.06);
-  --shadow-lg:   0 16px 48px rgba(17,34,54,0.14), 0 4px 16px rgba(17,34,54,0.08);
-  --shadow-xl:   0 32px 80px rgba(17,34,54,0.18), 0 8px 24px rgba(17,34,54,0.10);
+  --shadow-sm:   0 1px 4px rgba(28,50,72,0.06), 0 1px 2px rgba(28,50,72,0.04);
+  --shadow-md:   0 4px 20px rgba(28,50,72,0.09), 0 2px 8px rgba(28,50,72,0.05);
+  --shadow-lg:   0 16px 48px rgba(28,50,72,0.11), 0 4px 16px rgba(28,50,72,0.07);
+  --shadow-xl:   0 32px 80px rgba(28,50,72,0.14), 0 8px 24px rgba(28,50,72,0.08);
 
   --radius-sm:   6px;
   --radius-md:   12px;
@@ -234,7 +234,7 @@ p { line-height: 1.75; }
 .btn-navy:hover {
   background: var(--ocean-blue);
   transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(17,34,54,0.3);
+  box-shadow: 0 8px 24px rgba(28,50,72,0.25);
 }
 
 .btn-sm {
@@ -262,17 +262,17 @@ p { line-height: 1.75; }
 
 .nav.scrolled,
 .nav.opaque {
-  background: rgba(17, 34, 54, 0.94);
+  background: rgba(240, 107, 34, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 4px 24px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.12), 0 4px 24px rgba(240,107,34,0.3);
 }
 
 .nav.light-nav {
-  background: rgba(239, 244, 246, 0.97);
+  background: rgba(240, 107, 34, 0.97);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  box-shadow: 0 1px 0 var(--border-light), var(--shadow-sm);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.1), 0 4px 24px rgba(240,107,34,0.25);
 }
 
 .nav-inner {
@@ -320,12 +320,12 @@ p { line-height: 1.75; }
 }
 
 .nav.light-nav .nav-links li a {
-  color: var(--text-muted);
+  color: rgba(255,255,255,0.85);
 }
 .nav.light-nav .nav-links li a:hover,
 .nav.light-nav .nav-links li a.active {
-  color: var(--dark-charcoal);
-  background: rgba(17,34,54,0.06);
+  color: var(--white);
+  background: rgba(255,255,255,0.15);
 }
 
 .nav-actions {
@@ -351,13 +351,13 @@ p { line-height: 1.75; }
 }
 
 .nav.light-nav .nav-login {
-  color: var(--text-muted);
-  border-color: var(--border);
+  color: rgba(255,255,255,0.85);
+  border-color: rgba(255,255,255,0.35);
 }
 .nav.light-nav .nav-login:hover {
-  color: var(--dark-charcoal);
-  border-color: var(--dark-charcoal);
-  background: rgba(17,34,54,0.05);
+  color: var(--white);
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.12);
 }
 
 /* Hamburger */
@@ -382,7 +382,23 @@ p { line-height: 1.75; }
   border-radius: 2px;
   transition: all var(--transition);
 }
-.nav.light-nav .nav-hamburger span { background: var(--dark-charcoal); }
+.nav.light-nav .nav-hamburger span { background: var(--white); }
+
+/* On orange nav, flip CTA button to white so it pops */
+.nav.light-nav .btn-primary,
+.nav.scrolled .btn-primary,
+.nav.opaque .btn-primary {
+  background: var(--white);
+  border-color: var(--white);
+  color: var(--warm-orange);
+}
+.nav.light-nav .btn-primary:hover,
+.nav.scrolled .btn-primary:hover,
+.nav.opaque .btn-primary:hover {
+  background: rgba(255,255,255,0.88);
+  border-color: rgba(255,255,255,0.88);
+  color: var(--warm-orange);
+}
 
 /* Mobile Drawer */
 .nav-drawer {
@@ -391,7 +407,7 @@ p { line-height: 1.75; }
   right: 0;
   bottom: 0;
   width: 320px;
-  background: var(--navy);
+  background: var(--deep-teal);
   z-index: 1100;
   padding: 88px 32px 40px;
   display: flex;
@@ -738,7 +754,7 @@ p { line-height: 1.75; }
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to bottom, rgba(17,34,54,0.78) 0%, rgba(17,34,54,0.62) 100%);
+  background: linear-gradient(to bottom, rgba(28,50,72,0.65) 0%, rgba(28,50,72,0.50) 100%);
   z-index: 0;
 }
 
@@ -784,20 +800,20 @@ p { line-height: 1.75; }
    STATS STRIP
    ============================================= */
 .stats-strip {
-  background: var(--navy);
+  background: var(--warm-orange);
   padding: 0;
 }
 
 .stats-inner {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255,255,255,0.15);
 }
 
 .stat-item {
   padding: 52px 32px;
   text-align: center;
-  border-right: 1px solid rgba(255,255,255,0.06);
+  border-right: 1px solid rgba(255,255,255,0.18);
   position: relative;
 }
 .stat-item:last-child { border-right: none; }
@@ -811,14 +827,14 @@ p { line-height: 1.75; }
   margin-bottom: 10px;
   letter-spacing: -0.02em;
 }
-.stat-number span { color: var(--terra-light); }
+.stat-number span { color: rgba(255,255,255,0.7); }
 
 .stat-label {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.38);
+  color: rgba(255,255,255,0.75);
 }
 
 /* =============================================
@@ -911,11 +927,11 @@ p { line-height: 1.75; }
 
 .class-overlay-card .gradient-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(to top, rgba(17,34,54,0.9) 0%, rgba(17,34,54,0.3) 50%, rgba(0,0,0,0.05) 100%);
+  background: linear-gradient(to top, rgba(28,50,72,0.85) 0%, rgba(28,50,72,0.25) 50%, rgba(0,0,0,0.02) 100%);
   transition: background var(--transition-slow);
 }
 .class-overlay-card:hover .gradient-overlay {
-  background: linear-gradient(to top, rgba(224,90,30,0.85) 0%, rgba(17,34,54,0.4) 55%, rgba(0,0,0,0.05) 100%);
+  background: linear-gradient(to top, rgba(240,107,34,0.82) 0%, rgba(28,50,72,0.35) 55%, rgba(0,0,0,0.02) 100%);
 }
 
 .class-overlay-body {
@@ -1075,7 +1091,7 @@ p { line-height: 1.75; }
    HOW IT WORKS
    ============================================= */
 .how-section {
-  background: var(--navy);
+  background: var(--deep-teal);
   padding: 96px 0;
   position: relative;
   overflow: hidden;
@@ -1086,7 +1102,7 @@ p { line-height: 1.75; }
   top: -200px; right: -200px;
   width: 500px; height: 500px;
   border-radius: 50%;
-  border: 1px solid rgba(86,187,168,0.12);
+  border: 1px solid rgba(255,255,255,0.15);
   pointer-events: none;
 }
 .how-section::after {
@@ -1095,11 +1111,11 @@ p { line-height: 1.75; }
   bottom: -200px; left: -200px;
   width: 450px; height: 450px;
   border-radius: 50%;
-  border: 1px solid rgba(224,90,30,0.10);
+  border: 1px solid rgba(255,255,255,0.10);
   pointer-events: none;
 }
 
-.how-section .section-label { color: rgba(224, 90, 30, 0.85); }
+.how-section .section-label { color: rgba(255,255,255,0.85); }
 .how-section .section-header h2 { color: var(--white); }
 .how-section .section-header p { color: rgba(255,255,255,0.45); }
 
@@ -1142,11 +1158,11 @@ p { line-height: 1.75; }
   margin-bottom: 20px;
   box-shadow: 0 0 20px rgba(86,187,168,0.35);
 }
-.how-step:nth-child(2) .how-step-icon { background: var(--ocean-blue); box-shadow: 0 0 20px rgba(28,60,110,0.5); }
-.how-step:nth-child(3) .how-step-icon { background: var(--warm-orange); box-shadow: 0 0 20px rgba(224,90,30,0.35); }
+.how-step:nth-child(2) .how-step-icon { background: var(--warm-orange); box-shadow: 0 0 20px rgba(240,107,34,0.45); }
+.how-step:nth-child(3) .how-step-icon { background: rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(255,255,255,0.15); }
 
 .how-step h3 { color: var(--white); font-size: 1.25rem; font-weight: 400; margin-bottom: 12px; }
-.how-step p  { color: rgba(255,255,255,0.48); font-size: 0.92rem; line-height: 1.75; }
+.how-step p  { color: rgba(255,255,255,0.75); font-size: 0.92rem; line-height: 1.75; }
 
 .how-step-tags {
   display: flex;
@@ -1157,8 +1173,8 @@ p { line-height: 1.75; }
 .how-step-tag {
   padding: 4px 12px;
   border-radius: var(--radius-full);
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -1414,7 +1430,7 @@ p { line-height: 1.75; }
    PLATFORM FEATURES (dark section)
    ============================================= */
 .platform-section {
-  background: linear-gradient(160deg, #112236 0%, #1C3C6E 50%, #112236 100%);
+  background: linear-gradient(160deg, #0E9DB8 0%, #1FBAD6 50%, #0E9DB8 100%);
   padding: 96px 0;
   position: relative;
   overflow: hidden;
@@ -1614,7 +1630,7 @@ p { line-height: 1.75; }
    FINAL CTA (homepage)
    ============================================= */
 .final-cta {
-  background: var(--navy);
+  background: var(--warm-orange);
   padding: 120px 0;
   text-align: center;
   position: relative;
@@ -1830,7 +1846,7 @@ p { line-height: 1.75; }
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: rgba(17,34,54,0.55);
+  background: rgba(28,50,72,0.50);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2277,8 +2293,8 @@ p { line-height: 1.75; }
    FOOTER
    ============================================= */
 .footer {
-  background: var(--navy);
-  color: rgba(255,255,255,0.6);
+  background: var(--deep-teal);
+  color: rgba(255,255,255,0.75);
 }
 
 .footer-top {
@@ -2296,7 +2312,7 @@ p { line-height: 1.75; }
 
 .footer-tagline {
   font-size: 0.88rem;
-  color: rgba(255,255,255,0.44);
+  color: rgba(255,255,255,0.75);
   line-height: 1.7;
   margin-bottom: 24px;
 }
@@ -2339,7 +2355,7 @@ p { line-height: 1.75; }
 
 .footer-col ul li a {
   font-size: 0.85rem;
-  color: rgba(255,255,255,0.44);
+  color: rgba(255,255,255,0.8);
   transition: color var(--transition);
 }
 .footer-col ul li a:hover { color: rgba(255,255,255,0.9); }
@@ -2694,7 +2710,7 @@ p { line-height: 1.75; }
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17,34,54,0.55);
+  background: rgba(28,50,72,0.50);
   backdrop-filter: blur(6px);
   z-index: 9999;
   display: flex;

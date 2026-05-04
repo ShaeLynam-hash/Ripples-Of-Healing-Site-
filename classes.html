@@ -172,7 +172,7 @@
     { id:16, day:5, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
     { id:17, day:5, time:'9:00 AM',  name:'Chakra Vinyasa',               instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Journey through the body\'s energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.' },
     { id:18, day:5, time:'12:00 PM', name:'Full Body Stretch',            instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
-    { id:19, day:5, time:'5:30 PM',  name:'Yin',                         instructor:'Alisha Ayyad',      duration:'60 min', cat:'yoga',       desc:'A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.' },
+    { id:19, day:5, time:'5:30 PM',  name:'Yin',                         instructor:'Alisha Ayaad',      duration:'60 min', cat:'yoga',       desc:'A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.' },
     // SATURDAY
     { id:20, day:6, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
     { id:21, day:6, time:'11:00 AM', name:'Gentle Deep Stretch',          instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
@@ -225,14 +225,14 @@
     // Check membership + existing booking in parallel
     let isMember = false, isBooked = false, userId = null;
     try {
-      const { data: { user } } = await supabase.auth.getUser();
+      const { data: { user } } = await sb.auth.getUser();
       if (user) {
         isMember = true;
         userId = user.id;
         // format date as YYYY-MM-DD for the booking lookup
         const d = new Date(dateMs);
         const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        const { data } = await supabase
+        const { data } = await sb
           .from('bookings')
           .select('id')
           .eq('user_id', user.id)
@@ -299,7 +299,7 @@
         bookBtn.disabled = true;
         const d = new Date(dateMs);
         const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        const { error } = await supabase.from('bookings').insert({
+        const { error } = await sb.from('bookings').insert({
           user_id:    userId,
           class_id:   cls.id,
           class_name: cls.name,

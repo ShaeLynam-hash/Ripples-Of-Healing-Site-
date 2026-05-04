@@ -182,30 +182,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ============================================
-     CONTACT FORM
-     ============================================ */
-  const contactForm = document.getElementById('contact-form');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', e => {
-      e.preventDefault();
-      const submitBtn = contactForm.querySelector('[type="submit"]');
-      submitBtn.textContent = 'Message Sent ✓';
-      submitBtn.style.background = '#10B981';
-      submitBtn.style.borderColor = '#10B981';
-      submitBtn.disabled = true;
-
-      setTimeout(() => {
-        submitBtn.textContent = 'Send Message';
-        submitBtn.style.background = '';
-        submitBtn.style.borderColor = '';
-        submitBtn.disabled = false;
-        contactForm.reset();
-      }, 4000);
-    });
-  }
-
-  /* ============================================
      HERO VIDEO FALLBACK
      ============================================ */
   const heroVideo = document.getElementById('hero-video');
@@ -291,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const plan      = meta.plan || 'flow';
     const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || email[0].toUpperCase();
     const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email.split('@')[0];
-    const planLabel = plan === 'unlimited' ? 'Ripple Unlimited' : 'Ripple Flow';
+    const planLabel = 'Ripples Membership';
 
     // Replace .nav-login link with account button+dropdown
     document.querySelectorAll('a.nav-login').forEach(el => {
