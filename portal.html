@@ -638,7 +638,13 @@
             });
             const { url } = await res.json();
             if (url) { window.location.href = url; return; }
-          } catch(e) { /* fall through to portal */ }
+            // No URL returned — send to pricing
+            window.location.href = 'pricing.html';
+            return;
+          } catch(e) {
+            window.location.href = 'pricing.html';
+            return;
+          }
         }
       }
 

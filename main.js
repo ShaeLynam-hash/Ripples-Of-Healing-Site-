@@ -272,9 +272,14 @@ document.addEventListener('DOMContentLoaded', () => {
         body: JSON.stringify({ email: session.user.email, userId: session.user.id }),
       });
       const { url } = await res.json();
-      window.location.href = url || 'portal.html';
+      if (url) {
+        window.location.href = url;
+      } else {
+        // Checkout failed — send to pricing, not portal
+        window.location.href = 'pricing.html';
+      }
     } catch(e) {
-      window.location.href = 'portal.html';
+      window.location.href = 'pricing.html';
     }
   }
 

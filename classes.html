@@ -227,8 +227,10 @@
     try {
       const { data: { user } } = await sb.auth.getUser();
       if (user) {
-        isMember = true;
         userId = user.id;
+        // Only treat as member if they have an active subscription
+        const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', user.id).maybeSingle();
+        isMember = !!profile?.stripe_customer_id;
         // format date as YYYY-MM-DD for the booking lookup
         const d = new Date(dateMs);
         const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
@@ -308,7 +310,8 @@
           instructor: cls.instructor
         });
         if (error) {
-          bookBtn.textContent = 'Error — try again';
+          console.error('Booking error:', error.code, error.message, error.details);
+          bookBtn.textContent = 'Error: ' + (error.message || 'try again');
           bookBtn.disabled = false;
         } else {
           bookBtn.textContent = '✓ Booked!';
