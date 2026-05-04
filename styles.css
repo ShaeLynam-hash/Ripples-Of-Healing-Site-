@@ -305,18 +305,19 @@ p { line-height: 1.75; }
 
 .nav-links li a {
   font-size: 0.83rem;
-  font-weight: 500;
-  color: rgba(255,255,255,0.75);
+  font-weight: 700;
+  color: #ffffff;
   padding: 6px 12px;
   border-radius: var(--radius-sm);
   transition: color var(--transition), background var(--transition);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.18);
 }
 
 .nav-links li a:hover,
 .nav-links li a.active {
   color: var(--white);
-  background: rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.18);
 }
 
 .nav.light-nav .nav-links li a {
@@ -800,7 +801,7 @@ p { line-height: 1.75; }
    STATS STRIP
    ============================================= */
 .stats-strip {
-  background: var(--warm-orange);
+  background: var(--deep-teal);
   padding: 0;
 }
 
@@ -1303,7 +1304,7 @@ p { line-height: 1.75; }
    PULL QUOTE BANNER
    ============================================= */
 .quote-banner {
-  background: var(--deep-teal);
+  background: var(--warm-orange);
   padding: 96px 0;
   text-align: center;
   position: relative;
@@ -2293,7 +2294,7 @@ p { line-height: 1.75; }
    FOOTER
    ============================================= */
 .footer {
-  background: var(--deep-teal);
+  background: #0B6B84;
   color: rgba(255,255,255,0.75);
 }
 
