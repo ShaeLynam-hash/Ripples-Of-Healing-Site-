@@ -361,6 +361,113 @@ p { line-height: 1.75; }
   background: rgba(255,255,255,0.12);
 }
 
+/* ── Nav Account Dropdown (logged-in state) ─────────── */
+.nav-account {
+  position: relative;
+}
+.nav-account-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.18);
+  border: 1.5px solid rgba(255,255,255,0.35);
+  border-radius: var(--radius-full);
+  padding: 5px 12px 5px 5px;
+  cursor: pointer;
+  color: var(--white);
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all var(--transition);
+}
+.nav-account-btn:hover {
+  background: rgba(255,255,255,0.28);
+  border-color: rgba(255,255,255,0.6);
+}
+.nav-account-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--white);
+  color: var(--warm-orange);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.nav-account-chevron {
+  font-size: 0.65rem;
+  opacity: 0.8;
+}
+.nav-account-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: var(--white);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  min-width: 220px;
+  overflow: hidden;
+  display: none;
+  z-index: 500;
+  border: 1px solid var(--border-light);
+}
+.nav-account.open .nav-account-dropdown { display: block; }
+.nav-account-info {
+  padding: 14px 16px;
+  background: var(--cream);
+  border-bottom: 1px solid var(--border-light);
+}
+.nav-account-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--dark-charcoal);
+  margin-bottom: 2px;
+}
+.nav-account-email {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.nav-account-plan {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: var(--warm-orange);
+  color: var(--white);
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+.nav-dropdown-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  font-size: 0.87rem;
+  font-weight: 500;
+  color: var(--dark-charcoal);
+  text-decoration: none;
+  transition: background var(--transition);
+  background: none;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  text-align: left;
+}
+.nav-dropdown-link:hover {
+  background: var(--cream);
+  color: var(--dark-charcoal);
+}
+.nav-dropdown-link.danger { color: #dc2626; }
+.nav-dropdown-link.danger:hover { background: #fef2f2; }
+.nav-dropdown-divider {
+  height: 1px;
+  background: var(--border-light);
+  margin: 4px 0;
+}
+
 /* Hamburger */
 .nav-hamburger {
   display: none;

@@ -259,14 +259,32 @@ document.addEventListener('DOMContentLoaded', () => {
 (function() {
   if (typeof sb === 'undefined') return;
 
+  async function goToCheckout(session) {
+    try {
+      const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
+      if (profile?.stripe_customer_id) {
+        window.location.href = 'portal.html';
+        return;
+      }
+      const res = await fetch('/.netlify/functions/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: session.user.email, userId: session.user.id }),
+      });
+      const { url } = await res.json();
+      window.location.href = url || 'portal.html';
+    } catch(e) {
+      window.location.href = 'portal.html';
+    }
+  }
+
   function buildDropdown(session) {
     const meta      = session.user.user_metadata || {};
     const firstName = meta.first_name || '';
     const lastName  = meta.last_name  || '';
     const email     = session.user.email;
-    const plan      = meta.plan || 'flow';
     const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || email[0].toUpperCase();
-    const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email.split('@')[0];
+    const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email;
     const planLabel = 'Ripples Membership';
 
     // Replace .nav-login link with account button+dropdown
@@ -276,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
       wrapper.innerHTML = `
         <button class="nav-account-btn" aria-haspopup="true" aria-expanded="false">
           <span class="nav-account-avatar">${initials}</span>
-          <span>${firstName || email.split('@')[0]}</span>
+          ${firstName ? `<span>${firstName}</span>` : ''}
           <span class="nav-account-chevron">▾</span>
         </button>
         <div class="nav-account-dropdown" role="menu">
@@ -294,9 +312,7 @@ document.addEventListener('DOMContentLoaded', () => {
       `;
       el.parentNode.replaceChild(wrapper, el);
 
-      // Toggle dropdown
-      const btn      = wrapper.querySelector('.nav-account-btn');
-      const dropdown = wrapper.querySelector('.nav-account-dropdown');
+      const btn = wrapper.querySelector('.nav-account-btn');
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
         const isOpen = wrapper.classList.toggle('open');
@@ -307,27 +323,33 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.setAttribute('aria-expanded', 'false');
       });
 
-      // Sign out
       wrapper.querySelector('#nav-signout-btn').addEventListener('click', async () => {
         await sb.auth.signOut();
         window.location.href = 'index.html';
       });
     });
 
-    // Hide "Start Free" button
+    // For logged-in users: intercept ALL "Join Now" clicks → go straight to Stripe, never signup.html
+    document.querySelectorAll('a[href="signup.html"]').forEach(el => {
+      el.addEventListener('click', async (e) => {
+        e.preventDefault();
+        await goToCheckout(session);
+      });
+    });
+
+    // Hide the "Join Now" button in the nav (user is already logged in)
     document.querySelectorAll('a.btn-primary.btn-sm[href="signup.html"]').forEach(el => {
       el.style.display = 'none';
     });
 
-    // Mobile drawer: swap Log In link + hide Start Free Trial
+    // Mobile drawer: replace Log In with "My Portal", hide Join Now
     document.querySelectorAll('.nav-drawer-links a[href="login.html"]').forEach(el => {
-      el.textContent = fullName;
-      el.href = '#';
+      el.textContent = 'My Portal';
+      el.href = 'portal.html';
     });
     document.querySelectorAll('.nav-drawer-actions a[href="signup.html"]').forEach(el => {
       el.style.display = 'none';
     });
-    // Replace drawer Log In btn with Sign Out
     document.querySelectorAll('.nav-drawer-actions a[href="login.html"]').forEach(el => {
       el.textContent = 'Sign Out';
       el.href = '#';
