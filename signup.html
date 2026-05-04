@@ -105,50 +105,6 @@
     }
     .btn-social:hover { border-color: var(--deep-teal); background: #f8fefe; }
     .btn-social svg { width: 20px; height: 20px; flex-shrink: 0; }
-    .plan-picker {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-    .plan-option {
-      border: 2px solid var(--border-light);
-      border-radius: var(--radius-md);
-      padding: 16px;
-      cursor: pointer;
-      transition: all var(--transition);
-      position: relative;
-    }
-    .plan-option:hover { border-color: var(--deep-teal); }
-    .plan-option.selected { border-color: var(--warm-orange); background: #fff8f5; }
-    .plan-option input[type="radio"] { position: absolute; opacity: 0; pointer-events: none; }
-    .plan-option-name { font-weight: 700; font-size: 0.92rem; color: var(--dark-charcoal); margin-bottom: 2px; }
-    .plan-option-price { font-size: 0.82rem; color: var(--text-muted); }
-    .plan-option.selected .plan-option-name { color: var(--warm-orange); }
-    .plan-check {
-      position: absolute;
-      top: 10px; right: 10px;
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      border: 2px solid var(--border-light);
-      background: var(--white);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 10px;
-      color: var(--white);
-      transition: all var(--transition);
-    }
-    .plan-option.selected .plan-check { background: var(--warm-orange); border-color: var(--warm-orange); }
-    .plan-option.selected .plan-check::after { content: '✓'; }
-    .form-label-plan {
-      display: block;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--dark-charcoal);
-      margin-bottom: 10px;
-      letter-spacing: 0.02em;
-    }
     .auth-submit {
       width: 100%;
       justify-content: center;
@@ -193,7 +149,6 @@
         <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
       <div class="nav-actions">
-        <span style="color:var(--text-muted);font-size:0.9rem;">Already have an account?</span>
         <a href="login.html" class="btn btn-outline-teal btn-sm">Log In</a>
       </div>
     </div>
@@ -250,23 +205,12 @@
           </div>
         </div>
 
-        <div class="form-group" style="margin-bottom:28px;">
-          <div class="plan-picker">
-            <label class="plan-option selected" id="plan-flow">
-              <input type="radio" name="plan" value="flow" checked />
-              <div class="plan-check"></div>
-              <div class="plan-option-name">Ripples Membership</div>
-              <div class="plan-option-price">$22/mo after 7-day trial</div>
-            </label>
-          </div>
-        </div>
-
         <button type="submit" class="btn btn-primary auth-submit" id="signup-submit">Continue to Payment →</button>
       </form>
 
       <p class="auth-footer-note">
-        By creating an account you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
-        A credit card is required to start your trial. You won't be charged anything for 7 days — cancel before day 8 to avoid being billed.
+        By continuing you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+        You'll enter your card on the next step — cancel anytime before day 8 and you won't be charged.
       </p>
 
     </div>
@@ -277,15 +221,6 @@
   <script src="supabase-client.js"></script>
   <script src="main.js"></script>
   <script>
-    // Plan picker
-    document.querySelectorAll('.plan-option').forEach(option => {
-      option.addEventListener('click', function() {
-        document.querySelectorAll('.plan-option').forEach(o => o.classList.remove('selected'));
-        this.classList.add('selected');
-        this.querySelector('input[type="radio"]').checked = true;
-      });
-    });
-
     // Password strength meter
     const passInput = document.getElementById('signup-password');
     const strengthWrap = document.getElementById('password-strength');
@@ -345,7 +280,6 @@
       const lname    = document.getElementById('signup-lname').value.trim();
       const email    = document.getElementById('signup-email').value.trim();
       const password = document.getElementById('signup-password').value;
-      const plan     = document.querySelector('input[name="plan"]:checked').value;
 
       let valid = true;
       if (!fname) { showErr('signup-fname','fname-error'); valid = false; }
@@ -359,13 +293,11 @@
       btn.textContent = 'Creating account…';
       btn.style.opacity = '0.85';
 
-      // Create auth user + store profile data in metadata
+      // Create auth user
       const { data, error } = await sb.auth.signUp({
         email,
         password,
-        options: {
-          data: { first_name: fname, last_name: lname, plan }
-        }
+        options: { data: { first_name: fname, last_name: lname } }
       });
 
       if (error) {
@@ -376,19 +308,19 @@
         return;
       }
 
-      // Also write to profiles table (if it exists)
+      // Write profile data
       if (data.user) {
         await sb.from('profiles').upsert({
           id: data.user.id,
           first_name: fname,
           last_name: lname,
-          plan,
         });
       }
 
-      if (data.session) {
+      // Go straight to Stripe to enter card — card required immediately
+      // Works whether or not Supabase requires email confirmation
+      if (data.user) {
         btn.textContent = 'Taking you to secure payment…';
-        // Send user to Stripe to enter card & start trial
         try {
           const res = await fetch('/.netlify/functions/create-checkout', {
             method: 'POST',
@@ -399,20 +331,24 @@
           if (url) {
             window.location.href = url;
           } else {
-            // Fallback: go to portal if checkout fails
             console.error('Checkout error:', fnErr);
-            window.location.href = 'portal.html';
+            showAlert('Could not start checkout. Please try again or contact us.', 'error');
+            btn.disabled = false;
+            btn.textContent = 'Continue to Payment →';
+            btn.style.opacity = '';
           }
         } catch (err) {
           console.error(err);
-          window.location.href = 'portal.html';
+          showAlert('Something went wrong. Please try again.', 'error');
+          btn.disabled = false;
+          btn.textContent = 'Continue to Payment →';
+          btn.style.opacity = '';
         }
       } else {
-        // Email confirmation required — portal will redirect to checkout after they confirm + log in
-        btn.textContent = '✓ Check your email!';
-        btn.style.background = '#10B981';
+        showAlert('Something went wrong. Please try again.', 'error');
+        btn.disabled = false;
+        btn.textContent = 'Continue to Payment →';
         btn.style.opacity = '';
-        showAlert('Account created! Check your email to confirm your address — then log in to enter your card and start your 7-day trial.', 'success');
       }
     });
 
