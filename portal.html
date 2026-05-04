@@ -623,12 +623,13 @@
         return;
       }
 
-      // Check if this member has a subscription — if not, send to checkout.
-      // Skip this check if they just returned from Stripe (webhook may not have fired yet).
+      // If they just completed Stripe checkout, skip the subscription check
+      // (webhook may not have updated the profile yet)
       if (!comingFromCheckout) {
-        const { data: profile } = await sb.from('profiles').select('subscription_status, stripe_customer_id').eq('id', session.user.id).maybeSingle();
+        const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
         if (!profile?.stripe_customer_id) {
-          // New member — needs to complete checkout
+          // No subscription — send to payment
+          document.querySelector('#portal-loading p').textContent = 'Setting up your payment…';
           try {
             const res = await fetch('/.netlify/functions/create-checkout', {
               method: 'POST',

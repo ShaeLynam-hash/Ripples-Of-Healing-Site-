@@ -258,7 +258,7 @@
 
       submitBtn.textContent = '✓ Welcome back!';
       submitBtn.style.background = '#10B981';
-      setTimeout(() => routeAfterLogin(data.session), 900);
+      window.location.href = 'portal.html';
     });
 
     // Google OAuth
@@ -296,29 +296,9 @@
       }
     });
 
-    async function routeAfterLogin(session) {
-      const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
-      if (profile?.stripe_customer_id) {
-        window.location.href = 'portal.html';
-      } else {
-        // No subscription yet — go straight to Stripe
-        try {
-          const res = await fetch('/.netlify/functions/create-checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: session.user.email, userId: session.user.id }),
-          });
-          const { url } = await res.json();
-          window.location.href = url || 'portal.html';
-        } catch(e) {
-          window.location.href = 'portal.html';
-        }
-      }
-    }
-
-    // If already logged in, route based on subscription status
+    // If already logged in, go to portal (portal handles routing from there)
     sb.auth.getSession().then(({ data: { session } }) => {
-      if (session) routeAfterLogin(session);
+      if (session) window.location.href = 'portal.html';
     });
   </script>
 </body>
