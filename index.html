@@ -5,6 +5,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ripples of Healing — Live Stream Yoga &amp; Healing Movement</title>
   <meta name="description" content="Real. Guided. Transformative. Premium live stream yoga and somatic healing with live and on-demand classes from world-class instructors." />
@@ -21,7 +25,7 @@
   <nav class="nav" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo" aria-label="Ripples of Healing Home">
-        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
       <ul class="nav-links" role="list">
         <li><a href="classes.html">Classes</a></li>
@@ -69,15 +73,8 @@
         </video>
       </div>
       <div class="hero-overlay"></div>
-      <!-- Animated ripple rings -->
-      <div class="hero-ripples" aria-hidden="true">
-        <div class="hero-ripple-ring" style="--d:0s;--s:300px;"></div>
-        <div class="hero-ripple-ring" style="--d:1.2s;--s:550px;"></div>
-        <div class="hero-ripple-ring" style="--d:2.4s;--s:800px;"></div>
-        <div class="hero-ripple-ring" style="--d:3.6s;--s:1050px;"></div>
-      </div>
       <div class="hero-content">
-        <div class="hero-eyebrow">
+        <div class="hero-eyebrow" style="font-size:1.1rem;font-weight:700;letter-spacing:0.06em;padding:10px 22px;">
           <span class="hero-eyebrow-dot"></span>
           <span>Live Stream Yoga &amp; Healing Movement</span>
         </div>
@@ -87,32 +84,13 @@
         </h1>
         <p class="hero-subtitle">Real. Guided. Transformative.</p>
         <div class="hero-actions">
-          <a href="classes.html" class="btn btn-primary btn-lg">Book a Class</a>
+          <a href="classes.html" class="btn btn-primary btn-lg">Book a Live Class</a>
           <a href="pricing.html" class="btn btn-outline-cream btn-lg">View Pricing</a>
         </div>
       </div>
 
-      <!-- Floating live card -->
-      <a href="classes.html" class="hero-live-card" aria-label="Join live class now">
-        <span class="hero-live-card-dot"></span>
-        <div class="hero-live-card-info">
-          <span class="hero-live-card-label">Live Now</span>
-          <span class="hero-live-card-class">Morning Vinyasa Flow</span>
-        </div>
-        <span class="hero-live-card-join">Join &rarr;</span>
-      </a>
 
-      <!-- Member badge -->
-      <div class="hero-member-badge" aria-hidden="true">
-        <div class="hero-member-avatars">
-          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=64&q=80&fit=crop&auto=format" alt="" />
-          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=64&q=80&fit=crop&auto=format" alt="" />
-          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=64&q=80&fit=crop&auto=format" alt="" />
-        </div>
-        <span>2,400+ members healing daily</span>
-      </div>
-
-      <div class="hero-scroll" aria-hidden="true">
+      <div class="hero-scroll" aria-hidden="true" style="display:none;">
         <span>Explore</span>
         <div class="hero-scroll-line"></div>
       </div>
@@ -130,10 +108,10 @@
         </div>
         <div class="feature-item fade-in">
           <div class="feature-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
-          <h4>500+ On-Demand</h4>
-          <p>Stream any class from our full library, anytime you need it</p>
+          <h4>Personal Attention</h4>
+          <p>Your instructor sees you, greets you, and guides you — just like an in-person studio</p>
         </div>
         <div class="feature-item fade-in">
           <div class="feature-icon">
@@ -157,20 +135,20 @@
       <div class="container">
         <div class="stats-inner">
           <div class="stat-item fade-in">
-            <div class="stat-number">21<span>+</span></div>
-            <div class="stat-label">Live Classes Weekly</div>
+            <div class="stat-number">20<span>+</span></div>
+            <div class="stat-label">Live Classes Per Week</div>
           </div>
           <div class="stat-item fade-in">
-            <div class="stat-number">14<span>+</span></div>
+            <div class="stat-number">12<span>+</span></div>
             <div class="stat-label">Certified Instructors</div>
           </div>
           <div class="stat-item fade-in">
-            <div class="stat-number">2<span>,</span>400<span>+</span></div>
-            <div class="stat-label">Active Members</div>
+            <div class="stat-number">60</div>
+            <div class="stat-label">Minutes Per Class</div>
           </div>
           <div class="stat-item fade-in">
-            <div class="stat-number">7</div>
-            <div class="stat-label">Day Free Trial</div>
+            <div class="stat-number">$<span>22</span></div>
+            <div class="stat-label">Per Month</div>
           </div>
         </div>
       </div>
@@ -201,7 +179,7 @@
           </div>
           <!-- Wide card — Healing -->
           <div class="class-overlay-card wide">
-            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80&fit=crop&auto=format" alt="Healing movement class" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1588286840104-8957b019727f?w=1200&q=80&fit=crop&auto=format" alt="Healing movement class indoors" loading="lazy" />
             <div class="gradient-overlay"></div>
             <div class="class-overlay-body">
               <span class="class-type-badge">Healing Movement</span>
@@ -229,7 +207,7 @@
           </div>
           <!-- Wide card — Yin -->
           <div class="class-overlay-card wide">
-            <img src="https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=1200&q=80&fit=crop&auto=format" alt="Yin yoga class" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80&fit=crop&auto=format" alt="Yin yoga and deep stretch" loading="lazy" />
             <div class="gradient-overlay"></div>
             <div class="class-overlay-body">
               <span class="class-type-badge">Yin &amp; Deep Stretch</span>
@@ -267,7 +245,7 @@
       <div class="container">
         <div class="split-inner">
           <div class="split-img-wrap fade-in">
-            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=900&q=80&fit=crop&auto=format" alt="Yoga instructor in session" loading="lazy" />
+            <img src="https://images.unsplash.com/photo-1549576490-b0d6e10c24ca?w=900&q=80&fit=crop&auto=format" alt="Yoga instructor in session indoors" loading="lazy" />
             <div class="split-img-badge">
               <div class="badge-num">25+</div>
               <div class="badge-label">Years of Practice</div>
@@ -289,7 +267,7 @@
                 <div class="benefit-icon">&#9835;</div>
                 <div class="benefit-text">
                   <h4>Accessible to every body</h4>
-                  <p>Modifications offered in every class. Beginner or advanced, you belong here exactly as you are.</p>
+                  <p>Modifications offered in every class. Beginner or advanced, you belong here exactly as you are. Camera on or off — join however feels most comfortable.</p>
                 </div>
               </div>
               <div class="benefit-item">
@@ -311,38 +289,38 @@
       <div class="container">
         <div class="section-header fade-in">
           <span class="section-label">Getting Started</span>
-          <h2 id="how-heading">From Sign-Up to First Class in Minutes</h2>
-          <p>No complicated setup. No equipment required. Just you, your mat, and your intention.</p>
+          <h2 id="how-heading">No Studio Required. Just Show Up.</h2>
+          <p>You don't need any yoga experience, special equipment, or even workout clothes. Just a little space to move — from anywhere you feel comfortable.</p>
         </div>
         <div class="how-steps-grid stagger-children">
           <div class="how-step">
             <div class="how-step-num">01</div>
             <div class="how-step-icon">&#9998;</div>
-            <h3>Create Your Account</h3>
-            <p>Sign up, enter your card, and your 7-day free trial begins immediately. You won't be charged a thing until day 8.</p>
+            <h3>Claim Your New Member Special</h3>
+            <p>Sign up and your first 7 days are completely free. You're joining a membership you can cancel anytime — no pressure, no contracts.</p>
             <div class="how-step-tags">
-              <span class="how-step-tag">7-Day Free Trial</span>
-              <span class="how-step-tag">No Card Needed</span>
+              <span class="how-step-tag">New Member Special</span>
+              <span class="how-step-tag">Cancel Anytime</span>
             </div>
           </div>
           <div class="how-step">
             <div class="how-step-num">02</div>
             <div class="how-step-icon">&#9776;</div>
-            <h3>Browse the Schedule</h3>
-            <p>Explore our full weekly calendar. Filter by style, instructor, or duration. See what's live right now or browse on-demand recordings.</p>
+            <h3>Pick a Class That Feels Right</h3>
+            <p>Browse our weekly schedule and find a class that sounds good to you. Not sure where to start? Gentle Flow or Full Body Stretch are great first classes — no experience needed.</p>
             <div class="how-step-tags">
-              <span class="how-step-tag">21 Weekly Classes</span>
-              <span class="how-step-tag">On-Demand Library</span>
+              <span class="how-step-tag">20+ Weekly Classes</span>
+              <span class="how-step-tag">All Levels Welcome</span>
             </div>
           </div>
           <div class="how-step">
             <div class="how-step-num">03</div>
             <div class="how-step-icon">&#9786;</div>
-            <h3>Show Up &amp; Heal</h3>
-            <p>Join via Zoom — your instructor sees you, greets you, guides you. All you need is space to move and a willingness to breathe.</p>
+            <h3>Show Up &amp; Feel Better</h3>
+            <p>Join via Zoom from your living room, backyard, or wherever you're comfortable. Your instructor will greet you, guide you through the whole class, and make sure you feel at home.</p>
             <div class="how-step-tags">
               <span class="how-step-tag">Via Zoom</span>
-              <span class="how-step-tag">All Levels</span>
+              <span class="how-step-tag">Beginner Friendly</span>
             </div>
           </div>
         </div>
@@ -480,78 +458,46 @@
       <div class="container">
         <div class="platform-inner">
           <div class="platform-content fade-in">
-            <span class="section-label">The Platform</span>
-            <h2 id="platform-heading">Everything You Need to Build a Real Practice</h2>
-            <p>Designed for practitioners who want more than an app — a real, living ecosystem for sustained healing.</p>
+            <span class="section-label">How It Works</span>
+            <h2 id="platform-heading">Real Classes. Real Instructors. Real Results.</h2>
+            <p>Not a pre-recorded app. Not a subscription to content you'll never use. Every class is taught live by a real, certified instructor who actually sees you — from wherever you are.</p>
             <div class="platform-features-list">
               <div class="platform-feat">
                 <div class="platform-feat-icon">&#9654;</div>
                 <div>
-                  <h4>HD Live Stream via Zoom</h4>
-                  <p>Your instructor sees you and can offer real-time corrections and encouragement.</p>
+                  <h4>Live Stream via Zoom</h4>
+                  <p>Your instructor sees you, greets you by name, and guides you through every move in real time.</p>
                 </div>
               </div>
               <div class="platform-feat">
-                <div class="platform-feat-icon">&#9776;</div>
+                <div class="platform-feat-icon">&#9998;</div>
                 <div>
-                  <h4>On-Demand Library</h4>
-                  <p>Every live class recorded and available within 2 hours. Stream any time, anywhere.</p>
+                  <h4>No Experience Needed</h4>
+                  <p>Every class offers beginner-friendly options. You don't need to know any yoga terms — just come as you are.</p>
                 </div>
               </div>
               <div class="platform-feat">
                 <div class="platform-feat-icon">&#9733;</div>
                 <div>
-                  <h4>Progress Tracking</h4>
-                  <p>Log your classes, track streaks, and see your practice grow over time.</p>
+                  <h4>Feel Better in Your Body</h4>
+                  <p>Classes are designed to reduce tension, improve how you feel day to day, and build a movement habit that sticks.</p>
                 </div>
               </div>
               <div class="platform-feat">
                 <div class="platform-feat-icon">&#9825;</div>
                 <div>
-                  <h4>Community &amp; Connection</h4>
-                  <p>Members-only forum, instructor Q&amp;A, and group healing circles each month.</p>
+                  <h4>Your Membership Gives Back</h4>
+                  <p>2% of every membership supports women and children in need. Healing that ripples outward.</p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="platform-mockup fade-in" aria-hidden="true">
-            <div class="platform-card-stack">
-              <div class="p-card">
-                <div class="p-card-header">
-                  <div class="p-card-avatar">&#9786;</div>
-                  <div>
-                    <div class="p-card-title">Morning Vinyasa</div>
-                    <div class="p-card-sub">with Anna Fernandez</div>
-                  </div>
-                  <div class="p-live-dot" style="margin-left:auto;">Live</div>
-                </div>
-                <div class="p-card-bar"><div class="p-card-bar-fill" style="width:68%"></div></div>
-                <div class="p-card-progress-label"><span>38 min in</span><span>60 min</span></div>
-              </div>
-              <div class="p-card">
-                <div class="p-card-header">
-                  <div class="p-card-avatar" style="background:var(--warm-orange);">&#9675;</div>
-                  <div>
-                    <div class="p-card-title">My Weekly Streak</div>
-                    <div class="p-card-sub">Keep it going!</div>
-                  </div>
-                </div>
-                <div class="p-card-row"><span class="p-card-label">This week</span><span class="p-card-value">4 classes</span></div>
-                <div class="p-card-row"><span class="p-card-label">Total hours</span><span class="p-card-value">62.5 hrs</span></div>
-                <div class="p-card-row"><span class="p-card-label">Current streak</span><span class="p-card-value">12 days 🔥</span></div>
-              </div>
-              <div class="p-card">
-                <div class="p-card-header">
-                  <div class="p-card-avatar" style="background:var(--mint);">&#9775;</div>
-                  <div>
-                    <div class="p-card-title">Up Next: Yin Yoga</div>
-                    <div class="p-card-sub">Today at 5:30 PM PT</div>
-                  </div>
-                </div>
-                <div class="p-card-row"><span class="p-card-label">Instructor</span><span class="p-card-value">Alisha Ayaad</span></div>
-                <div class="p-card-row"><span class="p-card-label">Duration</span><span class="p-card-value">60 minutes</span></div>
-              </div>
-            </div>
+          <div class="platform-mockup fade-in">
+            <blockquote class="platform-quote">
+              "I've tried every yoga app out there. Ripples of Healing is different because there's a real person on the other side of the screen who actually cares. Anna noticed my posture in week one and it changed everything for my back."
+              <cite>— Sarah K., Member since 2023</cite>
+            </blockquote>
+            <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=700&q=80&fit=crop&auto=format" alt="Yoga class in session" style="width:100%;border-radius:16px;margin-top:24px;display:block;" loading="lazy" />
           </div>
         </div>
       </div>
@@ -597,27 +543,69 @@
       </div>
     </section>
 
+    <!-- ═══════════════════════════ RIPPLE EFFECT -->
+    <section class="section" style="background:var(--ocean-blue);padding:80px 0;" aria-labelledby="ripple-heading">
+      <div class="container">
+        <div class="section-header fade-in" style="color:#fff;">
+          <span class="section-label" style="color:rgba(255,255,255,0.7);">The Ripple Effect</span>
+          <h2 id="ripple-heading" style="color:#fff;">Your Membership Does More Than You Think</h2>
+          <p style="color:rgba(255,255,255,0.8);max-width:640px;margin:0 auto;">At Ripples of Healing, every membership creates waves of change. Together we support our most vulnerable — at-risk women and children. Your Ripples of Healing spread outward into the world.</p>
+        </div>
+
+        <!-- 2% statement -->
+        <div style="text-align:center;margin-bottom:56px;" class="fade-in">
+          <div style="display:inline-flex;align-items:center;gap:20px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:var(--radius-full);padding:16px 36px;">
+            <span style="font-family:var(--font-display);font-size:2.4rem;font-weight:300;color:var(--warm-orange);">2%</span>
+            <span style="color:#fff;font-size:0.95rem;line-height:1.5;text-align:left;">of every membership donated<br><strong>every month, automatically</strong></span>
+          </div>
+        </div>
+
+        <!-- Charity cards -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:48px;" class="stagger-children">
+          <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-md);padding:24px;text-align:center;">
+            <div style="font-size:1.6rem;margin-bottom:10px;">&#128104;&#8205;&#128105;&#8205;&#128103;</div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;">Protecting Children</div>
+            <div style="color:#fff;font-weight:700;font-size:0.95rem;">National Children's Alliance</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-md);padding:24px;text-align:center;">
+            <div style="font-size:1.6rem;margin-bottom:10px;">&#129302;</div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;">Mental Health &amp; Youth</div>
+            <div style="color:#fff;font-weight:700;font-size:0.95rem;">The Jed Foundation</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-md);padding:24px;text-align:center;">
+            <div style="font-size:1.6rem;margin-bottom:10px;">&#127968;</div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;">At-Risk Women</div>
+            <div style="color:#fff;font-weight:700;font-size:0.95rem;">Sister League of San Diego</div>
+          </div>
+          <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-md);padding:24px;text-align:center;">
+            <div style="font-size:1.6rem;margin-bottom:10px;">&#127775;</div>
+            <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:6px;">At-Risk Youth</div>
+            <div style="color:#fff;font-weight:700;font-size:0.95rem;">G.R.A.C.E.</div>
+          </div>
+        </div>
+
+        <div style="text-align:center;" class="fade-in">
+          <a href="charities.html" class="btn btn-outline-cream btn-lg">Meet the Organizations We Support</a>
+        </div>
+      </div>
+    </section>
+
     <!-- ═══════════════════════════ FINAL CTA -->
     <section class="final-cta" aria-labelledby="cta-heading">
-      <div class="final-cta-rings" aria-hidden="true">
-        <div class="final-cta-ring" style="width:300px;height:300px;"></div>
-        <div class="final-cta-ring" style="width:550px;height:550px;"></div>
-        <div class="final-cta-ring" style="width:800px;height:800px;"></div>
-        <div class="final-cta-ring" style="width:1050px;height:1050px;"></div>
-      </div>
+      <div>
       <div class="container">
-        <h2 id="cta-heading">Your First 7 Days Are Free</h2>
-        <p>Begin your healing journey today. 7 days free, then $22/month. Cancel anytime.</p>
+        <h2 id="cta-heading">New Member Special — 7 Days Free</h2>
+        <p>Try every live class for a full week at no charge. Then just $22/month. Cancel anytime, no questions asked.</p>
         <div class="newsletter-form">
           <input type="email" placeholder="Enter your email address" aria-label="Email address" />
-          <a href="signup.html" class="btn btn-primary btn-lg">Start Free Trial</a>
+          <a href="signup.html" class="btn btn-primary btn-lg">Claim New Member Special</a>
         </div>
         <p class="fine-print">By continuing, you agree to our Terms of Service and Privacy Policy.</p>
         <div class="trust-row">
-          <div class="trust-item"><span>&#9679;</span> No Credit Card Required</div>
+          <div class="trust-item"><span>&#9679;</span> Card Required — Charged Day 8</div>
           <div class="trust-item"><span>&#9679;</span> Cancel Anytime</div>
-          <div class="trust-item"><span>&#9679;</span> 7-Day Free Trial</div>
-          <div class="trust-item"><span>&#9679;</span> All Classes Live &amp; On-Demand</div>
+          <div class="trust-item"><span>&#9679;</span> 7-Day New Member Special</div>
+          <div class="trust-item"><span>&#9679;</span> All Classes Taught Live</div>
         </div>
       </div>
     </section>
@@ -630,11 +618,11 @@
       <div class="footer-top">
         <div class="footer-brand">
           <div class="footer-logo">
-            <img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" />
+            <img src="images/logo-photo.png" alt="Ripples of Healing" class="footer-logo-img" />
           </div>
           <p class="footer-tagline">Real. Guided. Transformative. Live stream yoga and somatic healing for a more connected life.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="https://www.instagram.com/myripplesofhealing/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
             <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
             <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
           </div>
@@ -653,6 +641,7 @@
           <h4>Company</h4>
           <ul>
             <li><a href="about.html">About Us</a></li>
+            <li><a href="charities.html">Our Charities</a></li>
             <li><a href="instructors.html">Instructors</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
@@ -670,7 +659,7 @@
         <div class="footer-col">
           <h4>Connect</h4>
           <ul>
-            <li><a href="#">Instagram</a></li>
+            <li><a href="https://www.instagram.com/myripplesofhealing/" target="_blank" rel="noopener">Instagram</a></li>
             <li><a href="#">Facebook</a></li>
             <li><a href="#">YouTube</a></li>
             <li><a href="#">Newsletter</a></li>
@@ -678,7 +667,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p>
+        <p>&copy; 2026 Ripples of Healing. All Rights Reserved.</p>
         <div class="footer-bottom-links">
           <a href="#">Privacy Policy</a>
           <a href="#">Terms</a>
@@ -688,8 +677,10 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-client.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-client.js"></script>
   <script src="main.js"></script>
 </body>
 </html>
