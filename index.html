@@ -265,8 +265,8 @@
           </div>
           <div class="split-content fade-in">
             <span class="section-label">Born From Healing</span>
-            <h2 id="story-heading">Movement, Breath, and Connection Have Made a Profound Difference in Our Lives. We Hope They Do the Same for You.</h2>
-            <p>Ripples of Healing was founded by Anna Fernandez after her own journey healing chronic pain from scoliosis through yoga. What began as a personal practice became a passion — and then a calling to share these tools with the world.</p>
+            <h2 id="story-heading" data-cms="headline">Movement, Breath, and Connection Have Made a Profound Difference in Our Lives. We Hope They Do the Same for You.</h2>
+            <p data-cms="story_paragraph">Ripples of Healing was founded by Anna Fernandez after her own journey healing chronic pain from scoliosis through yoga. What began as a personal practice became a passion — and then a calling to share these tools with the world.</p>
             <div class="benefit-list">
               <div class="benefit-item">
                 <div class="benefit-icon">&#9775;</div>
@@ -516,7 +516,7 @@
         <div class="section-header fade-in" style="color:#fff;">
           <span class="section-label" style="color:rgba(255,255,255,0.7);">The Ripple Effect</span>
           <h2 id="ripple-heading" style="color:#fff;">Your Membership Does More Than You Think</h2>
-          <p style="color:rgba(255,255,255,0.8);max-width:640px;margin:0 auto;">At Ripples of Healing, every membership creates waves of change. Together we support our most vulnerable — at-risk women and children. Your Ripples of Healing spread outward into the world.</p>
+          <p data-cms="charity_tagline" style="color:rgba(255,255,255,0.8);max-width:640px;margin:0 auto;">At Ripples of Healing, every membership creates waves of change. Together we support our most vulnerable — at-risk women and children. Your Ripples of Healing spread outward into the world.</p>
         </div>
 
         <!-- 2% statement -->
@@ -650,5 +650,16 @@
   <script src="firebase-client.js"></script>
   <script src="main.js"></script>
   <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    fetch('/_data/homepage.json')
+      .then(function(r){ return r.json(); })
+      .then(function(data){
+        document.querySelectorAll('[data-cms]').forEach(function(el){
+          var key = el.getAttribute('data-cms');
+          if (data[key] !== undefined) el.textContent = data[key];
+        });
+      })
+      .catch(function(err){ console.error('Failed to load homepage data:', err); });
+  </script>
 </body>
 </html>

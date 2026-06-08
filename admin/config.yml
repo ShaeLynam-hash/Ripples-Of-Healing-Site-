@@ -76,3 +76,48 @@ collections:
               - label: "Answer"
                 name: "answer"
                 widget: "text"
+
+  - name: "instructors"
+    label: "Instructors"
+    files:
+      - label: "Instructor Profiles"
+        name: "instructors"
+        file: "_data/instructors.json"
+        fields:
+          - label: "Instructors"
+            name: "instructors"
+            widget: "list"
+            fields:
+              - label: "Name"
+                name: "name"
+                widget: "string"
+              - label: "Title / Role"
+                name: "title"
+                widget: "string"
+                required: false
+              - label: "Bio"
+                name: "bio"
+                widget: "text"
+              - label: "Photo"
+                name: "photo"
+                widget: "image"
+              - label: "Instagram URL"
+                name: "instagram"
+                widget: "string"
+
+  - name: "homepage"
+    label: "Homepage"
+    files:
+      - label: "Homepage Text"
+        name: "homepage"
+        file: "_data/homepage.json"
+        fields:
+          - label: "Story Headline"
+            name: "headline"
+            widget: "string"
+          - label: "Story Paragraph"
+            name: "story_paragraph"
+            widget: "text"
+          - label: "Charity Tagline"
+            name: "charity_tagline"
+            widget: "text"
