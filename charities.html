@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Charities — Ripples of Healing</title>
+  <meta name="description" content="2% of every Ripples of Healing membership goes directly to charities supporting at-risk women and children. Meet the organizations we're proud to support." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .charity-mission-strip {
+      background: var(--ocean-blue);
+      color: #fff;
+      padding: 64px 0;
+      text-align: center;
+    }
+    .charity-mission-strip blockquote {
+      font-family: var(--font-display);
+      font-size: clamp(1.3rem, 3vw, 2rem);
+      font-weight: 300;
+      font-style: italic;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      line-height: 1.6;
+      color: #fff;
+    }
+    .charity-mission-strip cite {
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.7;
+      font-style: normal;
+    }
+    .giving-stat-row {
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+      margin-top: 48px;
+    }
+    .giving-stat {
+      text-align: center;
+    }
+    .giving-stat-num {
+      font-family: var(--font-display);
+      font-size: 3rem;
+      font-weight: 300;
+      color: var(--warm-orange);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .giving-stat-label {
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+
+    .charity-category {
+      margin-bottom: 72px;
+    }
+    .charity-category-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .charity-category-label span {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--deep-teal);
+      background: rgba(106,187,169,0.15);
+      padding: 6px 16px;
+      border-radius: var(--radius-full);
+    }
+    .charity-category-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border-light);
+    }
+
+    .charity-card {
+      background: var(--white);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      gap: 0;
+      transition: box-shadow var(--transition);
+    }
+    .charity-card:hover {
+      box-shadow: var(--shadow-lg);
+    }
+    .charity-card-accent {
+      width: 6px;
+      flex-shrink: 0;
+      background: var(--deep-teal);
+    }
+    .charity-card-accent.orange { background: var(--warm-orange); }
+    .charity-card-accent.navy  { background: var(--navy); }
+    .charity-card-accent.sage  { background: var(--sage); }
+    .charity-card-body {
+      padding: 32px 36px;
+      flex: 1;
+    }
+    .charity-org-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark-charcoal);
+      margin-bottom: 4px;
+    }
+    .charity-org-abbr {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--deep-teal);
+      background: rgba(106,187,169,0.12);
+      padding: 3px 10px;
+      border-radius: var(--radius-full);
+      margin-bottom: 16px;
+    }
+    .charity-desc {
+      color: var(--text-muted);
+      line-height: 1.75;
+      font-size: 0.95rem;
+    }
+    .charity-anna-note {
+      margin-top: 16px;
+      padding: 14px 18px;
+      background: var(--cream);
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      color: var(--navy);
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .split-note {
+      background: rgba(240,119,43,0.08);
+      border: 1px solid rgba(240,119,43,0.2);
+      border-radius: var(--radius-md);
+      padding: 14px 20px;
+      font-size: 0.86rem;
+      color: #a84c0a;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .charities-grid-2 {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .giving-how-strip {
+      background: var(--cream);
+      border-radius: var(--radius-xl);
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 64px;
+    }
+    .giving-how-item {
+      text-align: center;
+    }
+    .giving-how-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+    .giving-how-item h4 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--dark-charcoal);
+    }
+    .giving-how-item p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    @media (max-width: 768px) {
+      .giving-how-strip {
+        grid-template-columns: 1fr;
+        padding: 32px 24px;
+      }
+      .charity-card-body { padding: 24px 20px; }
+      .giving-stat-row { gap: 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav light-nav scrolled" id="main-nav" role="navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="nav-logo-img" />
+      </a>
+      <ul class="nav-links" role="list">
+        <li><a href="classes.html">Classes</a></li>
+        <li><a href="instructors.html">Instructors</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="faq.html">FAQ</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-login guest-only">Log In</a>
+        <a href="signup.html" class="btn btn-primary btn-sm guest-only">Join Now</a>
+        <a href="classes.html" class="btn btn-primary btn-sm auth-only">My Classes</a>
+        <button class="nav-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+  <div class="nav-drawer">
+    <nav class="nav-drawer-links">
+      <a href="classes.html">Classes</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="faq.html">FAQ</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-drawer-actions">
+      <a href="login.html" class="btn btn-outline-cream" style="width:100%;justify-content:center;">Log In</a>
+      <a href="signup.html" class="btn btn-primary" style="width:100%;justify-content:center;">Join Now</a>
+    </div>
+  </div>
+  <div class="nav-overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1600&q=80&fit=crop&auto=format')">
+      <div class="container">
+        <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Our Charities</span></div>
+        <h1>Healing That<br>Ripples Outward</h1>
+        <p class="tagline">Every membership creates waves of change. Together we support our most vulnerable — at-risk women and children.</p>
+      </div>
+    </section>
+
+    <!-- MISSION STRIP -->
+    <div class="charity-mission-strip">
+      <div class="container">
+        <blockquote>"May all beings be happy and free, and may I contribute to this vibration."</blockquote>
+        <cite>Gāyatrī Mantra &mdash; The Heart of Ripples of Healing</cite>
+        <div class="giving-stat-row">
+          <div class="giving-stat">
+            <div class="giving-stat-num">2%</div>
+            <div class="giving-stat-label">Of every membership donated monthly</div>
+          </div>
+          <div class="giving-stat">
+            <div class="giving-stat-num">4</div>
+            <div class="giving-stat-label">Charities we proudly support</div>
+          </div>
+          <div class="giving-stat">
+            <div class="giving-stat-num">100%</div>
+            <div class="giving-stat-label">Goes directly to the organizations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARITIES SECTION -->
+    <section class="section" style="background:var(--soft-grey);" aria-labelledby="charities-heading">
+      <div class="container">
+
+        <div class="section-header fade-in">
+          <span class="section-label">Our Mission in Action</span>
+          <h2 id="charities-heading">The Organizations We Support</h2>
+          <p>Each month, 2% of every membership is donated to these four organizations. Your practice is doing something meaningful in the world.</p>
+        </div>
+
+        <!-- How it works -->
+        <div class="giving-how-strip fade-in">
+          <div class="giving-how-item">
+            <div class="giving-how-icon">&#9997;</div>
+            <h4>You Join</h4>
+            <p>Sign up for a Ripples Membership and start your healing journey with live, guided classes every week.</p>
+          </div>
+          <div class="giving-how-item">
+            <div class="giving-how-icon">&#9825;</div>
+            <h4>We Give</h4>
+            <p>2% of your membership fee is donated every month — automatically, with no extra steps from you.</p>
+          </div>
+          <div class="giving-how-item">
+            <div class="giving-how-icon">&#9733;</div>
+            <h4>Ripples Spread</h4>
+            <p>Your practice creates real impact for women, children, and families who need it most.</p>
+          </div>
+        </div>
+
+        <!-- Category 1: Children -->
+        <div class="charity-category fade-in">
+          <div class="charity-category-label">
+            <span>Protecting &amp; Healing Children</span>
+          </div>
+          <div class="charity-card">
+            <div class="charity-card-accent orange"></div>
+            <div class="charity-card-body">
+              <div class="charity-org-name">National Children's Alliance</div>
+              <div class="charity-org-abbr">NCA</div>
+              <p class="charity-desc">Supports a national network of Child Advocacy Centers, providing children who have experienced abuse with medical care, counseling, and legal support in a safe and compassionate environment. NCA ensures that every child who has experienced abuse can access the care and healing they deserve — no matter where they live.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 2: Mental Health -->
+        <div class="charity-category fade-in">
+          <div class="charity-category-label">
+            <span>Fostering Mental Health &amp; Emotional Well-Being</span>
+          </div>
+          <div class="charity-card">
+            <div class="charity-card-accent navy"></div>
+            <div class="charity-card-body">
+              <div class="charity-org-name">The Jed Foundation</div>
+              <div class="charity-org-abbr">JED</div>
+              <p class="charity-desc">Works with schools and communities to promote mental wellness, prevent suicide, and equip young people with the life skills to thrive. JED is dedicated to protecting emotional health and preventing suicide for our nation's teens and young adults — giving them the tools and community they need to build resilience and hope.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category 3: At-Risk Youth & Women -->
+        <div class="charity-category fade-in">
+          <div class="charity-category-label">
+            <span>Supporting At-Risk Youth &amp; Women</span>
+          </div>
+          <p class="split-note">&#9675; Your membership supports both organizations below.</p>
+          <div class="charities-grid-2">
+            <div class="charity-card">
+              <div class="charity-card-accent sage"></div>
+              <div class="charity-card-body">
+                <div class="charity-org-name">Sister League of San Diego</div>
+                <p class="charity-desc">Provides safe housing and life skills programs for women recovering from trauma, helping them regain independence and confidence. Their programs have positively transformed the lives of women in our community — giving them a safe place to heal, grow, and reclaim their lives.</p>
+                <div class="charity-anna-note">"I have personally worked with Sister League and witnessed firsthand the profound difference they make. Their compassion and dedication to helping women heal is something I deeply believe in." &mdash; Anna Fernandez, Founder</div>
+              </div>
+            </div>
+            <div class="charity-card">
+              <div class="charity-card-accent sage"></div>
+              <div class="charity-card-body">
+                <div class="charity-org-name">G.R.A.C.E.</div>
+                <div class="charity-org-abbr">Girls Rising Above Childhood Exploitation</div>
+                <p class="charity-desc">Offers mentorship, educational programs, and supportive resources for victims of sex trafficking and at-risk youth, helping them gain the tools and support they need to thrive. G.R.A.C.E. meets young people where they are — with compassion, safety, and a roadmap toward a better future.</p>
+                <div class="charity-anna-note">"The courage and resilience of the young people G.R.A.C.E. serves is extraordinary. Supporting their work is one of the most meaningful things we can do together as a community." &mdash; Anna Fernandez, Founder</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MEMBER STATEMENT -->
+    <section class="section" style="background:var(--white);">
+      <div class="container" style="max-width:860px;">
+        <div style="text-align:center;margin-bottom:48px;" class="fade-in">
+          <span class="section-label">Welcome to Ripples of Healing</span>
+          <h2 style="margin-bottom:24px;">Where Your Self-Care Ripples Out to Heal Others</h2>
+          <p style="font-size:1.05rem;line-height:1.85;color:var(--text-muted);margin-bottom:24px;">At Ripples of Healing, every membership creates waves of change. Together we support some of our most vulnerable populations — at-risk women and children. Every time you show up on your mat, every class you take, every breath you commit to — it becomes part of something larger.</p>
+          <p style="font-family:var(--font-display);font-size:1.2rem;font-style:italic;color:var(--navy);line-height:1.7;">Your Ripples of Healing spread outward into the world.</p>
+        </div>
+        <div style="background:var(--cream);border-radius:var(--radius-xl);padding:40px 48px;text-align:center;" class="fade-in">
+          <p style="font-size:0.9rem;color:var(--text-muted);line-height:1.8;margin-bottom:8px;">Every membership. Every month. Automatically.</p>
+          <p style="font-family:var(--font-display);font-size:1.5rem;color:var(--deep-teal);font-weight:300;margin-bottom:0;">2% of your membership supports women &amp; children in need.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-banner" aria-labelledby="charities-cta-heading">
+      <div class="container">
+        <h2 id="charities-cta-heading">Join Us &amp; Make a Difference</h2>
+        <p>By participating in our classes and memberships, you're nurturing your own well-being — and helping create healing ripples that reach individuals, families, communities, and the world.</p>
+        <a href="signup.html" class="btn btn-outline-cream btn-lg" style="margin-right:16px;">Become a Member</a>
+        <a href="about.html" class="btn btn-outline-cream btn-lg">Our Full Story</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-logo"><img src="images/logo-photo.png" alt="Ripples of Healing" class="footer-logo-img" /></div>
+          <p class="footer-tagline">Real. Guided. Transformative. Live stream yoga and somatic healing for a more connected life.</p>
+          <div class="footer-social">
+            <a href="https://www.instagram.com/myripplesofhealing/" target="_blank" rel="noopener" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+            <a href="#" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="#" aria-label="YouTube"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.97C18.88 4 12 4 12 4s-6.88 0-8.59.45A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.45a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02"/></svg></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Practice</h4>
+          <ul>
+            <li><a href="classes.html">All Classes</a></li>
+            <li><a href="classes.html">Yoga</a></li>
+            <li><a href="classes.html">Healing Movement</a></li>
+            <li><a href="classes.html">Live Schedule</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="charities.html">Our Charities</a></li>
+            <li><a href="instructors.html">Instructors</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="pricing.html">Pricing</a></li>
+            <li><a href="faq.html">FAQ</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Connect</h4>
+          <ul>
+            <li><a href="https://www.instagram.com/myripplesofhealing/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+            <li><a href="#">YouTube</a></li>
+            <li><a href="#">Newsletter</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms</a>
+          <a href="privacy.html">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-client.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

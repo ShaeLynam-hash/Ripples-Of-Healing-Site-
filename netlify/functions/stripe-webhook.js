@@ -1,21 +1,19 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
-const { createClient } = require('@supabase/supabase-js');
+const admin  = require('firebase-admin');
 
-const supabase = createClient(
-  'https://indmbezacqesboecocvn.supabase.co',
-  process.env.SUPABASE_SERVICE_ROLE_KEY
-);
+if (!admin.apps.length) {
+  admin.initializeApp({
+    credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT)),
+  });
+}
+const db = admin.firestore();
 
 exports.handler = async (event) => {
   const sig = event.headers['stripe-signature'];
 
   let stripeEvent;
   try {
-    stripeEvent = stripe.webhooks.constructEvent(
-      event.body,
-      sig,
-      process.env.STRIPE_WEBHOOK_SECRET
-    );
+    stripeEvent = stripe.webhooks.constructEvent(event.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
     console.error('Webhook signature error:', err.message);
     return { statusCode: 400, body: `Webhook Error: ${err.message}` };
@@ -23,32 +21,22 @@ exports.handler = async (event) => {
 
   const { type, data } = stripeEvent;
 
-  // Checkout completed → trial started, card saved
   if (type === 'checkout.session.completed') {
     const session = data.object;
-    const userId  = session.metadata?.supabase_user_id;
+    const userId  = session.metadata?.firebase_user_id;
     if (userId) {
-      await supabase.from('profiles').upsert({
-        id: userId,
-        stripe_customer_id: session.customer,
+      await db.collection('users').doc(userId).set({
+        stripe_customer_id:  session.customer,
         subscription_status: 'trialing',
-      });
+      }, { merge: true });
     }
   }
 
-  // Subscription updated (trial ended → active, or cancelled, etc.)
   if (type === 'customer.subscription.updated' || type === 'customer.subscription.deleted') {
-    const sub = data.object;
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('stripe_customer_id', sub.customer)
-      .maybeSingle();
-
-    if (profile) {
-      await supabase.from('profiles').update({
-        subscription_status: sub.status, // 'active', 'canceled', 'past_due', etc.
-      }).eq('id', profile.id);
+    const sub  = data.object;
+    const snap = await db.collection('users').where('stripe_customer_id', '==', sub.customer).limit(1).get();
+    if (!snap.empty) {
+      await snap.docs[0].ref.update({ subscription_status: sub.status });
     }
   }
 

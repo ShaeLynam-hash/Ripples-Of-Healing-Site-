@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Classes &amp; Schedule — Ripples of Healing</title>
   <meta name="description" content="Browse live classes and book your spot at Ripples of Healing." />
@@ -13,12 +17,13 @@
 
   <nav class="nav light-nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
-      <a href="index.html" class="nav-logo"><img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" /></a>
+      <a href="index.html" class="nav-logo"><img src="images/logo-photo.png" alt="Ripples of Healing" class="nav-logo-img" /></a>
       <ul class="nav-links" role="list">
         <li><a href="classes.html" class="active">Classes</a></li>
         <li><a href="instructors.html">Instructors</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="charities.html">Giving Back</a></li>
         <li><a href="faq.html">FAQ</a></li>
         <li><a href="contact.html">Contact</a></li>
       </ul>
@@ -49,11 +54,11 @@
   <main class="classes-page">
 
     <!-- PAGE HERO -->
-    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1599901860904-17e6ed7083a0?w=1600&q=80&fit=crop&auto=format')">
+    <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=1600&q=80&fit=crop&auto=format')">
       <div class="container">
         <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Classes</span></div>
         <h1>Classes &amp; Schedule</h1>
-        <p class="tagline">21 live classes every week. Real instructors, real time — from your own home.</p>
+        <p class="tagline">20+ Live Classes Every Week. Real instructors, real time — from your own home.</p>
       </div>
     </section>
 
@@ -106,7 +111,7 @@
         </div>
         <div class="cal-grid" id="cal-grid"></div>
         <p style="text-align:center;margin-top:24px;font-size:0.84rem;color:var(--text-muted);">
-          Click any class to view details and get the Zoom link. All classes are also recorded and available on-demand within 2 hours.
+          Click any class to view details and get the Zoom link.
         </p>
       </div>
     </div>
@@ -122,18 +127,20 @@
     <div class="container">
       <div class="footer-top">
         <div class="footer-brand">
-          <div class="footer-logo"><img src="logo.svg" alt="Ripples of Healing" class="footer-logo-img" /></div>
+          <div class="footer-logo"><img src="images/logo-photo.png" alt="Ripples of Healing" class="footer-logo-img" /></div>
           <p class="footer-tagline">Real. Guided. Transformative.</p>
           <div class="footer-social">
-            <a href="#" aria-label="Instagram">&#9728;</a>
+            <a href="https://www.instagram.com/myripplesofhealing/" target="_blank" rel="noopener" aria-label="Instagram">&#9728;</a>
             <a href="#" aria-label="Facebook">f</a>
             <a href="#" aria-label="YouTube">&#9654;</a>
           </div>
         </div>
         <div class="footer-col"><h4>Practice</h4><ul><li><a href="classes.html">All Classes</a></li><li><a href="classes.html">Yoga</a></li><li><a href="classes.html">Healing Movement</a></li><li><a href="classes.html">Live Schedule</a></li></ul></div>
-        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="instructors.html">Instructors</a></li><li><a href="contact.html">Contact</a></li></ul></div>
-        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
-        <div class="footer-col"><h4>Connect</h4><ul><li><a href="#">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
+        <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li>
+            <li><a href="charities.html">Our Charities</a></li><li><a href="instructors.html">Instructors</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div class="footer-col"><h4>Support</h4><ul><li><a href="pricing.html">Pricing</a></li><li><a href="charities.html">Giving Back</a></li>
+        <li><a href="faq.html">FAQ</a></li><li><a href="contact.html">Contact Us</a></li></ul></div>
+        <div class="footer-col"><h4>Connect</h4><ul><li><a href="https://www.instagram.com/myripplesofhealing/" target="_blank" rel="noopener">Instagram</a></li><li><a href="#">Facebook</a></li><li><a href="#">YouTube</a></li></ul></div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2025 Ripples of Healing. All Rights Reserved.</p>
@@ -142,8 +149,10 @@
     </div>
   </footer>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-client.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-client.js"></script>
   <script src="main.js"></script>
   <script>
   // ── CLASS DATA ─────────────────────────────────────────────────
@@ -152,33 +161,33 @@
     // MONDAY
     { id:1,  day:1, time:'9:00 AM',  name:'Yoga Mythology Flow',           instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'Storytelling woven into a dynamic all-levels Vinyasa — dive into Yoga Philosophy and embody the ancient teachings as you flow.' },
     { id:2,  day:1, time:'12:00 PM', name:'Full Body Stretch',             instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
-    { id:3,  day:1, time:'5:30 PM',  name:'Hatha Flow',                   instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful, slow postures and steady breath help you develop alignment, awareness, and inner calm.' },
+    { id:3,  day:1, time:'5:30 PM',  name:'Vinyasa Mobility Flow',        instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful, slow postures and steady breath help you develop alignment, awareness, and inner calm.' },
     // TUESDAY
-    { id:4,  day:2, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'Olivia Hughes',     duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
-    { id:5,  day:2, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:5,  day:2, time:'9:00 AM',  name:'Gentle Flow',                  instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
     { id:6,  day:2, time:'12:00 PM', name:'OM Mat Pilates',               instructor:'Jennifer Opaka',    duration:'60 min', cat:'healing',    desc:'Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.' },
-    { id:7,  day:2, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',         duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
+    { id:7,  day:2, time:'5:30 PM',  name:'Vinyasa Flow',                 instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:7b, day:2, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',         duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
     // WEDNESDAY
-    { id:8,  day:3, time:'7:00 AM',  name:'Slow Flow',                    instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm to start your day with presence.' },
-    { id:9,  day:3, time:'9:00 AM',  name:'Power Vinyasa',                instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'An empowering, dynamic flow designed to build strength, stamina, and focus. Expect heat, challenge, and the satisfaction of moving beyond your limits with intention.' },
+    { id:8,  day:3, time:'7:00 AM',  name:'Vinyasa Flow',                 instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm to start your day with presence.' },
+    { id:9,  day:3, time:'9:00 AM',  name:'Vinyasa Flow',                 instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'An empowering, dynamic flow designed to build strength, stamina, and focus. Expect heat, challenge, and the satisfaction of moving beyond your limits with intention.' },
     { id:10, day:3, time:'11:00 AM', name:'Gentle Deep Stretch',          instructor:'Amy Freeman',       duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
     { id:11, day:3, time:'5:30 PM',  name:'Slow & Strong Mobility Flow',  instructor:'Nam Chanterrwynn',  duration:'60 min', cat:'healing',    desc:'A fusion of strength and mobility that awakens your body, opens your joints, and builds core stability. Leave strong, fluid, and fully energized.' },
     // THURSDAY
-    { id:12, day:4, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'India Bee',         duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
-    { id:13, day:4, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:13, day:4, time:'9:00 AM',  name:'Gentle Flow',                  instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
     { id:14, day:4, time:'12:00 PM', name:'OM Mat Pilates',               instructor:'Jennifer Opaka',    duration:'60 min', cat:'healing',    desc:'Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.' },
-    { id:15, day:4, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',         duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
+    { id:15, day:4, time:'5:30 PM',  name:'Chakra Vinyasa',               instructor:'India Bee',         duration:'60 min', cat:'yoga',       desc:'Journey through the body\'s energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.' },
+    { id:15b,day:4, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',         duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
     // FRIDAY
-    { id:16, day:5, time:'7:00 AM',  name:'Gentle Flow',                  instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
-    { id:17, day:5, time:'9:00 AM',  name:'Chakra Vinyasa',               instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Journey through the body\'s energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.' },
+    { id:16, day:5, time:'7:00 AM',  name:'Vinyasa Flow',                 instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
+    { id:17, day:5, time:'9:00 AM',  name:'Slow Flow',                    instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm.' },
     { id:18, day:5, time:'12:00 PM', name:'Full Body Stretch',            instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
     { id:19, day:5, time:'5:30 PM',  name:'Yin',                         instructor:'Alisha Ayaad',      duration:'60 min', cat:'yoga',       desc:'A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.' },
     // SATURDAY
-    { id:20, day:6, time:'9:00 AM',  name:'Vinyasa',                      instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
-    { id:21, day:6, time:'11:00 AM', name:'Gentle Deep Stretch',          instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
+    { id:20, day:6, time:'9:00 AM',  name:'Gentle Deep Stretch',          instructor:'Amy Freeman',       duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
+    { id:21, day:6, time:'10:30 AM', name:'Vinyasa Flow',                 instructor:'Anna Fernandez',    duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
     // SUNDAY
     { id:22, day:0, time:'9:00 AM',  name:'Serenity Roll & Release',      instructor:'Jennifer Opaka',    duration:'60 min', cat:'healing',    desc:'Guided self-massage with fascia release balls to relieve tightness, reduce stress, and enhance natural mobility. A rolled towel works as an alternative.' },
-    { id:23, day:0, time:'10:30 AM', name:'Detox Flow',                   instructor:'Carli Klingerman',  duration:'60 min', cat:'yoga',       desc:'A purifying, faster-paced sequence of twists, breathwork, and energizing postures. Stimulates circulation, supports digestion, and leaves you feeling light and revitalized.' },
+    { id:23, day:0, time:'10:30 AM', name:'Strong Vinyasa Flow',          instructor:'Carli Klingerman',  duration:'60 min', cat:'yoga',       desc:'A dynamic, challenging flow designed to build strength, stamina, and focus. Expect heat, intention, and the satisfaction of moving beyond your limits.' },
   ];
 
   const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -225,23 +234,20 @@
     // Check membership + existing booking in parallel
     let isMember = false, isBooked = false, userId = null;
     try {
-      const { data: { user } } = await sb.auth.getUser();
+      const user = fbAuth.currentUser;
       if (user) {
-        userId = user.id;
-        // Only treat as member if they have an active subscription
-        const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', user.id).maybeSingle();
-        isMember = !!profile?.stripe_customer_id;
-        // format date as YYYY-MM-DD for the booking lookup
+        userId = user.uid;
+        const snap    = await fbDb.collection('users').doc(user.uid).get();
+        const profile = snap.data() || {};
+        isMember = !!profile.stripe_customer_id;
         const d = new Date(dateMs);
         const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        const { data } = await sb
-          .from('bookings')
-          .select('id')
-          .eq('user_id', user.id)
-          .eq('class_id', cls.id)
-          .eq('class_date', dateISO)
-          .maybeSingle();
-        isBooked = !!data;
+        const bookSnap = await fbDb.collection('bookings')
+          .where('user_id',   '==', user.uid)
+          .where('class_id',  '==', cls.id)
+          .where('class_date','==', dateISO)
+          .limit(1).get();
+        isBooked = !bookSnap.empty;
       }
     } catch(e) {}
 
@@ -301,24 +307,25 @@
         bookBtn.disabled = true;
         const d = new Date(dateMs);
         const dateISO = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-        const { error } = await sb.from('bookings').insert({
-          user_id:    userId,
-          class_id:   cls.id,
-          class_name: cls.name,
-          class_date: dateISO,
-          class_time: cls.time,
-          instructor: cls.instructor
-        });
-        if (error) {
-          console.error('Booking error:', error.code, error.message, error.details);
-          bookBtn.textContent = 'Error: ' + (error.message || 'try again');
+        try {
+          await fbDb.collection('bookings').add({
+            user_id:    userId,
+            class_id:   cls.id,
+            class_name: cls.name,
+            class_date: dateISO,
+            class_time: cls.time,
+            instructor: cls.instructor
+          });
+        } catch(bookErr) {
+          console.error('Booking error:', bookErr);
+          bookBtn.textContent = 'Error — try again';
           bookBtn.disabled = false;
-        } else {
-          bookBtn.textContent = '✓ Booked!';
-          bookBtn.style.background = '#f0fdf4';
-          bookBtn.style.color = '#15803d';
-          bookBtn.style.border = '1.5px solid #bbf7d0';
+          return;
         }
+        bookBtn.textContent = '✓ Booked!';
+        bookBtn.style.background = '#f0fdf4';
+        bookBtn.style.color = '#15803d';
+        bookBtn.style.border = '1.5px solid #bbf7d0';
       });
     }
   }

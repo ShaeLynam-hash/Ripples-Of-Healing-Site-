@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Portal — Ripples of Healing</title>
   <meta name="description" content="Your Ripples of Healing member portal." />
@@ -341,26 +345,41 @@
 
   <!-- Loading screen — hidden once auth confirmed -->
   <div id="portal-loading">
-    <img src="logo.svg" alt="Ripples of Healing" style="height:40px;margin-bottom:8px;" />
+    <img src="images/logo-photo.png" alt="Ripples of Healing" style="height:40px;margin-bottom:8px;" />
     <div class="portal-spinner"></div>
     <p>Loading your portal…</p>
   </div>
 
-  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav light-nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
-      <div class="nav-links">
-        <a href="classes.html">Classes</a>
-        <a href="schedule.html">Schedule</a>
-        <a href="instructors.html">Instructors</a>
-        <a href="portal.html" class="active">My Portal</a>
+      <ul class="nav-links" role="list">
+        <li><a href="classes.html">Classes</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="instructors.html">Instructors</a></li>
+        <li><a href="portal.html" class="active">My Portal</a></li>
+      </ul>
+      <div class="nav-actions">
         <!-- nav-login replaced by main.js when logged in -->
         <a href="login.html" class="nav-login" style="display:none"></a>
+        <button class="nav-hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
       </div>
     </div>
   </nav>
+  <div class="nav-drawer" role="dialog" aria-label="Mobile navigation">
+    <nav class="nav-drawer-links">
+      <a href="classes.html">Classes</a>
+      <a href="schedule.html">Schedule</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="portal.html">My Portal</a>
+    </nav>
+    <div class="nav-drawer-actions">
+      <button class="btn btn-outline-cream" id="mobile-signout" style="width:100%;justify-content:center;">Sign Out</button>
+    </div>
+  </div>
+  <div class="nav-overlay" aria-hidden="true"></div>
 
   <main class="portal-page" id="portal-main" style="display:none">
     <div class="portal-container">
@@ -394,7 +413,7 @@
           <span class="stat-icon">📅</span>
           <div>
             <div class="stat-label">Classes This Month</div>
-            <div class="stat-value" id="stat-month-classes">—</div>
+            <div class="stat-value" id="stat-month-classes">0</div>
           </div>
         </div>
         <div class="stat-card">
@@ -548,16 +567,18 @@
     </div><!-- /portal-container -->
   </main>
 
-  <footer style="background:var(--dark-charcoal);color:rgba(255,255,255,0.45);text-align:center;padding:24px 32px;font-size:0.83rem;margin-top:60px;">
-    <p>&copy; 2025 Ripples of Healing. All Rights Reserved. &nbsp;·&nbsp; <a href="contact.html" style="color:rgba(255,255,255,0.6);">Contact</a> &nbsp;·&nbsp; <a href="faq.html" style="color:rgba(255,255,255,0.6);">FAQ</a></p>
+  <footer style="background:var(--dark-charcoal);color:rgba(255,255,255,0.70);text-align:center;padding:24px 32px;font-size:0.83rem;margin-top:60px;">
+    <p>&copy; 2025 Ripples of Healing. All Rights Reserved. &nbsp;·&nbsp; <a href="contact.html" style="color:rgba(255,255,255,0.85);">Contact</a> &nbsp;·&nbsp; <a href="faq.html" style="color:rgba(255,255,255,0.85);">FAQ</a></p>
   </footer>
 
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-client.js"></script>
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-client.js"></script>
   <script src="main.js"></script>
   <script>
-    const loading   = document.getElementById('portal-loading');
+    const loading    = document.getElementById('portal-loading');
     const portalMain = document.getElementById('portal-main');
 
     function showAlert(elId, msg, type) {
@@ -574,33 +595,27 @@
       setTimeout(() => { el.style.display = 'none'; }, 3000);
     }
 
-    function populatePortal(user) {
-      const meta      = user.user_metadata || {};
-      const firstName = meta.first_name || '';
-      const lastName  = meta.last_name  || '';
+    async function populatePortal(user) {
+      const snap      = await fbDb.collection('users').doc(user.uid).get();
+      const profile   = snap.data() || {};
+      const firstName = profile.first_name || '';
+      const lastName  = profile.last_name  || '';
       const email     = user.email || '';
-      const plan      = meta.plan || 'flow';
       const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || email[0]?.toUpperCase() || '?';
-      const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email.split('@')[0];
       const planLabel = 'Ripples Membership';
 
-      // Welcome bar
-      document.getElementById('welcome-name').textContent = firstName || email.split('@')[0];
-      document.getElementById('welcome-sub').textContent  = `Managing your ${planLabel} membership.`;
+      document.getElementById('welcome-name').textContent  = firstName || email.split('@')[0];
+      document.getElementById('welcome-sub').textContent   = `Managing your ${planLabel} membership.`;
       document.getElementById('portal-avatar').textContent = initials;
 
-      // Stats
-      const since = new Date(user.created_at);
+      const since = new Date(user.metadata.creationTime);
       document.getElementById('stat-since').textContent = since.toLocaleDateString('en-US', { month:'short', year:'numeric' });
       document.getElementById('stat-plan').textContent  = planLabel;
-
-      // Membership card
       document.getElementById('membership-plan-title').textContent = planLabel;
 
-      // Profile form
-      document.getElementById('profile-fname').value  = firstName;
-      document.getElementById('profile-lname').value  = lastName;
-      document.getElementById('profile-email').value  = email;
+      document.getElementById('profile-fname').value       = firstName;
+      document.getElementById('profile-lname').value       = lastName;
+      document.getElementById('profile-email').value       = email;
       document.getElementById('account-email').textContent = email;
     }
 
@@ -610,61 +625,46 @@
       banner.style.cssText = 'background:#f0fdf4;border-bottom:1px solid #bbf7d0;color:#15803d;text-align:center;padding:14px 20px;font-size:0.92rem;font-weight:600;';
       banner.textContent = '🎉 Welcome! Your 7-day free trial has started. Your card is saved but you won\'t be charged until day 8 — cancel anytime.';
       document.body.prepend(banner);
-      // clean URL
       history.replaceState({}, '', '/portal.html');
     }
 
     // ── Auth gate ────────────────────────────────────────────────
     const comingFromCheckout = new URLSearchParams(window.location.search).get('checkout') === 'success';
 
-    sb.auth.getSession().then(async ({ data: { session } }) => {
-      if (!session) {
-        window.location.href = 'login.html';
+    let isFirstAuthCheck = true;
+    fbAuth.onAuthStateChanged(async user => {
+      if (!isFirstAuthCheck) {
+        if (!user) window.location.href = 'login.html';
         return;
       }
+      isFirstAuthCheck = false;
 
-      // If they just completed Stripe checkout, skip the subscription check
-      // (webhook may not have updated the profile yet)
+      if (!user) { window.location.href = 'login.html'; return; }
+
       if (!comingFromCheckout) {
-        const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
-        if (!profile?.stripe_customer_id) {
-          // No subscription — send to payment
+        const snap    = await fbDb.collection('users').doc(user.uid).get();
+        const profile = snap.data() || {};
+        if (!profile.stripe_customer_id) {
           document.querySelector('#portal-loading p').textContent = 'Setting up your payment…';
           try {
             const res = await fetch('/.netlify/functions/create-checkout', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ email: session.user.email, userId: session.user.id }),
+              body: JSON.stringify({ email: user.email, userId: user.uid }),
             });
             const { url } = await res.json();
             if (url) { window.location.href = url; return; }
-            // No URL returned — send to pricing
-            window.location.href = 'pricing.html';
-            return;
+            window.location.href = 'pricing.html'; return;
           } catch(e) {
-            window.location.href = 'pricing.html';
-            return;
+            window.location.href = 'pricing.html'; return;
           }
         }
       }
 
-      populatePortal(session.user);
-      loadBookings(session.user.id);
-      loading.style.display = 'none';
+      await populatePortal(user);
+      loadBookings(user.uid);
+      loading.style.display  = 'none';
       portalMain.style.display = 'block';
-    });
-
-    // Re-populate if Google OAuth just redirected back
-    sb.auth.onAuthStateChange((event, session) => {
-      if (event === 'SIGNED_IN' && session) {
-        populatePortal(session.user);
-        loadBookings(session.user.id);
-        loading.style.display = 'none';
-        portalMain.style.display = 'block';
-      }
-      if (event === 'SIGNED_OUT') {
-        window.location.href = 'login.html';
-      }
     });
 
     // ── Profile save ─────────────────────────────────────────────
@@ -673,22 +673,20 @@
       const fname = document.getElementById('profile-fname').value.trim();
       const lname = document.getElementById('profile-lname').value.trim();
       const email = document.getElementById('profile-email').value.trim();
+      const user  = fbAuth.currentUser;
+      if (!user) return;
 
-      const { error } = await sb.auth.updateUser({
-        email,
-        data: { first_name: fname, last_name: lname }
-      });
-
-      if (error) {
-        showAlert('profile-alert', error.message, 'error');
-      } else {
-        // Also update profiles table
-        const { data: { user } } = await sb.auth.getUser();
-        if (user) {
-          await sb.from('profiles').upsert({ id: user.id, first_name: fname, last_name: lname });
-        }
+      try {
+        const updates = [
+          user.updateProfile({ displayName: [fname, lname].filter(Boolean).join(' ') }),
+          fbDb.collection('users').doc(user.uid).set({ first_name: fname, last_name: lname }, { merge: true }),
+        ];
+        if (email !== user.email) updates.push(user.updateEmail(email));
+        await Promise.all(updates);
         showSaveMsg('profile-save-msg');
         document.getElementById('welcome-name').textContent = fname || email.split('@')[0];
+      } catch (error) {
+        showAlert('profile-alert', fbErrorMsg(error), 'error');
       }
     });
 
@@ -697,47 +695,40 @@
       e.preventDefault();
       const newPass  = document.getElementById('new-password').value;
       const confPass = document.getElementById('confirm-password').value;
+      const user = fbAuth.currentUser;
+      if (!user) return;
 
       if (newPass.length < 8) {
-        showAlert('password-alert', 'Password must be at least 8 characters.', 'error');
-        return;
+        showAlert('password-alert', 'Password must be at least 8 characters.', 'error'); return;
       }
       if (newPass !== confPass) {
-        showAlert('password-alert', 'Passwords do not match.', 'error');
-        return;
+        showAlert('password-alert', 'Passwords do not match.', 'error'); return;
       }
 
-      const { error } = await sb.auth.updateUser({ password: newPass });
-      if (error) {
-        showAlert('password-alert', error.message, 'error');
-      } else {
+      try {
+        await user.updatePassword(newPass);
         showSaveMsg('password-save-msg');
         document.getElementById('new-password').value     = '';
         document.getElementById('confirm-password').value = '';
+      } catch (error) {
+        showAlert('password-alert', fbErrorMsg(error), 'error');
       }
     });
 
-    // ── Real booking stats ────────────────────────────────────────
+    // ── Bookings ─────────────────────────────────────────────────
     async function loadBookings(userId) {
-      const now = new Date();
+      const now        = new Date();
       const monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString().slice(0,10);
       const monthEnd   = new Date(now.getFullYear(), now.getMonth()+1, 0).toISOString().slice(0,10);
+      const todayISO   = now.toISOString().slice(0,10);
 
-      const { data: bookings } = await sb.from('bookings')
-        .select('*')
-        .eq('user_id', userId)
-        .order('class_date', { ascending: true });
+      const snap     = await fbDb.collection('bookings').where('user_id', '==', userId).get();
+      const bookings = snap.docs.map(d => d.data()).sort((a, b) => a.class_date.localeCompare(b.class_date));
 
-      if (!bookings) return;
-
-      // Classes booked this month
       const thisMonth = bookings.filter(b => b.class_date >= monthStart && b.class_date <= monthEnd);
       document.getElementById('stat-month-classes').textContent = thisMonth.length || '0';
 
-      // Upcoming bookings (today or future)
-      const todayISO = now.toISOString().slice(0,10);
       const upcoming = bookings.filter(b => b.class_date >= todayISO).slice(0, 3);
-
       if (upcoming.length) {
         const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         document.getElementById('upcoming-classes').innerHTML = upcoming.map(b => {
@@ -760,17 +751,16 @@
     }
 
     // ── Sign out ─────────────────────────────────────────────────
-    document.getElementById('signout-btn').addEventListener('click', async () => {
-      await sb.auth.signOut();
+    async function signOut() {
+      await fbAuth.signOut();
       window.location.href = 'index.html';
-    });
+    }
+    document.getElementById('signout-btn').addEventListener('click', signOut);
+    document.getElementById('mobile-signout').addEventListener('click', signOut);
 
     // ── Delete account ───────────────────────────────────────────
-    document.getElementById('delete-account-btn').addEventListener('click', async () => {
-      const confirmed = confirm('Are you sure you want to delete your account? This cannot be undone.');
-      if (!confirmed) return;
-      // Note: deleting a Supabase auth user requires a server-side call or Edge Function
-      // For now, sign them out and show a message
+    document.getElementById('delete-account-btn').addEventListener('click', () => {
+      if (!confirm('Are you sure you want to delete your account? This cannot be undone.')) return;
       alert('Please contact us at thrive@ripplesofhealing.com to delete your account and we\'ll take care of it within 24 hours.');
     });
   </script>

@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Log In — Ripples of Healing</title>
   <meta name="description" content="Log in to your Ripples of Healing account." />
@@ -141,10 +145,10 @@
 </head>
 <body>
 
-  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav light-nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
       <div class="nav-actions">
         <a href="signup.html" class="btn btn-primary btn-sm">Join Now</a>
@@ -156,7 +160,7 @@
     <div class="auth-card">
 
       <a href="index.html" class="auth-logo">
-        <img src="logo.svg" alt="Ripples of Healing" class="auth-logo-img" />
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="auth-logo-img" />
       </a>
 
       <h1 class="auth-heading">Welcome back</h1>
@@ -195,9 +199,11 @@
     </div>
   </main>
 
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-client.js"></script>
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-client.js"></script>
   <script src="main.js"></script>
   <script>
     const form        = document.getElementById('login-form');
@@ -225,7 +231,6 @@
     emailInput.addEventListener('input', () => clearFieldError(emailInput, document.getElementById('email-error')));
     passInput.addEventListener('input',  () => clearFieldError(passInput,  document.getElementById('password-error')));
 
-    // Form submit — real Supabase auth
     form.addEventListener('submit', async function(e) {
       e.preventDefault();
       alertBox.style.display = 'none';
@@ -244,39 +249,34 @@
       submitBtn.disabled = true;
       submitBtn.textContent = 'Logging in…';
 
-      const { data, error } = await sb.auth.signInWithPassword({
-        email: emailInput.value.trim(),
-        password: passInput.value,
-      });
-
-      if (error) {
-        showAlert(error.message);
+      try {
+        await fbAuth.signInWithEmailAndPassword(emailInput.value.trim(), passInput.value);
+        submitBtn.textContent = '✓ Welcome back!';
+        submitBtn.style.background = '#10B981';
+        window.location.href = 'portal.html';
+      } catch (error) {
+        const msg = fbErrorMsg(error);
+        if (msg) showAlert(msg);
         submitBtn.disabled = false;
         submitBtn.textContent = 'Log In';
-        return;
       }
-
-      submitBtn.textContent = '✓ Welcome back!';
-      submitBtn.style.background = '#10B981';
-      window.location.href = 'portal.html';
     });
 
-    // Google OAuth
     document.getElementById('google-btn').addEventListener('click', async function() {
+      const originalHtml = this.innerHTML;
       this.textContent = 'Redirecting to Google…';
       this.disabled = true;
-      const { error } = await sb.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.origin + '/portal.html' }
-      });
-      if (error) {
-        this.textContent = 'Continue with Google';
+      try {
+        await fbAuth.signInWithPopup(fbGoogleProvider);
+        window.location.href = 'portal.html';
+      } catch (error) {
+        const msg = fbErrorMsg(error);
+        if (msg) showAlert(msg);
+        this.innerHTML = originalHtml;
         this.disabled = false;
-        showAlert(error.message);
       }
     });
 
-    // Forgot password
     document.getElementById('forgot-link').addEventListener('click', async function(e) {
       e.preventDefault();
       const email = emailInput.value.trim();
@@ -286,19 +286,16 @@
         showAlert('Enter your email address above first, then click Forgot password.');
         return;
       }
-      const { error } = await sb.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin + '/reset-password.html'
-      });
-      if (error) {
-        showAlert(error.message);
-      } else {
+      try {
+        await fbAuth.sendPasswordResetEmail(email);
         showAlert('Password reset email sent — check your inbox.', 'success');
+      } catch (error) {
+        showAlert(fbErrorMsg(error));
       }
     });
 
-    // If already logged in, go to portal (portal handles routing from there)
-    sb.auth.getSession().then(({ data: { session } }) => {
-      if (session) window.location.href = 'portal.html';
+    fbGetUser().then(user => {
+      if (user) window.location.href = 'portal.html';
     });
   </script>
 </body>

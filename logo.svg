@@ -1,69 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 260" width="260" height="260" role="img" aria-label="Ripples of Healing">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 290" width="280" height="290" role="img" aria-label="Ripples of Healing">
   <title>Ripples of Healing</title>
   <defs>
-    <!-- Sky-to-ocean gradient: warm amber → rich teal -->
-    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0%"   stop-color="#F5A023"/>
-      <stop offset="42%"  stop-color="#E8793A"/>
-      <stop offset="100%" stop-color="#237070"/>
-    </linearGradient>
-    <!-- Sun radial glow -->
-    <radialGradient id="sunGrad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%"   stop-color="#FFD166"/>
-      <stop offset="100%" stop-color="#E05A1E"/>
-    </radialGradient>
-    <!-- Clip everything to the main circle -->
-    <clipPath id="mainClip">
-      <circle cx="130" cy="130" r="120"/>
+    <clipPath id="circleClip">
+      <circle cx="140" cy="140" r="138"/>
+    </clipPath>
+    <!-- Clip waves to their outline shapes -->
+    <clipPath id="waveTopClip">
+      <path d="M 52,185 C 70,160 95,148 140,158 C 185,148 210,160 228,185 C 215,195 185,200 140,198 C 95,200 65,195 52,185 Z"/>
+    </clipPath>
+    <clipPath id="waveMidClip">
+      <path d="M 48,200 C 65,178 92,167 140,175 C 188,167 215,178 232,200 C 218,212 188,218 140,216 C 92,218 62,212 48,200 Z"/>
+    </clipPath>
+    <clipPath id="waveBotClip">
+      <path d="M 44,216 C 62,196 90,185 140,192 C 190,185 218,196 236,216 C 222,232 192,238 140,236 C 88,238 58,232 44,216 Z"/>
     </clipPath>
   </defs>
 
-  <!-- Outer border ring -->
-  <circle cx="130" cy="130" r="126" fill="none" stroke="#1A5060" stroke-width="5"/>
+  <!-- Light blue background circle -->
+  <circle cx="140" cy="140" r="138" fill="#EAF4F7"/>
 
-  <!-- Background fill -->
-  <circle cx="130" cy="130" r="120" fill="url(#bgGrad)"/>
+  <g clip-path="url(#circleClip)">
 
-  <!-- Clipped inner art -->
-  <g clip-path="url(#mainClip)">
+    <!-- ── Golden sunrise arcs ─────────────────────────────────────── -->
+    <!-- Center sun dot -->
+    <circle cx="140" cy="164" r="9" fill="#F9C215" stroke="#F0A020" stroke-width="1.5"/>
+    <!-- Semicircular arcs — upper half only -->
+    <path d="M 122,164 A 18,18 0 0 1 158,164"  fill="none" stroke="#F9C215" stroke-width="3"   stroke-linecap="round"/>
+    <path d="M 108,164 A 32,32 0 0 1 172,164"  fill="none" stroke="#F9C215" stroke-width="3"   stroke-linecap="round"/>
+    <path d="M 93,164  A 47,47 0 0 1 187,164"  fill="none" stroke="#F9C215" stroke-width="2.8" stroke-linecap="round"/>
+    <path d="M 78,164  A 62,62 0 0 1 202,164"  fill="none" stroke="#F9C215" stroke-width="2.6" stroke-linecap="round"/>
+    <path d="M 63,164  A 77,77 0 0 1 217,164"  fill="none" stroke="#F9C215" stroke-width="2.4" stroke-linecap="round"/>
+    <path d="M 48,164  A 92,92 0 0 1 232,164"  fill="none" stroke="#F9C215" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M 33,164  A 107,107 0 0 1 247,164" fill="none" stroke="#F9C215" stroke-width="2"   stroke-linecap="round"/>
+    <path d="M 18,164  A 122,122 0 0 1 262,164" fill="none" stroke="#F9C215" stroke-width="1.8" stroke-linecap="round"/>
 
-    <!-- Wave layer 1 — lightest, topmost -->
-    <path d="M8,156 C40,141 82,160 130,148 C178,136 218,154 252,144 L252,252 L8,252 Z"
-          fill="#2A8080" opacity="0.88"/>
-    <!-- Wave layer 2 -->
-    <path d="M8,173 C46,162 88,176 130,166 C172,156 214,170 252,161 L252,252 L8,252 Z"
-          fill="#1E6868" opacity="0.92"/>
-    <!-- Wave layer 3 — darkest, bottom fill -->
-    <path d="M8,190 C48,182 90,192 130,184 C170,176 212,186 252,178 L252,252 L8,252 Z"
-          fill="#165555"/>
+    <!-- ── Teal wave outlines (filled background shapes) ──────────── -->
+    <!-- Top wave fill -->
+    <path d="M 52,185 C 70,160 95,148 140,158 C 185,148 210,160 228,185 C 215,195 185,200 140,198 C 95,200 65,195 52,185 Z"
+          fill="#EAF4F7" stroke="#4E9CA4" stroke-width="2.2"/>
+    <!-- Mid wave fill -->
+    <path d="M 48,200 C 65,178 92,167 140,175 C 188,167 215,178 232,200 C 218,212 188,218 140,216 C 92,218 62,212 48,200 Z"
+          fill="#EAF4F7" stroke="#4E9CA4" stroke-width="2.2"/>
+    <!-- Bottom wave fill -->
+    <path d="M 44,216 C 62,196 90,185 140,192 C 190,185 218,196 236,216 C 222,232 192,238 140,236 C 88,238 58,232 44,216 Z"
+          fill="#EAF4F7" stroke="#4E9CA4" stroke-width="2.2"/>
 
-    <!-- Concentric ripple rings centred on sun -->
-    <circle cx="130" cy="104" r="22" fill="none" stroke="rgba(255,255,255,0.32)" stroke-width="2.2"/>
-    <circle cx="130" cy="104" r="45" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.8"/>
-    <circle cx="130" cy="104" r="70" fill="none" stroke="rgba(255,255,255,0.13)" stroke-width="1.4"/>
+    <!-- ── Wave stripes — top wave (4 inner lines) ─────────────────── -->
+    <g clip-path="url(#waveTopClip)" fill="none" stroke="#4E9CA4" stroke-width="2" stroke-linecap="round">
+      <path d="M 68,179 C 85,165 108,158 140,164 C 172,158 195,165 212,179"/>
+      <path d="M 63,186 C 82,171 106,164 140,170 C 174,164 198,171 217,186"/>
+      <path d="M 58,193 C 78,177 103,170 140,176 C 177,170 202,177 222,193"/>
+      <path d="M 54,199 C 75,183 100,176 140,182 C 180,176 205,183 226,199"/>
+    </g>
 
-    <!-- Sun: outer glow halo -->
-    <circle cx="130" cy="104" r="16" fill="url(#sunGrad)" opacity="0.9"/>
-    <!-- Sun: bright centre -->
-    <circle cx="130" cy="104" r="8"  fill="#FFD580"/>
+    <!-- ── Wave stripes — mid wave ──────────────────────────────────── -->
+    <g clip-path="url(#waveMidClip)" fill="none" stroke="#4E9CA4" stroke-width="2" stroke-linecap="round">
+      <path d="M 64,195 C 82,180 106,172 140,178 C 174,172 198,180 216,195"/>
+      <path d="M 59,203 C 78,187 103,179 140,185 C 177,179 202,187 221,203"/>
+      <path d="M 54,210 C 74,194 100,186 140,192 C 180,186 206,194 226,210"/>
+      <path d="M 50,217 C 71,200 97,193 140,199 C 183,193 209,200 230,217"/>
+    </g>
+
+    <!-- ── Wave stripes — bottom wave ──────────────────────────────── -->
+    <g clip-path="url(#waveBotClip)" fill="none" stroke="#4E9CA4" stroke-width="2" stroke-linecap="round">
+      <path d="M 60,212 C 79,196 104,188 140,194 C 176,188 201,196 220,212"/>
+      <path d="M 55,220 C 75,203 101,195 140,201 C 179,195 205,203 225,220"/>
+      <path d="M 51,228 C 72,210 98,203 140,209 C 182,203 208,210 229,228"/>
+      <path d="M 47,235 C 69,218 96,210 140,216 C 184,210 211,218 233,235"/>
+    </g>
+
+    <!-- ── Text ──────────────────────────────────────────────────────── -->
+    <text x="140" y="258"
+          font-family="Georgia, 'Palatino Linotype', serif"
+          font-size="34"
+          font-weight="700"
+          fill="#1E4B76"
+          text-anchor="middle"
+          letter-spacing="2">RIPPLES</text>
+
+    <text x="140" y="278"
+          font-family="Georgia, 'Palatino Linotype', serif"
+          font-size="15"
+          font-weight="500"
+          fill="#4E9CA4"
+          text-anchor="middle"
+          letter-spacing="4">OF HEALING</text>
 
   </g>
-
-  <!-- RIPPLES — main wordmark inside the wave zone -->
-  <text x="130" y="196"
-        font-family="Georgia, 'Palatino Linotype', 'Book Antiqua', serif"
-        font-size="30"
-        font-weight="700"
-        fill="#FFFFFF"
-        text-anchor="middle"
-        letter-spacing="6">RIPPLES</text>
-
-  <!-- of healing — subtitle -->
-  <text x="130" y="218"
-        font-family="Georgia, 'Palatino Linotype', 'Book Antiqua', serif"
-        font-size="11"
-        fill="rgba(255,255,255,0.80)"
-        text-anchor="middle"
-        letter-spacing="5">OF  HEALING</text>
 </svg>

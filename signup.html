@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Start Free Trial — Ripples of Healing</title>
   <meta name="description" content="Create your Ripples of Healing account and start your 7-day free trial today." />
@@ -143,13 +147,13 @@
 </head>
 <body>
 
-  <nav class="nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
+  <nav class="nav light-nav scrolled" id="main-nav" role="navigation" aria-label="Main navigation">
     <div class="nav-inner">
       <a href="index.html" class="nav-logo">
-        <img src="logo.svg" alt="Ripples of Healing" class="nav-logo-img" />
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="nav-logo-img" />
       </a>
       <div class="nav-actions">
-        <a href="login.html" class="btn btn-outline-teal btn-sm">Log In</a>
+        <a href="login.html" class="btn btn-sm" style="background:var(--deep-teal);color:#fff;border-color:var(--deep-teal);">Log In</a>
       </div>
     </div>
   </nav>
@@ -158,7 +162,7 @@
     <div class="auth-card">
 
       <a href="index.html" class="auth-logo">
-        <img src="logo.svg" alt="Ripples of Healing" class="auth-logo-img" />
+        <img src="images/logo-photo.png" alt="Ripples of Healing" class="auth-logo-img" />
       </a>
 
       <h1 class="auth-heading">Start your free trial</h1>
@@ -216,9 +220,11 @@
     </div>
   </main>
 
-  <!-- Supabase CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="supabase-client.js"></script>
+  <!-- Firebase CDN -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script src="firebase-client.js"></script>
   <script src="main.js"></script>
   <script>
     // Password strength meter
@@ -250,7 +256,6 @@
       strengthLabel.style.color = lv.color;
     });
 
-    // Field validation helpers
     function showErr(id, errId) {
       document.getElementById(id).classList.add('error');
       document.getElementById(errId).style.display = 'block';
@@ -271,7 +276,18 @@
       box.style.display = 'block';
     }
 
-    // Form submit — real Supabase sign up
+    async function goToCheckout(email, userId) {
+      const res = await fetch('/.netlify/functions/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, userId }),
+      });
+      const { url, error: fnErr } = await res.json();
+      if (url) { window.location.href = url; return true; }
+      console.error('Checkout error:', fnErr);
+      return false;
+    }
+
     document.getElementById('signup-form').addEventListener('submit', async function(e) {
       e.preventDefault();
       document.getElementById('signup-alert').style.display = 'none';
@@ -293,102 +309,77 @@
       btn.textContent = 'Creating account…';
       btn.style.opacity = '0.85';
 
-      // Create auth user
-      const { data, error } = await sb.auth.signUp({
-        email,
-        password,
-        options: { data: { first_name: fname, last_name: lname } }
-      });
-
-      if (error) {
-        showAlert(error.message);
-        btn.disabled = false;
-        btn.textContent = 'Continue to Payment →';
-        btn.style.opacity = '';
-        return;
-      }
-
-      // Write profile data
-      if (data.user) {
-        await sb.from('profiles').upsert({
-          id: data.user.id,
+      try {
+        const cred = await fbAuth.createUserWithEmailAndPassword(email, password);
+        await cred.user.updateProfile({ displayName: [fname, lname].filter(Boolean).join(' ') });
+        await fbDb.collection('users').doc(cred.user.uid).set({
           first_name: fname,
-          last_name: lname,
+          last_name:  lname,
+          email,
+          created_at: new Date().toISOString(),
         });
-      }
 
-      // Go straight to Stripe to enter card — card required immediately
-      // Works whether or not Supabase requires email confirmation
-      if (data.user) {
         btn.textContent = 'Taking you to secure payment…';
-        try {
-          const res = await fetch('/.netlify/functions/create-checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, userId: data.user.id }),
-          });
-          const { url, error: fnErr } = await res.json();
-          if (url) {
-            window.location.href = url;
-          } else {
-            console.error('Checkout error:', fnErr);
-            showAlert('Could not start checkout. Please try again or contact us.', 'error');
-            btn.disabled = false;
-            btn.textContent = 'Continue to Payment →';
-            btn.style.opacity = '';
-          }
-        } catch (err) {
-          console.error(err);
-          showAlert('Something went wrong. Please try again.', 'error');
+        const ok = await goToCheckout(email, cred.user.uid);
+        if (!ok) {
+          showAlert('Could not start checkout. Please try again or contact us.', 'error');
           btn.disabled = false;
           btn.textContent = 'Continue to Payment →';
           btn.style.opacity = '';
         }
-      } else {
-        showAlert('Something went wrong. Please try again.', 'error');
+      } catch (error) {
+        showAlert(fbErrorMsg(error));
         btn.disabled = false;
         btn.textContent = 'Continue to Payment →';
         btn.style.opacity = '';
       }
     });
 
-    // Google OAuth
     document.getElementById('google-btn').addEventListener('click', async function() {
+      const originalHtml = this.innerHTML;
       this.textContent = 'Redirecting to Google…';
       this.disabled = true;
-      const { error } = await sb.auth.signInWithOAuth({
-        provider: 'google',
-        options: { redirectTo: window.location.origin + '/portal.html' }
-      });
-      if (error) {
-        this.textContent = 'Continue with Google';
+      try {
+        const cred = await fbAuth.signInWithPopup(fbGoogleProvider);
+        const user = cred.user;
+        // Ensure Firestore profile exists
+        const snap = await fbDb.collection('users').doc(user.uid).get();
+        if (!snap.exists) {
+          const [firstName, ...rest] = (user.displayName || '').split(' ');
+          await fbDb.collection('users').doc(user.uid).set({
+            first_name: firstName || '',
+            last_name:  rest.join(' '),
+            email:      user.email,
+            created_at: new Date().toISOString(),
+          });
+        }
+        // Check for existing subscription
+        const profile = (await fbDb.collection('users').doc(user.uid).get()).data() || {};
+        if (profile.stripe_customer_id) {
+          window.location.href = 'portal.html';
+        } else {
+          const ok = await goToCheckout(user.email, user.uid);
+          if (!ok) window.location.href = 'portal.html';
+        }
+      } catch (error) {
+        const msg = fbErrorMsg(error);
+        if (msg) showAlert(msg);
+        this.innerHTML = originalHtml;
         this.disabled = false;
-        showAlert(error.message);
       }
     });
 
-    // If already logged in, check subscription and go directly to Stripe (skip portal)
-    sb.auth.getSession().then(async ({ data: { session } }) => {
-      if (!session) return;
-      // Check if they already have a subscription
-      const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
-      if (profile?.stripe_customer_id) {
-        // Already a member — send to portal
+    // If already logged in, route to checkout or portal
+    fbGetUser().then(async user => {
+      if (!user) return;
+      const snap = await fbDb.collection('users').doc(user.uid).get();
+      const profile = snap.data() || {};
+      if (profile.stripe_customer_id) {
         window.location.href = 'portal.html';
       } else {
-        // No subscription yet — send straight to Stripe, skip portal
         try {
-          const res = await fetch('/.netlify/functions/create-checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: session.user.email, userId: session.user.id }),
-          });
-          const { url } = await res.json();
-          if (url) {
-            window.location.href = url;
-          } else {
-            window.location.href = 'portal.html';
-          }
+          const ok = await goToCheckout(user.email, user.uid);
+          if (!ok) window.location.href = 'portal.html';
         } catch(e) {
           window.location.href = 'portal.html';
         }

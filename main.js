@@ -101,13 +101,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   faqItems.forEach(item => {
     const question = item.querySelector('.faq-question');
+    const answer   = item.querySelector('.faq-answer');
     if (question) {
       question.addEventListener('click', () => {
         const isOpen = item.classList.contains('open');
         // Close all
-        faqItems.forEach(i => i.classList.remove('open'));
-        // Toggle clicked
-        if (!isOpen) item.classList.add('open');
+        faqItems.forEach(i => {
+          i.classList.remove('open');
+          const q = i.querySelector('.faq-question');
+          const a = i.querySelector('.faq-answer');
+          if (q) q.setAttribute('aria-expanded', 'false');
+          if (a) a.setAttribute('aria-hidden', 'true');
+        });
+        // Open clicked if it was closed
+        if (!isOpen) {
+          item.classList.add('open');
+          question.setAttribute('aria-expanded', 'true');
+          if (answer) answer.setAttribute('aria-hidden', 'false');
+        }
       });
     }
   });
@@ -254,28 +265,28 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 /* ============================================
-   AUTH STATE — update nav based on Supabase session
+   AUTH STATE — update nav based on Firebase session
    ============================================ */
 (function() {
-  if (typeof sb === 'undefined') return;
+  if (typeof fbAuth === 'undefined') return;
 
-  async function goToCheckout(session) {
+  async function goToCheckout(user) {
     try {
-      const { data: profile } = await sb.from('profiles').select('stripe_customer_id').eq('id', session.user.id).maybeSingle();
-      if (profile?.stripe_customer_id) {
+      const snap    = await fbDb.collection('users').doc(user.uid).get();
+      const profile = snap.data() || {};
+      if (profile.stripe_customer_id) {
         window.location.href = 'portal.html';
         return;
       }
       const res = await fetch('/.netlify/functions/create-checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: session.user.email, userId: session.user.id }),
+        body: JSON.stringify({ email: user.email, userId: user.uid }),
       });
       const { url } = await res.json();
       if (url) {
         window.location.href = url;
       } else {
-        // Checkout failed — send to pricing, not portal
         window.location.href = 'pricing.html';
       }
     } catch(e) {
@@ -283,16 +294,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  function buildDropdown(session) {
-    const meta      = session.user.user_metadata || {};
-    const firstName = meta.first_name || '';
-    const lastName  = meta.last_name  || '';
-    const email     = session.user.email;
+  async function buildDropdown(user) {
+    const snap      = await fbDb.collection('users').doc(user.uid).get();
+    const profile   = snap.data() || {};
+    const firstName = profile.first_name || user.displayName?.split(' ')[0] || '';
+    const lastName  = profile.last_name  || user.displayName?.split(' ').slice(1).join(' ') || '';
+    const email     = user.email;
     const initials  = ((firstName[0] || '') + (lastName[0] || '')).toUpperCase() || email[0].toUpperCase();
     const fullName  = [firstName, lastName].filter(Boolean).join(' ') || email;
     const planLabel = 'Ripples Membership';
 
-    // Replace .nav-login link with account button+dropdown
+    document.body.classList.add('logged-in');
+
     document.querySelectorAll('a.nav-login').forEach(el => {
       const wrapper = document.createElement('div');
       wrapper.className = 'nav-account';
@@ -329,25 +342,22 @@ document.addEventListener('DOMContentLoaded', () => {
       });
 
       wrapper.querySelector('#nav-signout-btn').addEventListener('click', async () => {
-        await sb.auth.signOut();
+        await fbAuth.signOut();
         window.location.href = 'index.html';
       });
     });
 
-    // For logged-in users: intercept ALL "Join Now" clicks → go straight to Stripe, never signup.html
     document.querySelectorAll('a[href="signup.html"]').forEach(el => {
       el.addEventListener('click', async (e) => {
         e.preventDefault();
-        await goToCheckout(session);
+        await goToCheckout(user);
       });
     });
 
-    // Hide the "Join Now" button in the nav (user is already logged in)
     document.querySelectorAll('a.btn-primary.btn-sm[href="signup.html"]').forEach(el => {
       el.style.display = 'none';
     });
 
-    // Mobile drawer: replace Log In with "My Portal", hide Join Now
     document.querySelectorAll('.nav-drawer-links a[href="login.html"]').forEach(el => {
       el.textContent = 'My Portal';
       el.href = 'portal.html';
@@ -360,24 +370,21 @@ document.addEventListener('DOMContentLoaded', () => {
       el.href = '#';
       el.addEventListener('click', async (e) => {
         e.preventDefault();
-        await sb.auth.signOut();
+        await fbAuth.signOut();
         window.location.href = 'index.html';
       });
     });
   }
 
-  function resetNav() {
-    // If signed out, refresh so the original nav links show
-    // (simplest approach for a static site)
-  }
-
-  sb.auth.getSession().then(({ data: { session } }) => {
-    if (session) buildDropdown(session);
-  });
-
-  sb.auth.onAuthStateChange((event, session) => {
-    if (event === 'SIGNED_IN' && session) buildDropdown(session);
-    if (event === 'SIGNED_OUT') window.location.reload();
+  let authInitialized = false;
+  fbAuth.onAuthStateChanged(async user => {
+    if (!authInitialized) {
+      authInitialized = true;
+      if (user) await buildDropdown(user);
+      return;
+    }
+    if (user) await buildDropdown(user);
+    else window.location.reload();
   });
 })();
 
