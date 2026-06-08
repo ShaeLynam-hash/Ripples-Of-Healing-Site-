@@ -1,0 +1,78 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: images/uploads
+public_folder: /images/uploads
+
+collections:
+  - name: "schedule"
+    label: "Class Schedule"
+    files:
+      - label: "Weekly Schedule"
+        name: "classes"
+        file: "_data/classes.json"
+        fields:
+          - label: "Classes"
+            name: "classes"
+            widget: "list"
+            fields:
+              - label: "Day"
+                name: "day"
+                widget: "select"
+                options: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+              - label: "Time"
+                name: "time"
+                widget: "string"
+                hint: "e.g. 9:00 AM"
+              - label: "Class Name"
+                name: "name"
+                widget: "string"
+              - label: "Instructor"
+                name: "instructor"
+                widget: "string"
+              - label: "Duration"
+                name: "duration"
+                widget: "string"
+                default: "60 min"
+              - label: "Category"
+                name: "cat"
+                widget: "select"
+                options:
+                  - label: "Yoga"
+                    value: "yoga"
+                  - label: "Healing Movement"
+                    value: "healing"
+                  - label: "Meditation & Rest"
+                    value: "meditation"
+              - label: "Description"
+                name: "desc"
+                widget: "text"
+
+  - name: "faq"
+    label: "FAQ"
+    files:
+      - label: "FAQ Items"
+        name: "faqs"
+        file: "_data/faq.json"
+        fields:
+          - label: "FAQ Items"
+            name: "faqs"
+            widget: "list"
+            fields:
+              - label: "Category"
+                name: "category"
+                widget: "select"
+                options:
+                  - label: "Getting Started"
+                    value: "getting-started"
+                  - label: "Billing"
+                    value: "billing"
+                  - label: "Technical"
+                    value: "technical"
+              - label: "Question"
+                name: "question"
+                widget: "string"
+              - label: "Answer"
+                name: "answer"
+                widget: "text"

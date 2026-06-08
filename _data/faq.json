@@ -1,0 +1,18 @@
+{
+  "faqs": [
+    {"category":"getting-started","question":"What is Ripples of Healing?","answer":"Ripples of Healing is a live online wellness membership offering yoga, mindful movement, mat Pilates, strength-building sessions, mobility work, restorative sessions, and relaxing, meditative practices. All classes are taught in real time by experienced, compassionate teachers and are designed to feel supportive and accessible."},
+    {"category":"getting-started","question":"Are the classes live?","answer":"Yes. Live classes allow real guidance, presence, and connection. We plan to offer select replays in the future, while keeping live participation at the heart of the experience."},
+    {"category":"getting-started","question":"What if I can't attend live?","answer":"Live participation is encouraged, but we plan to offer limited replays for additional flexibility."},
+    {"category":"getting-started","question":"What types of classes are included?","answer":"Yoga & Mindful Movement, Mat Pilates, Strength & Mobility, and Restorative & Meditative Practices. Choose what feels right for you each day."},
+    {"category":"getting-started","question":"Do I need prior experience?","answer":"No. Teachers provide gentle guidance and options so you can move in a way that supports your body."},
+    {"category":"getting-started","question":"Do I have to turn my camera on?","answer":"No. You can keep your camera off and participate however feels comfortable."},
+    {"category":"getting-started","question":"What supplies do I need?","answer":"Supplies are optional and not required. A yoga mat can be helpful, and teachers will suggest simple household alternatives if needed."},
+    {"category":"getting-started","question":"Who is Ripples of Healing for?","answer":"Ripples of Healing is for people who prefer practicing at home, have busy or unpredictable schedules, are easing back into movement, care for children or pets, or want to practice alongside loved ones who live far away."},
+    {"category":"billing","question":"How much does membership cost?","answer":"$22 per month for unlimited live classes. New members get a 7-day free trial — you won't be charged until day 8."},
+    {"category":"billing","question":"Can I cancel anytime?","answer":"Yes. Cancel anytime through your account online or by emailing thrive@ripplesofhealing.com. No long-term contracts, no cancellation fees."},
+    {"category":"billing","question":"Can I invite family or friends?","answer":"Yes. For every person you invite who joins as a member, you both receive 50% off that month. Ripples grows through shared healing."},
+    {"category":"billing","question":"Does Ripples of Healing give back?","answer":"Yes. 2% of every membership supports organizations that empower women and children and promote well-being in their communities."},
+    {"category":"technical","question":"What do I need for live streaming?","answer":"You'll need a device with internet access, such as a laptop, tablet, or smartphone. Classes are streamed via Zoom, which is easy to use and free to download."},
+    {"category":"technical","question":"I forgot my password — how do I reset it?","answer":"Click 'Log In' at the top of any page and select 'Forgot Password.' We'll send a reset link to your email. If you don't see it, check your spam folder or email us at thrive@ripplesofhealing.com."}
+  ]
+}

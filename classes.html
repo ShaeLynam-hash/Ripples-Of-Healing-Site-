@@ -157,38 +157,20 @@
   <script>
   // ── CLASS DATA ─────────────────────────────────────────────────
   // day: 0=Sun 1=Mon 2=Tue 3=Wed 4=Thu 5=Fri 6=Sat
-  const CLASSES = [
-    // MONDAY
-    { id:1,  day:1, time:'9:00 AM',  name:'Yoga Mythology Flow',           instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'Storytelling woven into a dynamic all-levels Vinyasa — dive into Yoga Philosophy and embody the ancient teachings as you flow.' },
-    { id:2,  day:1, time:'12:00 PM', name:'Full Body Stretch',             instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
-    { id:3,  day:1, time:'5:30 PM',  name:'Vinyasa Mobility Flow',        instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful, slow postures and steady breath help you develop alignment, awareness, and inner calm.' },
-    // TUESDAY
-    { id:5,  day:2, time:'9:00 AM',  name:'Gentle Flow',                  instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
-    { id:6,  day:2, time:'12:00 PM', name:'OM Mat Pilates',               instructor:'Jennifer Opaka',    duration:'60 min', cat:'healing',    desc:'Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.' },
-    { id:7,  day:2, time:'5:30 PM',  name:'Vinyasa Flow',                 instructor:'Brent Honnerlaw',   duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
-    { id:7b, day:2, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',         duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
-    // WEDNESDAY
-    { id:8,  day:3, time:'7:00 AM',  name:'Vinyasa Flow',                 instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm to start your day with presence.' },
-    { id:9,  day:3, time:'9:00 AM',  name:'Vinyasa Flow',                 instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'An empowering, dynamic flow designed to build strength, stamina, and focus. Expect heat, challenge, and the satisfaction of moving beyond your limits with intention.' },
-    { id:10, day:3, time:'11:00 AM', name:'Gentle Deep Stretch',          instructor:'Amy Freeman',       duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
-    { id:11, day:3, time:'5:30 PM',  name:'Slow & Strong Mobility Flow',  instructor:'Nam Chanterrwynn',  duration:'60 min', cat:'healing',    desc:'A fusion of strength and mobility that awakens your body, opens your joints, and builds core stability. Leave strong, fluid, and fully energized.' },
-    // THURSDAY
-    { id:13, day:4, time:'9:00 AM',  name:'Gentle Flow',                  instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'Soft, fluid movements designed to restore balance and release stress. Move slowly with your breath, creating ease in the body and calm in the mind.' },
-    { id:14, day:4, time:'12:00 PM', name:'OM Mat Pilates',               instructor:'Jennifer Opaka',    duration:'60 min', cat:'healing',    desc:'Fascia release meets core activation. Using the Opaka Method Ball Kit (or a rolled towel), strengthen from the inside out with accessible options for all levels.' },
-    { id:15, day:4, time:'5:30 PM',  name:'Chakra Vinyasa',               instructor:'India Bee',         duration:'60 min', cat:'yoga',       desc:'Journey through the body\'s energy centers with intention. Flow, breath, and visualization harmonize your physical and energetic body.' },
-    { id:15b,day:4, time:'7:00 PM',  name:'Restorative & Meditation',     instructor:'India Bee',         duration:'60 min', cat:'meditation', desc:'A sanctuary for deep rest and healing. Supported postures invite the body to release tension, followed by guided Yoga Nidra for profound relaxation and clarity.' },
-    // FRIDAY
-    { id:16, day:5, time:'7:00 AM',  name:'Vinyasa Flow',                 instructor:'Zach Brown',        duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
-    { id:17, day:5, time:'9:00 AM',  name:'Slow Flow',                    instructor:'Amy Freeman',       duration:'60 min', cat:'yoga',       desc:'Grounded yet uplifting — mindful postures and steady breath cultivate alignment, awareness, and inner calm.' },
-    { id:18, day:5, time:'12:00 PM', name:'Full Body Stretch',            instructor:'Anna Fernandez',    duration:'60 min', cat:'healing',    desc:'A rejuvenating head-to-toe stretch. Release tightness, restore flexibility and mobility, and leave feeling refreshed, open, and renewed.' },
-    { id:19, day:5, time:'5:30 PM',  name:'Yin',                         instructor:'Alisha Ayaad',      duration:'60 min', cat:'yoga',       desc:'A slow, introspective practice with long-held postures that target connective tissues. Enhances flexibility, encourages stillness, and restores balance to body and mind.' },
-    // SATURDAY
-    { id:20, day:6, time:'9:00 AM',  name:'Gentle Deep Stretch',          instructor:'Amy Freeman',       duration:'60 min', cat:'healing',    desc:'Focused attention on the body\'s most tension-prone areas — hips, back & shoulders. Gentle stretches and mindful holds create spaciousness, mobility, and lasting relief.' },
-    { id:21, day:6, time:'10:30 AM', name:'Vinyasa Flow',                 instructor:'Anna Fernandez',    duration:'60 min', cat:'yoga',       desc:'A graceful, breath-led flow that links movement and rhythm. Each posture seamlessly unfolds into the next — a moving meditation that energizes and centers.' },
-    // SUNDAY
-    { id:22, day:0, time:'9:00 AM',  name:'Serenity Roll & Release',      instructor:'Jennifer Opaka',    duration:'60 min', cat:'healing',    desc:'Guided self-massage with fascia release balls to relieve tightness, reduce stress, and enhance natural mobility. A rolled towel works as an alternative.' },
-    { id:23, day:0, time:'10:30 AM', name:'Strong Vinyasa Flow',          instructor:'Carli Klingerman',  duration:'60 min', cat:'yoga',       desc:'A dynamic, challenging flow designed to build strength, stamina, and focus. Expect heat, intention, and the satisfaction of moving beyond your limits.' },
-  ];
+  const DAY_NUM = {Sunday:0,Monday:1,Tuesday:2,Wednesday:3,Thursday:4,Friday:5,Saturday:6};
+  let CLASSES = [];
+
+  fetch('/_data/classes.json')
+    .then(r => r.json())
+    .then(data => {
+      CLASSES = data.classes.map((c, i) => ({...c, id: i+1, day: DAY_NUM[c.day]}));
+      // re-render after data loads
+      renderCalendar();
+      renderToday();
+    })
+    .catch(() => {
+      // data load failed — show empty state gracefully
+    });
 
   const DAY_NAMES = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const DAY_SHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
@@ -416,9 +398,7 @@
 
   document.getElementById('cal-prev').addEventListener('click',()=>{weekOffset--;renderCalendar();});
   document.getElementById('cal-next').addEventListener('click',()=>{weekOffset++;renderCalendar();});
-
-  renderToday();
-  renderCalendar();
   </script>
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </body>
 </html>
